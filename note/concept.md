@@ -1,17 +1,14 @@
 # Concept
 
-Voilà quelques idées:
+<hr>
 
-
-## Main Activity
+## Page principale
 
 Il y a 3 onglets:
 
 - Seen
 - Suggestion
 - To See
-
-
 
 ### Onglet SEEN
 C'est uniquement une liste des films vus. Il est possible de la trier selon différents critères (ranking, date de sortie, acteurs, titre, durée, ...)
@@ -20,7 +17,7 @@ C'est uniquement une liste des films vus. Il est possible de la trier selon diff
 
 #### sortie de la liste "Seen"
 
-//------------------------------------------------------------------------------
+<hr>
 
 ### Onglet SUGGESTION
 De manière un peu ennuyante, on aurait une liste des films.
@@ -35,7 +32,7 @@ Les propositions se font sur la base:
 
 #### sortie de la liste "Suggestion"
 
-//------------------------------------------------------------------------------
+<hr>
 
 ### Onglet "TO SEE"
 C'est la liste des films à voir.
@@ -44,11 +41,11 @@ C'est la liste des films à voir.
 
 #### sortie de la liste "To See"
 
-//------------------------------------------------------------------------------
+<hr>
 
 ## Les listes de films
 
-### Critères de tri
+### Critères de tri standards
 
 Selon:
 - ranking
@@ -58,11 +55,12 @@ Selon:
 - durée
 - ...
 
+### Critères de tri personnalisés
 Pour la liste des films à voir, il faudrait éventuellement faire une liste
 avec un tri fait par l'utilisateur; un drag'n'drop pour la liste des films à voir.
 Comme ça, l'utilisateur pourrait faire une sorte de ranking subjectif des films qu'il veut voir.
 
-//------------------------------------------------------------------------------
+<hr>
 
 ## Notifications
 
