@@ -1,0 +1,107 @@
+\documentclass[a4paper, 11pt]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+%\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+% \usepackage[latin1]{inputenc}
+
+\usepackage[top=3cm, bottom=3cm, left=2.3cm,right=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{titlepic}
+\usepackage{hyperref}
+\hypersetup{%
+    pdfborder = {0 0 0}
+}
+%\usepackage{url}
+\usepackage[table]{xcolor}
+\usepackage{tipa} % phonétique
+\definecolor{light-gray}{gray}{0.50}
+\definecolor{very-light-gray}{gray}{0.9}
+
+\usepackage{listings}
+\lstset{language=java,
+  basicstyle=\scriptsize,
+  numbers=left,
+  numberstyle=\tiny\color{light-gray},  % the style that is used for the line-numbers
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=single,                   % adds a frame around the code
+  %rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  tabsize=4,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                   % show the filename of files included with \lstinputlisting;
+                                  % also try caption instead of title
+  %keywordstyle=\color{blue},          % keyword style
+  commentstyle=\color{light-gray},       % comment style
+  %stringstyle=\color{yellow}         % string literal style
+}
+
+%en-tete de page
+\usepackage{fancyhdr}
+\lhead{DMG}
+\chead{Lunong Ba \& Montet}
+\rhead{\today}
+\pagestyle{fancy}
+
+%\renewcommand{\thesection}{\arabic{section}} % pour numerotation des sections
+
+\titlepic{\includegraphics[width=0.55\textwidth]{img/mselogo.jpg}}
+\title{\huge{HES-SO Master} \\ \Huge{\textbf{\textsc{Mobile Operating Systems}}} \\
+\LARGE{Projet de cours} \\
+\vspace{2cm} \huge{\textbf{Capitole}} \\
+\vspace{1cm} \Large{Le catalogue de films sous Android} }
+
+\author{\\ \\ Dan \textsc{Luong Ba} \& Frédéric \textsc{Montet} \\
+\\ \\
+Professeurs : Markus \textsc{Stolze} \& Pascal \textsc{Bruegger} \\
+}
+
+\date{\today}
+
+
+\begin{document}
+\maketitle % page de garde
+\newpage
+
+%\setcounter{tocdepth}{1} % limit the table of contents to depth 1
+\tableofcontents
+\newpage
+
+\input{chapter/introduction.tex}
+\input{chapter/part1.tex}
+\input{chapter/part2.tex}
+\input{chapter/part3.tex}
+% On peut toujour rajouter des chapitres ici si jamais il y en a plus.
+\input{chapter/conclusion.tex}
+
+\vspace{3cm}
+Lausanne, le \today
+
+\vspace{1.5cm}
+
+\hspace{2cm} Dan \textsc{Montet}
+\hspace{5cm} Frédéric \textsc{Casas}
+
+\vspace{2cm}
+
+%\newpage
+
+%\nocite{*}
+%\bibliographystyle{plain}
+%\bibliography{papers}
+
+% reference
+% lists
+% appendices
+
+%\appendix % annexes
+%\input{chapter/annexe.tex}
+
+\end{document}
