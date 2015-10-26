@@ -1,4 +1,4 @@
-package com.example.fredmontet.filmlist;
+package com.example.fredmontet.capitole;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
