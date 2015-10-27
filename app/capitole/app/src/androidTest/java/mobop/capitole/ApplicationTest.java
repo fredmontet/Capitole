@@ -1,4 +1,4 @@
-package com.example.fredmontet.capitole;
+package mobop.capitole;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
