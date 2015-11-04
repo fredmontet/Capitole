@@ -1,5 +1,6 @@
 package mobop.capitole;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
-        adapterViewPager = new TabsPagerAdapter(getSupportFragmentManager());
+        adapterViewPager = new TabsPagerAdapter(getSupportFragmentManager(), getApplicationContext());
         mViewPager.setAdapter(adapterViewPager);
     }
 
@@ -57,10 +58,12 @@ public class MainActivity extends AppCompatActivity {
      * Inner class for the Tabs on main activity
      */
     public static class TabsPagerAdapter extends FragmentPagerAdapter {
+        protected Context mContext;
         private static int NUM_ITEMS = 3;
 
-        public TabsPagerAdapter(FragmentManager fragmentManager) {
+        public TabsPagerAdapter(FragmentManager fragmentManager, Context context) {
             super(fragmentManager);
+            this.mContext = context;
         }
 
         // Returns total number of pages
@@ -87,7 +90,16 @@ public class MainActivity extends AppCompatActivity {
         // Returns the page title for the top indicator
         @Override
         public CharSequence getPageTitle(int position) {
-            return "Page " + position;
+            switch (position) {
+                case 0: // Fragment # 0 - This will show FirstFragment
+                    return mContext.getResources().getString(R.string.tab_seen);
+                case 1: // Fragment # 0 - This will show FirstFragment different title
+                    return mContext.getResources().getString(R.string.tab_suggestion);
+                case 2: // Fragment # 1 - This will show SecondFragment
+                    return mContext.getResources().getString(R.string.tab_tosee);
+                default:
+                    return null;
+            }
         }
 
     }
