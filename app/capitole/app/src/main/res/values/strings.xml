@@ -3,4 +3,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="tab1">Seen</string>
+    <string name="tab2">Suggestion</string>
+    <string name="tab3">To see</string>
 </resources>
