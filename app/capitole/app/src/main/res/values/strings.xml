@@ -1,6 +1,13 @@
 <resources>
+    <!-- Application global -->
     <string name="app_name">Capitole</string>
+
+    <!-- Action bar related -->
     <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
+
+
+    <!-- Fragment titles -->
     <string name="seen_title">Seen</string>
     <string name="suggestion_title">Suggestion</string>
     <string name="tosee_title">To See</string>

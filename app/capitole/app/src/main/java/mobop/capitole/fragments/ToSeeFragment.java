@@ -1,4 +1,4 @@
-package mobop.capitole;
+package mobop.capitole.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,13 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import mobop.capitole.R;
+
+
 /**
  * Created by fredmontet on 06/11/15.
  */
 
-public class SeenFragment extends Fragment {
+public class ToSeeFragment extends Fragment {
 
-    public SeenFragment() {
+    public ToSeeFragment() {
         // Required empty public constructor
     }
 
@@ -25,7 +28,7 @@ public class SeenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_seen, container, false);
+        return inflater.inflate(R.layout.fragment_tosee, container, false);
     }
 
 }
