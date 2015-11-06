@@ -1,4 +1,4 @@
-package mobop.test;
+package mobop.capitole;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

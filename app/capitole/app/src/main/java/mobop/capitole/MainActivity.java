@@ -1,65 +1,74 @@
 package mobop.capitole;
 
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.widget.Toolbar;
 
-/**
- * The main activity
- */
-public class MainActivity extends AppCompatActivity
-//        implements ActionBar.TabListener
-{
+import java.util.ArrayList;
+import java.util.List;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
+public class MainActivity extends AppCompatActivity {
 
-    private ViewPager mViewPager;
-    private FragmentPagerAdapter mAdapter;
-    private ActionBar mActionBar;
-    // Tab titles
-    private String[] tabs = { "Top Rated", "Games", "Movies" };
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Init
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        //mActionBar = getActionBar();
-        mAdapter = new TabsPagerAdapter(getSupportFragmentManager(), getApplicationContext());
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        mViewPager.setAdapter(mAdapter);
-        mActionBar.setHomeButtonEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new SeenFragment(), getString(R.string.seen_title));
+        adapter.addFragment(new SuggestionFragment(), getString(R.string.suggestion_title));
+        adapter.addFragment(new ToSeeFragment(), getString(R.string.tosee_title));
+        viewPager.setAdapter(adapter);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
         }
 
-        return super.onOptionsItemSelected(item);
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 }
-
-
-
-
