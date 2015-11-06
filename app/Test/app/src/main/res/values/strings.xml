@@ -3,7 +3,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="one">Fragment One</string>
-    <string name="two">Fragment Two</string>
-    <string name="three">Fragment Three</string>
+    <string name="seen_title">Seen</string>
+    <string name="suggestion_title">Suggestion</string>
+    <string name="tosee_title">To See</string>
 </resources>

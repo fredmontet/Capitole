@@ -11,9 +11,9 @@ import android.view.ViewGroup;
  * Created by fredmontet on 06/11/15.
  */
 
-public class ThreeFragment extends Fragment {
+public class ToSeeFragment extends Fragment {
 
-    public ThreeFragment() {
+    public ToSeeFragment() {
         // Required empty public constructor
     }
 
@@ -26,7 +26,7 @@ public class ThreeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_one, container, false);
+        return inflater.inflate(R.layout.fragment_tosee, container, false);
     }
 
 }
