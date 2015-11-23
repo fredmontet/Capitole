@@ -1,26 +1,22 @@
 package mobop.capitole.model;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by fredmontet on 22/11/15.
  */
-public class Mpaa {
+public class Mpaa extends RealmObject{
 
-    private long mId;
-    private String mMpaa;
+    @PrimaryKey
+    private String mpaa;
 
-    public long getId() {
-        return mId;
-    }
-
-    public void setId(long mId) {
-        this.mId = mId;
-    }
-
+    // Methods
     public String getMpaa() {
-        return mMpaa;
+        return mpaa;
     }
 
-    public void setMpaa(String mMpaa) {
-        this.mMpaa = mMpaa;
+    public void setMpaa(String mpaa) {
+        this.mpaa = mpaa;
     }
 }

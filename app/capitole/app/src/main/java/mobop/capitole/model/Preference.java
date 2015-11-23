@@ -1,64 +1,60 @@
 package mobop.capitole.model;
 
 import java.util.ArrayList;
+import java.util.UUID;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by fredmontet on 22/11/15.
  */
-public class Preference {
+public class Preference extends RealmObject{
 
-    private long mId;
-    private ArrayList<String> mGenre;
-    private ArrayList<String> mPeople;
-    private ArrayList<String> mFilm;
-    private ArrayList<String> mLanguage;
-    private ArrayList<String> mCountry;
+    private String genres;
+    private String people;
+    private String movies;
+    private String languages;
+    private String countries;
 
-    public long getId() {
-        return mId;
+    // Methods
+    public String getGenres() {
+        return genres;
     }
 
-    public void setId(long mId) {
-        this.mId = mId;
+    public void setGenres(String genres) {
+        this.genres = genres;
     }
 
-    public ArrayList<String> getGenre() {
-        return mGenre;
+    public String getPeople() {
+        return people;
     }
 
-    public void setGenre(ArrayList<String> mGenre) {
-        this.mGenre = mGenre;
+    public void setPeople(String people) {
+        this.people = people;
     }
 
-    public ArrayList<String> getPeople() {
-        return mPeople;
+    public String getMovies() {
+        return movies;
     }
 
-    public void setPeople(ArrayList<String> mPeople) {
-        this.mPeople = mPeople;
+    public void setMovies(String movies) {
+        this.movies = movies;
     }
 
-    public ArrayList<String> getFilm() {
-        return mFilm;
+    public String getLanguages() {
+        return languages;
     }
 
-    public void setFilm(ArrayList<String> mFilm) {
-        this.mFilm = mFilm;
+    public void setLanguages(String languages) {
+        this.languages = languages;
     }
 
-    public ArrayList<String> getLanguage() {
-        return mLanguage;
+    public String getCountries() {
+        return countries;
     }
 
-    public void setLanguage(ArrayList<String> mLanguage) {
-        this.mLanguage = mLanguage;
-    }
-
-    public ArrayList<String> getCountry() {
-        return mCountry;
-    }
-
-    public void setCountry(ArrayList<String> mCountry) {
-        this.mCountry = mCountry;
+    public void setCountries(String countries) {
+        this.countries = countries;
     }
 }

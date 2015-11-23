@@ -3,72 +3,129 @@ package mobop.capitole.model;
 import java.util.Date;
 import java.util.UUID;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by fredmontet on 22/11/15.
  */
-public class User {
+public class User extends RealmObject{
 
-    private long mId;
-    private UUID mUuid;
-    private String mFirstname;
-    private String mLastname;
-    private Date mBirthdate;
-    private String mCity;
-    private String mGender;
+    private String uuid;
+    private String firstname;
+    private String lastname;
+    private Date birthdate;
+    private String city;
+    private String gender;
 
-    public long getId() {
-        return mId;
-    }
+    // One to one
+    private Preference preference;
 
-    public void setId(long mId) {
-        this.mId = mId;
-    }
+    // Many to many
+    private RealmList<Rating> ratings;
+    private RealmList<Comment> comments;
 
+    // The Capitole associations \o/
+    private RealmList<Movie> moviesSeen;
+    private RealmList<Movie> moviesToSee;
+    private RealmList<Movie> moviesSuggestion;
+
+    // Methods
     public UUID getUuid() {
-        return mUuid;
+        UUID uuid = UUID.fromString(this.uuid);
+        return uuid;
     }
 
-    public void setUuid(UUID mUuid) {
-        this.mUuid = mUuid;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid.toString();
     }
 
     public String getFirstname() {
-        return mFirstname;
+        return firstname;
     }
 
-    public void setFirstname(String mFirstname) {
-        this.mFirstname = mFirstname;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getLastname() {
-        return mLastname;
+        return lastname;
     }
 
-    public void setLastname(String mLastname) {
-        this.mLastname = mLastname;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public Date getBirthdate() {
-        return mBirthdate;
+        return birthdate;
     }
 
-    public void setBirthdate(Date mBirthdate) {
-        this.mBirthdate = mBirthdate;
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
     }
 
     public String getCity() {
-        return mCity;
+        return city;
     }
 
-    public void setCity(String mCity) {
-        this.mCity = mCity;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getGender() {
-        return mGender;
+        return gender;
     }
 
-    public void setGender(String mGender) {
-        this.mGender = mGender;
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Preference getPreference() {
+        return preference;
+    }
+
+    public void setPreference(Preference preference) {
+        this.preference = preference;
+    }
+
+    public RealmList<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(RealmList<Rating> ratings) {
+        this.ratings = ratings;
+    }
+
+    public RealmList<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(RealmList<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public RealmList<Movie> getMoviesSeen() {
+        return moviesSeen;
+    }
+
+    public void setMoviesSeen(RealmList<Movie> moviesSeen) {
+        this.moviesSeen = moviesSeen;
+    }
+
+    public RealmList<Movie> getMoviesToSee() {
+        return moviesToSee;
+    }
+
+    public void setMoviesToSee(RealmList<Movie> moviesToSee) {
+        this.moviesToSee = moviesToSee;
+    }
+
+    public RealmList<Movie> getMoviesSuggestion() {
+        return moviesSuggestion;
+    }
+
+    public void setMoviesSuggestion(RealmList<Movie> moviesSuggestion) {
+        this.moviesSuggestion = moviesSuggestion;
     }
 }

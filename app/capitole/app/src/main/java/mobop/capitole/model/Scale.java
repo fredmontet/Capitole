@@ -1,44 +1,41 @@
 package mobop.capitole.model;
 
+import java.util.UUID;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by fredmontet on 22/11/15.
  */
-public class Scale {
+public class Scale extends RealmObject{
 
-    private long mId;
-    private int mMin;
-    private int mMax;
-    private int mStep;
+    private int min;
+    private int max;
+    private int step;
 
-    public long getId() {
-        return mId;
-    }
-
-    public void setId(long mId) {
-        this.mId = mId;
-    }
-
+    // Methods
     public int getMin() {
-        return mMin;
+        return min;
     }
 
-    public void setMin(int mMin) {
-        this.mMin = mMin;
+    public void setMin(int min) {
+        this.min = min;
     }
 
     public int getMax() {
-        return mMax;
+        return max;
     }
 
-    public void setMax(int mMax) {
-        this.mMax = mMax;
+    public void setMax(int max) {
+        this.max = max;
     }
 
     public int getStep() {
-        return mStep;
+        return step;
     }
 
-    public void setStep(int mStep) {
-        this.mStep = mStep;
+    public void setStep(int step) {
+        this.step = step;
     }
 }

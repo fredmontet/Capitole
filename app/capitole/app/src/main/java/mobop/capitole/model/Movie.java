@@ -1,93 +1,158 @@
 package mobop.capitole.model;
 
 import java.util.Date;
-
+import java.util.UUID;
 import javax.xml.datatype.Duration;
+
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by fredmontet on 22/11/15.
  */
-public class Movie {
+public class Movie extends RealmObject{
 
-    private long mId;
-    private String mTitle;
-    private String mTagline;
-    private String mSynopsis;
-    private Duration mLength;
-    private String mTrailerlink;
-    private String mWebsite;
-    private Date mReleaseDate;
-    private int mBudget;
+    @PrimaryKey
+    private String uuid;
+    private String title;
+    private String tagline;
+    private String synopsis;
+    private long length;
+    private String trailerlink;
+    private String website;
+    private Date releaseDate;
+    private int budget;
 
-    public long getId() {
-        return mId;
+    // Many to many
+    private RealmList<Person> people;
+    private RealmList<Keyword> keywords;
+    private RealmList<Language> languages;
+    private RealmList<Genre> genres;
+
+    // Many to one
+    private Country country;
+    private Mpaa mpaa;
+
+    // Methods
+    public UUID getUuid() {
+        UUID uuid = UUID.fromString(this.uuid);
+        return uuid;
     }
 
-    public void setId(long mId) {
-        this.mId = mId;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid.toString();
     }
 
     public String getTitle() {
-        return mTitle;
+        return title;
     }
 
-    public void setTitle(String mTitle) {
-        this.mTitle = mTitle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getTagline() {
-        return mTagline;
+        return tagline;
     }
 
-    public void setTagline(String mTagline) {
-        this.mTagline = mTagline;
+    public void setTagline(String tagline) {
+        this.tagline = tagline;
     }
 
     public String getSynopsis() {
-        return mSynopsis;
+        return synopsis;
     }
 
-    public void setSynopsis(String mSynopsis) {
-        this.mSynopsis = mSynopsis;
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
     }
 
-    public Duration getLength() {
-        return mLength;
+    public long getLength() {
+        return length;
     }
 
-    public void setLength(Duration mLength) {
-        this.mLength = mLength;
+    public void setLength(long length) {
+        this.length = length;
     }
 
     public String getTrailerlink() {
-        return mTrailerlink;
+        return trailerlink;
     }
 
-    public void setTrailerlink(String mTrailerlink) {
-        this.mTrailerlink = mTrailerlink;
+    public void setTrailerlink(String trailerlink) {
+        this.trailerlink = trailerlink;
     }
 
     public String getWebsite() {
-        return mWebsite;
+        return website;
     }
 
-    public void setWebsite(String mWebsite) {
-        this.mWebsite = mWebsite;
+    public void setWebsite(String website) {
+        this.website = website;
     }
 
     public Date getReleaseDate() {
-        return mReleaseDate;
+        return releaseDate;
     }
 
-    public void setReleaseDate(Date mReleaseDate) {
-        this.mReleaseDate = mReleaseDate;
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public int getBudget() {
-        return mBudget;
+        return budget;
     }
 
-    public void setBudget(int mBudget) {
-        this.mBudget = mBudget;
+    public void setBudget(int budget) {
+        this.budget = budget;
+    }
+
+    public RealmList<Person> getPeople() {
+        return people;
+    }
+
+    public void setPeople(RealmList<Person> people) {
+        this.people = people;
+    }
+
+    public RealmList<Keyword> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(RealmList<Keyword> keywords) {
+        this.keywords = keywords;
+    }
+
+    public RealmList<Language> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(RealmList<Language> languages) {
+        this.languages = languages;
+    }
+
+    public RealmList<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(RealmList<Genre> genres) {
+        this.genres = genres;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public Mpaa getMpaa() {
+        return mpaa;
+    }
+
+    public void setMpaa(Mpaa mpaa) {
+        this.mpaa = mpaa;
     }
 }

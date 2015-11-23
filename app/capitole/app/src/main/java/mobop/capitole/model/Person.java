@@ -1,44 +1,64 @@
 package mobop.capitole.model;
 
+import java.util.UUID;
+
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by fredmontet on 22/11/15.
  */
-public class Person {
+public class Person extends RealmObject{
 
-    private long mId;
-    private String mFirstname;
-    private String mLastname;
-    private String mGender;
+    @PrimaryKey
+    private String uuid;
+    private String firstname;
+    private String lastname;
+    private String gender;
 
-    public long getId() {
-        return mId;
+    // Many to many
+    private RealmList<Role> roles;
+
+    // Methods
+    public UUID getUuid() {
+        UUID uuid = UUID.fromString(this.uuid);
+        return uuid;
     }
 
-    public void setId(long mId) {
-        this.mId = mId;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid.toString();
     }
 
     public String getFirstname() {
-        return mFirstname;
+        return firstname;
     }
 
-    public void setFirstname(String mFirstname) {
-        this.mFirstname = mFirstname;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getLastname() {
-        return mLastname;
+        return lastname;
     }
 
-    public void setLastname(String mLastname) {
-        this.mLastname = mLastname;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getGender() {
-        return mGender;
+        return gender;
     }
 
-    public void setGender(String mGender) {
-        this.mGender = mGender;
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public RealmList<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(RealmList<Role> roles) {
+        this.roles = roles;
     }
 }

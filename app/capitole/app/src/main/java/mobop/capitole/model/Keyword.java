@@ -1,26 +1,22 @@
 package mobop.capitole.model;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by fredmontet on 22/11/15.
  */
-public class Keyword {
+public class Keyword extends RealmObject{
 
-    private long mId;
-    private String mKeyword;
+    @PrimaryKey
+    private String keyword;
 
-    public long getId() {
-        return mId;
-    }
-
-    public void setId(long mId) {
-        this.mId = mId;
-    }
-
+    // Methods
     public String getKeyword() {
-        return mKeyword;
+        return keyword;
     }
 
-    public void setKeyword(String mKeyword) {
-        this.mKeyword = mKeyword;
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 }

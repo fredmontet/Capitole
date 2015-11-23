@@ -1,26 +1,22 @@
 package mobop.capitole.model;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by fredmontet on 22/11/15.
  */
-public class Role {
+public class Role extends RealmObject{
 
-    private long mId;
-    private String mRole;
+    @PrimaryKey
+    private String role;
 
-    public long getId() {
-        return mId;
-    }
-
-    public void setId(long mId) {
-        this.mId = mId;
-    }
-
+    // Methods
     public String getRole() {
-        return mRole;
+        return role;
     }
 
-    public void setRole(String mRole) {
-        this.mRole = mRole;
+    public void setRole(String role) {
+        this.role = role;
     }
 }

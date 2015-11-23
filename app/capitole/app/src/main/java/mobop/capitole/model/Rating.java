@@ -1,26 +1,33 @@
 package mobop.capitole.model;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by fredmontet on 22/11/15.
  */
-public class Rating {
+public class Rating extends RealmObject{
 
-    private long mId;
-    private int mRate;
+    private int rate;
 
-    public long getId() {
-        return mId;
-    }
+    // Many to one
+    private Scale scale;
 
-    public void setId(long mId) {
-        this.mId = mId;
-    }
-
+    // Methods
     public int getRate() {
-        return mRate;
+        return rate;
     }
 
-    public void setRate(int mRate) {
-        this.mRate = mRate;
+    public void setRate(int rate) {
+        this.rate = rate;
+    }
+
+    public Scale getScale() {
+        return scale;
+    }
+
+    public void setScale(Scale scale) {
+        this.scale = scale;
     }
 }

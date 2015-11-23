@@ -1,4 +1,4 @@
-package mobop.capitole;
+package mobop.capitole.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import mobop.capitole.R;
+import mobop.capitole.adapters.ViewPagerAdapter;
 import mobop.capitole.fragments.SeenFragment;
 import mobop.capitole.fragments.SuggestionFragment;
 import mobop.capitole.fragments.ToSeeFragment;

@@ -1,26 +1,22 @@
 package mobop.capitole.model;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by fredmontet on 22/11/15.
  */
-public class Language {
+public class Language extends RealmObject{
 
-    private long mId;
-    private String mLanguage;
+    @PrimaryKey
+    private String language;
 
-    public long getId() {
-        return mId;
-    }
-
-    public void setId(long mId) {
-        this.mId = mId;
-    }
-
+    // Methods
     public String getLanguage() {
-        return mLanguage;
+        return language;
     }
 
-    public void setLanguage(String mLanguage) {
-        this.mLanguage = mLanguage;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

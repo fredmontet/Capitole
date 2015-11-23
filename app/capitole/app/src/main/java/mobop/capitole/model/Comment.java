@@ -1,37 +1,56 @@
 package mobop.capitole.model;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by fredmontet on 22/11/15.
  */
-public class Comment {
+public class Comment extends RealmObject {
 
-    private long mId;
-    private SimpleDateFormat mTimestamp;
-    private String mText;
+    @PrimaryKey
+    private String uuid;
+    private Date date;
+    private String text;
 
-    public long getId() {
-        return mId;
+    // Many to one
+    private Movie movie;
+
+    // Methods
+    public String getUuid() {
+        UUID uuid = UUID.fromString(this.uuid);
+        return uuid.toString();
     }
 
-    public void setId(long mId) {
-        this.mId = mId;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid.toString();
     }
 
-    public SimpleDateFormat getTimestamp() {
-        return mTimestamp;
+    public Date getDate() {
+        return date;
     }
 
-    public void setTimestamp(SimpleDateFormat mTimestamp) {
-        this.mTimestamp = mTimestamp;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getText() {
-        return mText;
+        return text;
     }
 
-    public void setText(String mText) {
-        this.mText = mText;
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
     }
 }
