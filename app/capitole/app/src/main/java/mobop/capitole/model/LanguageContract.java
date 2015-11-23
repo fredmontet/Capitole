@@ -26,8 +26,6 @@ public class LanguageContract {
      * primary key is the _id column from the BaseColumn class.
      */
     public static abstract class LanguageEntry implements BaseColumns {
-
-        public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_KEYWORD = "language";
     }
 

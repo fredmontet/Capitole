@@ -27,7 +27,6 @@ public class PreferenceContract {
      */
     public static abstract class PreferenceEntry implements BaseColumns {
 
-        public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_GENRE = "genre";
         public static final String COLUMN_NAME_PEOPLE = "people";
         public static final String COLUMN_NAME_FILM = "film";

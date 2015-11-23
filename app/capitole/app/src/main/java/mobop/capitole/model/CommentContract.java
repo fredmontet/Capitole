@@ -11,26 +11,25 @@ public class CommentContract {
     // give it an empty constructor.
     public CommentContract() {}
 
-    /**
-     * Contains the name of the table to create that contains the row counters.
-     */
     public static final String TABLE_NAME = "comment";
 
     /**
-     * Contains the SQL query to use to create the table containing the row counters.
+     * Contains the SQL query to use to create the table.
      */
-    public static final String SQL_CREATE_TABLE = "CREATE TABLE ..."; // TODO: 23/11/15 make create sql
+    public static final String SQL_CREATE_TABLE = "CREATE TABLE ...";
 
     /**
-     * This class represents the rows for an entry in the row_counter table. The
-     * primary key is the _id column from the BaseColumn class.
+     * This class represents the rows for an entry in the table.
+     * The primary key is the _id column from the BaseColumn class.
      */
     public static abstract class CommentEntry implements BaseColumns {
 
-        public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_TIMESTAMP = "timestamp";
         public static final String COLUMN_NAME_TEXT = "text";
 
+        // Foreign key(s)
+        public static final String COLUMN_NAME_USER_ID = "user_id";
+        public static final String COLUMN_NAME_MOVIE_ID = "movie_id";
     }
 
 }

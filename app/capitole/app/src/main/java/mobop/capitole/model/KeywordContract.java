@@ -27,8 +27,6 @@ public class KeywordContract {
      * primary key is the _id column from the BaseColumn class.
      */
     public static abstract class KeywordEntry implements BaseColumns {
-
-        public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_KEYWORD = "keyword";
     }
 

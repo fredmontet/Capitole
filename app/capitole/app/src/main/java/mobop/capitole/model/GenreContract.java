@@ -27,8 +27,8 @@ public class GenreContract {
      */
     public static abstract class GenreEntry implements BaseColumns {
 
-        public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_GENRE = "genre";
+
     }
 
 }

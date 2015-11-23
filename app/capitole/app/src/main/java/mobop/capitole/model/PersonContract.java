@@ -27,7 +27,6 @@ public class PersonContract {
      */
     public static abstract class PersonEntry implements BaseColumns {
 
-        public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_FIRSTNAME = "firstName";
         public static final String COLUMN_NAME_LASTNAME = "lastName";
         public static final String COLUMN_NAME_GENDER = "gender";

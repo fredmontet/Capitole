@@ -27,7 +27,6 @@ public class CountryContract {
      */
     public static abstract class CountryEntry implements BaseColumns {
 
-        public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_COUNTRY = "country";
     }
 

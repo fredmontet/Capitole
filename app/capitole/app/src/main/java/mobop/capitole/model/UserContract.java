@@ -27,13 +27,15 @@ public class UserContract {
      */
     public static abstract class UserEntry implements BaseColumns {
 
-        public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_UUID = "uuid";
         public static final String COLUMN_NAME_FIRSTNAME = "firstName";
         public static final String COLUMN_NAME_LASTNAME = "lastName";
         public static final String COLUMN_NAME_BIRTHDATE = "birthdate";
         public static final String COLUMN_NAME_GENDER = "gender";
         public static final String COLUMN_NAME_CITY = "city";
+
+        // Foreign key(s)
+        public static final String COLUMN_NAME_PREFERENCE_ID = "preference_id";
     }
 
 }

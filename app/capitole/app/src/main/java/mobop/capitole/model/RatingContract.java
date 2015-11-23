@@ -27,8 +27,10 @@ public class RatingContract {
      */
     public static abstract class RatingEntry implements BaseColumns {
 
-        public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_RATE = "rate";
+
+        // Foreign key(s)
+        public static final String COLUMN_NAME_SCALE_ID = "scale_id";
 
     }
 
