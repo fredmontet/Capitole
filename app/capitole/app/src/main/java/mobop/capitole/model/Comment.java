@@ -22,12 +22,11 @@ public class Comment extends RealmObject {
 
     // Methods
     public String getUuid() {
-        UUID uuid = UUID.fromString(this.uuid);
-        return uuid.toString();
+        return uuid;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid.toString();
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public Date getDate() {
