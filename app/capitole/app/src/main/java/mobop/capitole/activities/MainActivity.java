@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new SuggestionFragment(), getString(R.string.suggestion_title));
         adapter.addFragment(new ToSeeFragment(), getString(R.string.tosee_title));
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(1); // Set suggestionFragment when app is opening
     }
 
     @Override
