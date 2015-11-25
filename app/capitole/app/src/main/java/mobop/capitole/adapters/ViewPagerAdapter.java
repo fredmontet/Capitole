@@ -1,4 +1,4 @@
-package mobop.capitole;
+package mobop.capitole.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by fredmontet on 06/11/15.
  */
-class ViewPagerAdapter extends FragmentPagerAdapter {
+public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();

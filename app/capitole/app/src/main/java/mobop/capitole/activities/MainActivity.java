@@ -1,5 +1,7 @@
-package mobop.capitole;
+package mobop.capitole.activities;
 
+import android.content.Intent;
+import android.media.audiofx.BassBoost;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -16,6 +18,8 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import mobop.capitole.R;
+import mobop.capitole.adapters.ViewPagerAdapter;
 import mobop.capitole.fragments.SeenFragment;
 import mobop.capitole.fragments.SuggestionFragment;
 import mobop.capitole.fragments.ToSeeFragment;
@@ -34,16 +38,12 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        //getSupportActionBar().setDisplayShowCustomEnabled(true);
-
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -57,5 +57,19 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new SuggestionFragment(), getString(R.string.suggestion_title));
         adapter.addFragment(new ToSeeFragment(), getString(R.string.tosee_title));
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(1); // Set suggestionFragment when app is opening
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                this.startActivity(intent);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 }
