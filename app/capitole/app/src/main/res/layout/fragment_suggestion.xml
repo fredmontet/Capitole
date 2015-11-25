@@ -7,17 +7,14 @@
     tools:context="info.mobop.capitole.fragments.SuggestionFragment"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
+    <GridView
+        android:id="@+id/movie_gridview"
+        android:layout_margin="2dp"
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:horizontalSpacing="2dp"
+        android:verticalSpacing="2dp"
+        android:numColumns="3"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/suggestion_title"
-            android:textSize="40dp"
-            android:textStyle="bold"
-            android:layout_centerInParent="true"/>
-
-    </RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>
