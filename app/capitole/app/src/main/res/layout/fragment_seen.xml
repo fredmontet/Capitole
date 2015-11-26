@@ -10,7 +10,10 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="514dp"
-        android:id="@android:id/list" />
+        android:id="@+id/seenListview" />
+
+    <!--android:id="@android:id/list" />-->
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabToSee"
