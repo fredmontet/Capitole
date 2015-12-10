@@ -1,14 +1,18 @@
 package mobop.capitole.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import mobop.capitole.R;
+import mobop.capitole.activities.MainActivity;
 
 
 /**
@@ -34,6 +38,7 @@ public class SuggestionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override

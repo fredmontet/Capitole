@@ -1,11 +1,14 @@
 package mobop.capitole.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import mobop.capitole.R;
+import mobop.capitole.fragments.SeenFragment;
 
 public class MovieActivity extends AppCompatActivity {
 
@@ -13,6 +16,12 @@ public class MovieActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
+        Intent intent = getIntent();
+        String movieId = intent.getStringExtra(SeenFragment.movieId);
+        TextView textView = new TextView(this);
+        textView.setTextSize(40);
+        textView.setText(movieId);
+        setContentView(textView);
     }
 
     @Override
