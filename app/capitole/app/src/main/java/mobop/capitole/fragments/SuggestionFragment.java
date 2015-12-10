@@ -1,18 +1,23 @@
 package mobop.capitole.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import mobop.capitole.R;
 import mobop.capitole.activities.MainActivity;
+import mobop.capitole.activities.MovieActivity;
 
 
 /**
@@ -31,6 +36,12 @@ public class SuggestionFragment extends Fragment {
             "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
             "Linux", "OS/2"  };
 
+    View mView;
+    ArrayAdapter<String> mAdapter;
+    GridView mGridView;
+    public final static String movieId = "mobop.capitole.activities.movieId";
+
+
     public SuggestionFragment() {
         // Required empty public constructor
     }
@@ -44,10 +55,21 @@ public class SuggestionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_suggestion, container, false);
-        GridView gridView = (GridView) view.findViewById(R.id.movie_gridview);
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, movies);
-        gridView.setAdapter(adapter);
-        return view;
+
+        mView = inflater.inflate(R.layout.fragment_suggestion, container, false);
+        mGridView = (GridView) mView.findViewById(R.id.movie_gridview);
+        mAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, movies);
+        mGridView.setAdapter(mAdapter);
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                CharSequence text = ((TextView) view).getText();
+                Intent intent = new Intent(getActivity(), MovieActivity.class);
+                intent.putExtra(movieId, text.toString());
+                startActivity(intent);
+            }
+        });
+
+        return mView;
     }
 }

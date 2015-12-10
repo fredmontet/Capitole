@@ -68,7 +68,7 @@ public class SeenFragment extends Fragment {
         fabSeen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Hello World", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Hello Seen", Toast.LENGTH_SHORT).show();
             }
         });
 
