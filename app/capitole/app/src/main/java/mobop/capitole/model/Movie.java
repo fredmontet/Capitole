@@ -15,6 +15,7 @@ public class Movie extends RealmObject{
 
     @PrimaryKey
     private String uuid;
+
     private String title;
     private String tagline;
     private String synopsis;
@@ -42,6 +43,7 @@ public class Movie extends RealmObject{
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
+
     public String getTitle() {
         return title;
     }
