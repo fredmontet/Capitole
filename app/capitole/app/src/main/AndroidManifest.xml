@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="mobop.capitole" >
+    package="mobop.capitole">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -14,28 +14,28 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/CapitoleTheme" >
+        android:theme="@style/CapitoleTheme">
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".presentation.activity.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.MovieActivity"
+            android:name=".presentation.activity.MovieDetailActivity"
             android:label="@string/title_activity_movie"
-            android:parentActivityName=".activities.MainActivity" >
+            android:parentActivityName=".presentation.activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="mobop.capitole.activities.MainActivity" />
+                android:value=".presentation.activity.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.SettingsActivity"
-            android:label="@string/title_activity_settings" >
-        </activity>
+            android:name=".presentation.activity.SettingsActivity"
+            android:label="@string/title_activity_settings" />
     </application>
 
 </manifest>
