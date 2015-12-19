@@ -14,6 +14,7 @@ public class Movie extends RealmObject{
     @PrimaryKey
     private String uuid;
 
+    private String imdbID;
     private String title;
     private String tagline;
     private String synopsis;
@@ -21,7 +22,11 @@ public class Movie extends RealmObject{
     private String trailerlink;
     private String website;
     private Date releaseDate;
-    private int budget;
+    private Date year;
+    private String awards;
+    private String poster;
+    private String metascore;
+    private String type;
 
     // Many to many
     private RealmList<Person> people;
@@ -40,6 +45,14 @@ public class Movie extends RealmObject{
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public String getImdbID() {
+        return imdbID;
+    }
+
+    public void setImdbID(String imdbID) {
+        this.imdbID = imdbID;
     }
 
     public String getTitle() {
@@ -98,12 +111,44 @@ public class Movie extends RealmObject{
         this.releaseDate = releaseDate;
     }
 
-    public int getBudget() {
-        return budget;
+    public Date getYear() {
+        return year;
     }
 
-    public void setBudget(int budget) {
-        this.budget = budget;
+    public void setYear(Date year) {
+        this.year = year;
+    }
+
+    public String getAwards() {
+        return awards;
+    }
+
+    public void setAwards(String awards) {
+        this.awards = awards;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
+    public String getMetascore() {
+        return metascore;
+    }
+
+    public void setMetascore(String metascore) {
+        this.metascore = metascore;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public RealmList<Person> getPeople() {

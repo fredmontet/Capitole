@@ -11,9 +11,7 @@ public class Person extends RealmObject{
 
     @PrimaryKey
     private String uuid;
-    private String firstname;
-    private String lastname;
-    private String gender;
+    private String name;
 
     // Many to many
     private RealmList<Role> roles;
@@ -27,28 +25,12 @@ public class Person extends RealmObject{
         this.uuid = uuid;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public RealmList<Role> getRoles() {
