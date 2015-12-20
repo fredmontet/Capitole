@@ -18,6 +18,10 @@ public class Capitole extends Application {
     private static User mUser;
     public static final String TAG = Capitole.class.getName();
 
+    //==============================================================================================
+    // Life Cycle
+    //==============================================================================================
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -25,6 +29,11 @@ public class Capitole extends Application {
         mUser = this.getUser();
         mRequestQueue = Volley.newRequestQueue(getApplicationContext());
     }
+
+
+    //==============================================================================================
+    // Functions
+    //==============================================================================================
 
     /**
      * Singleton main method. Provides the global static instance of the helper class.
