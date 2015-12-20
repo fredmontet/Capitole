@@ -15,13 +15,13 @@ import mobop.capitole.domain.model.Movie;
 /**
  * Created by fredmontet on 10/12/15.
  */
-public class MovieDetailAdapter extends BaseAdapter{
+public class MovieListAdapter extends BaseAdapter{
 
     private LayoutInflater inflater;
 
     private List<Movie> movies = null;
 
-    public MovieDetailAdapter(Context context) {
+    public MovieListAdapter(Context context) {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 

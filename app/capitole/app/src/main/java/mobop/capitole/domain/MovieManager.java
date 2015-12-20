@@ -1,81 +1,103 @@
 package mobop.capitole.domain;
 
+import android.app.Application;
 import android.content.Context;
+import android.widget.Toast;
+
+import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.util.Collection;
+import java.util.List;
 
 import io.realm.Realm;
 
-import mobop.capitole.domain.mapper.OmdbMapper;
+import mobop.capitole.domain.omdbMapper.MovieJsonMapper;
 import mobop.capitole.domain.model.Movie;
 import mobop.capitole.domain.model.User;
-import mobop.capitole.domain.net.ApiQuerier;
+import mobop.capitole.domain.net.ApiQuery;
 
 /**
  * Created by fredmontet on 13/12/15.
  */
-public class MovieManager {
+public class MovieManager extends Application{
 
     private Realm realm;
     private User user;
     private Context context;
-    private OmdbMapper omdbMapper;
+    private MovieJsonMapper movieJsonMapper;
 
-    MovieManager(Context context, User user){
+    public MovieManager(Context context, User user){
         this.user = user;
         this.context = context;
         this.realm = Realm.getInstance(this.context);
-        this.omdbMapper = new OmdbMapper();
+        this.movieJsonMapper = new MovieJsonMapper();
     }
 
-    private Movie getMovie(String movieId){
+    public Movie getMovie(String movieId){
         return realm.where(Movie.class).equalTo("uuid", movieId).findFirst();
     }
 
-    private Collection<Movie> getMoviesSeen(){
+    public Collection<Movie> getMoviesSeen(){
         return this.user.getMoviesSeen();
     }
 
-    private Collection<Movie> getMoviesToSee(){
+    public Collection<Movie> getMoviesToSee(){
         return this.user.getMoviesToSee();
     }
 
-    private Collection<Movie> getSuggestion() throws MalformedURLException {
+    public void getSuggestion(final MovieManagerCallback callback) throws MalformedURLException {
+
+        // TestToast
+        Toast.makeText(context, "getSuggestions()", Toast.LENGTH_SHORT).show();
+
         // TODO change this for the real suggestions!!!
-        ApiQuerier api = new ApiQuerier(this.context);
-        String json = api.getMoviesByTitle("titanic", "", "full");
-        Collection<Movie> suggestion = omdbMapper.transform(json);
-        return suggestion;
+        ApiQuery api = new ApiQuery(this.context);
+        api.getMoviesByTitle("titanic", "", "full", new ApiQuery.ApiQueryCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                List<Movie> suggestion = movieJsonMapper.transform(response.toString());
+                callback.onSuccess(suggestion);
+            }
+        });
+
     }
 
-    private boolean addToMoviesSeen(Movie movie){
+    public boolean addToMoviesSeen(Movie movie){
         realm.beginTransaction();
         boolean res = this.user.getMoviesSeen().add(movie);
         realm.commitTransaction();
         return res;
     }
 
-    private boolean addToMoviesToSee(Movie movie){
+    public boolean addToMoviesToSee(Movie movie){
         realm.beginTransaction();
         boolean res = this.user.getMoviesToSee().add(movie);
         realm.commitTransaction();
         return res;
     }
 
-    private boolean removeFromMoviesSeen(Movie movie){
+    public boolean removeFromMoviesSeen(Movie movie){
         realm.beginTransaction();
         boolean res = this.user.getMoviesSeen().remove(movie);
         realm.commitTransaction();
         return res;
     }
 
-    private boolean removeFromMoviesToSee(Movie movie){
+    public boolean removeFromMoviesToSee(Movie movie){
         realm.beginTransaction();
         boolean res = this.user.getMoviesToSee().remove(movie);
         realm.commitTransaction();
         return res;
     }
+
+    /**
+     * Simple callback interface
+     */
+    public interface MovieManagerCallback{
+        void onSuccess(List<Movie> response);
+    }
+
 
 
 

@@ -22,7 +22,7 @@ public class Movie extends RealmObject{
     private String trailerlink;
     private String website;
     private Date releaseDate;
-    private Date year;
+    private Integer year;
     private String awards;
     private String poster;
     private String metascore;
@@ -111,11 +111,11 @@ public class Movie extends RealmObject{
         this.releaseDate = releaseDate;
     }
 
-    public Date getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(Date year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 

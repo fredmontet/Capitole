@@ -1,63 +1,60 @@
 package mobop.capitole.domain.net;
 
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
+import android.content.Context;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONObject;
+
+import mobop.capitole.Capitole;
 
 /**
  * Api Connection class used to retrieve data from the cloud.
  */
 public class ApiConnection{
 
-  private static final String CONTENT_TYPE_LABEL = "Content-Type";
-  private static final String CONTENT_TYPE_VALUE_JSON = "application/json; charset=utf-8";
+  private String url;
+  private Context context;
 
-  private URL url;
-  private String response;
-
-  private ApiConnection(String url) throws MalformedURLException {
-    this.url = new URL(url);
-  }
-
-  public static ApiConnection createGET(String url) throws MalformedURLException {
-    return new ApiConnection(url);
+  public ApiConnection(String url, Context context){
+    this.url = url;
+    this.context = context;
   }
 
   /**
-   * Do a request to an api synchronously.
-   * It should not be executed in the main thread of the application.
-   *
-   * @return A string response
+   * Get the json from an API
    */
-  public String requestSyncCall() {
-    connectToApi();
-    return response;
+  public void getJson(final VolleyCallback callback){
+
+    JsonObjectRequest jsObjRequest = new JsonObjectRequest
+            (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject response) {
+                  callback.onSuccess(response);
+                }
+              }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                  Toast.makeText(context, "Unable to fetch data", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
+    // Access the RequestQueue through your singleton class.
+    Capitole.getInstance().add(jsObjRequest);
+
   }
 
-  private void connectToApi() {
-    OkHttpClient okHttpClient = this.createClient();
-    final Request request = new Request.Builder()
-        .url(this.url)
-        .addHeader(CONTENT_TYPE_LABEL, CONTENT_TYPE_VALUE_JSON)
-        .get()
-        .build();
-
-    try {
-      this.response = okHttpClient.newCall(request).execute().body().string();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
-  private OkHttpClient createClient() {
-    final OkHttpClient okHttpClient = new OkHttpClient();
-    okHttpClient.setReadTimeout(10000, TimeUnit.MILLISECONDS);
-    okHttpClient.setConnectTimeout(15000, TimeUnit.MILLISECONDS);
-
-    return okHttpClient;
+  public interface VolleyCallback {
+    void onSuccess(JSONObject response);
   }
 
 }
+
+

@@ -3,17 +3,20 @@ package mobop.capitole.domain.net;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
+import org.json.JSONObject;
+
 import java.net.MalformedURLException;
 
-import mobop.capitole.domain.mapper.OmdbMapper;
+import mobop.capitole.domain.omdbMapper.MovieJsonMapper;
 
 /**
  * Class for retrieving data from the network.
  */
-public class ApiQuerier{
+public class ApiQuery {
 
   private final Context context;
-  private final OmdbMapper omdbMapper;
+  private final MovieJsonMapper movieJsonMapper;
   private final OmdbApi omdbApi;
 
   /**
@@ -21,25 +24,37 @@ public class ApiQuerier{
    *
    * @param context {@link android.content.Context}.
    */
-  public ApiQuerier(Context context) {
+  public ApiQuery(Context context) {
     if (context == null) {
       throw new IllegalArgumentException("The constructor parameters cannot be null!");
     }
     this.context = context.getApplicationContext();
-    this.omdbMapper = new OmdbMapper();
+    this.movieJsonMapper = new MovieJsonMapper();
     this.omdbApi = new OmdbApi();
   }
 
-  public String getMoviesByTitle(String title, String year, String plot) throws MalformedURLException {
+  public void getMoviesByTitle(String title, String year, String plot, final ApiQueryCallback callback) throws MalformedURLException {
     String resType = "json";
     String apiUrl = omdbApi.getUrlMoviesByTitle(title, year, plot, resType);
-    return ApiConnection.createGET(apiUrl).requestSyncCall();
+    ApiConnection api = new ApiConnection(apiUrl, this.context);
+    api.getJson(new ApiConnection.VolleyCallback() {
+      @Override
+      public void onSuccess(JSONObject response) {
+        callback.onSuccess(response);
+      }
+    });
   }
 
-  public String getMovieById(String id, String plot) throws MalformedURLException {
-    String resType = "json";
+  public void getMovieById(String id, String plot, final ApiQueryCallback callback) throws MalformedURLException {
+    final String resType = "json";
     String apiUrl = omdbApi.getUrlMovieById(id, plot, resType);
-    return ApiConnection.createGET(apiUrl).requestSyncCall();
+    ApiConnection api = new ApiConnection(apiUrl, this.context);
+    api.getJson(new ApiConnection.VolleyCallback() {
+      @Override
+      public void onSuccess(JSONObject response) {
+        callback.onSuccess(response);
+      }
+    });
   }
 
   /**
@@ -56,5 +71,12 @@ public class ApiQuerier{
     isConnected = (networkInfo != null && networkInfo.isConnectedOrConnecting());
 
     return isConnected;
+  }
+
+  /**
+   * Simple callback interface
+   */
+  public interface ApiQueryCallback {
+    void onSuccess(JSONObject jsonObject);
   }
 }
