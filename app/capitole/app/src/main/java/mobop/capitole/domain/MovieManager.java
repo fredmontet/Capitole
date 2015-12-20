@@ -7,11 +7,11 @@ import android.widget.Toast;
 import org.json.JSONObject;
 
 import java.net.MalformedURLException;
-import java.util.Collection;
 import java.util.List;
 
 import io.realm.Realm;
 
+import io.realm.RealmConfiguration;
 import mobop.capitole.domain.omdbMapper.MovieJsonMapper;
 import mobop.capitole.domain.model.Movie;
 import mobop.capitole.domain.model.User;
@@ -30,19 +30,31 @@ public class MovieManager extends Application{
     public MovieManager(Context context, User user){
         this.user = user;
         this.context = context;
-        this.realm = Realm.getInstance(this.context);
         this.movieJsonMapper = new MovieJsonMapper();
+
+
+        // Configure Realm
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this.context)
+                .name("capitole.realm")
+                .deleteRealmIfMigrationNeeded()
+                .build();
+
+        // Clear the realm from last time
+        //Realm.deleteRealm(realmConfiguration);
+
+        // Create a new empty instance of Realm
+        this.realm = Realm.getInstance(realmConfiguration);
     }
 
     public Movie getMovie(String movieId){
-        return realm.where(Movie.class).equalTo("uuid", movieId).findFirst();
+        return this.realm.where(Movie.class).equalTo("uuid", movieId).findFirst();
     }
 
-    public Collection<Movie> getMoviesSeen(){
+    public List<Movie> getMoviesSeen(){
         return this.user.getMoviesSeen();
     }
 
-    public Collection<Movie> getMoviesToSee(){
+    public List<Movie> getMoviesToSee(){
         return this.user.getMoviesToSee();
     }
 
@@ -92,13 +104,18 @@ public class MovieManager extends Application{
     }
 
     /**
-     * Simple callback interface
+     * Function to close the MovieManager
+     * In fact, it just close the realm...
+     */
+    public void close(){
+        this.realm.close(); // Remember to close Realm when done.
+    }
+
+    /**
+     * Callback interface
      */
     public interface MovieManagerCallback{
         void onSuccess(List<Movie> response);
     }
-
-
-
 
 }

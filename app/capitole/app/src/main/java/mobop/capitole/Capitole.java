@@ -30,7 +30,6 @@ public class Capitole extends Application {
         mRequestQueue = Volley.newRequestQueue(getApplicationContext());
     }
 
-
     //==============================================================================================
     // Functions
     //==============================================================================================

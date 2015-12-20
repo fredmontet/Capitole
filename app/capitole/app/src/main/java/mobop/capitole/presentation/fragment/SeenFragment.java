@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -20,7 +21,9 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
+import mobop.capitole.Capitole;
 import mobop.capitole.R;
+import mobop.capitole.domain.MovieManager;
 import mobop.capitole.presentation.activity.MovieDetailActivity;
 import mobop.capitole.presentation.adapter.MovieListAdapter;
 import mobop.capitole.domain.model.Movie;
@@ -35,7 +38,7 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
     private MovieListAdapter mAdapter;
     private ListView mListView;
     private FloatingActionButton mFabSeen;
-    private Realm realm;
+    private MovieManager movieManager;
     public final static String movieUuid = "mobop.capitole.activities.movieUuid";
 
     public SeenFragment() {
@@ -51,18 +54,7 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(getContext())
-                .name("capitole.realm")
-                .deleteRealmIfMigrationNeeded()
-                .build();
-
-        // Clear the realm from last time
-        Realm.deleteRealm(realmConfiguration);
-
-        // Create a new empty instance of Realm
-        realm = Realm.getInstance(realmConfiguration);
-
+        this.movieManager = new MovieManager(getContext(), Capitole.getInstance().getUser());
     }
 
     @Override
@@ -92,8 +84,7 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
         // Load from file "movies.json" first time
         if(mAdapter == null) {
 
-            //List<Movie> movies = loadMovies();
-            RealmResults<Movie> movies = realm.allObjects(Movie.class);
+            List<Movie> movies = movieManager.getMoviesSeen();
 
             //This is the ListView adapter
             mAdapter = new MovieListAdapter(getActivity());
@@ -111,7 +102,7 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
     @Override
     public void onDestroy() {
         super.onDestroy();
-        realm.close(); // Remember to close Realm when done.
+        this.movieManager.close();
     }
 
 
@@ -121,8 +112,9 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
 
 
     public void updateMovies() {
-        // Pull all the cities from the realm
-        RealmResults<Movie> movies = realm.where(Movie.class).findAll();
+
+        // Get all the seen movies
+        List<Movie> movies = movieManager.getMoviesSeen();
 
         // Put these items in the Adapter
         mAdapter.setData(movies);
@@ -132,10 +124,10 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Movie modifiedCity = (Movie)mAdapter.getItem(position);
+        Movie modifiedMovie = (Movie)mAdapter.getItem(position);
 
         // Get the movie object of realm matching the uuid
-        Movie movie = realm.where(Movie.class).equalTo("uuid", modifiedCity.getUuid()).findFirst();
+        Movie movie = this.movieManager.getMovie(modifiedMovie.getUuid());
 
         Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
         intent.putExtra(movieUuid, movie.getUuid());
@@ -148,14 +140,7 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
     public void addMovie() {
 
         Toast.makeText(getActivity(), "addMovie()", Toast.LENGTH_SHORT).show();
-
-        realm.beginTransaction();
-        Movie movie = realm.createObject(Movie.class);
-        movie.setUuid(UUID.randomUUID().toString());
-        movie.setTitle("Heidi court dans les montagnes");
-        movie.setReleaseDate(new Date());
-        realm.commitTransaction();
-
         updateMovies();
+
     }
 }//EOC

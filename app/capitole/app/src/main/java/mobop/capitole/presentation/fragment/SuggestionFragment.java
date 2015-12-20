@@ -92,7 +92,7 @@ public class SuggestionFragment extends Fragment implements AdapterView.OnItemCl
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Movie modifiedCity = (Movie)mAdapter.getItem(position);
+        Movie modifiedMovie = (Movie)mAdapter.getItem(position);
 
         // Get the movie object of realm matching the uuid
         //TODO Get the movie information from the online API
