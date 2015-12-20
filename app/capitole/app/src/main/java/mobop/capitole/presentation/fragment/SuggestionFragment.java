@@ -14,6 +14,7 @@ import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.List;
 
+import mobop.capitole.Capitole;
 import mobop.capitole.R;
 import mobop.capitole.domain.MovieManager;
 import mobop.capitole.domain.model.Movie;
@@ -56,7 +57,7 @@ public class SuggestionFragment extends Fragment implements AdapterView.OnItemCl
         mView = inflater.inflate(R.layout.fragment_suggestion, container, false);
         mGridView = (GridView) mView.findViewById(R.id.suggestionGridview);
 
-        User user = new User();
+        User user = Capitole.getInstance().getUser();
         MovieManager movieManager = new MovieManager(getContext(), user);
 
         try {
@@ -86,7 +87,7 @@ public class SuggestionFragment extends Fragment implements AdapterView.OnItemCl
     }
 
     //==============================================================================================
-    // Data functions
+    // Functions
     //==============================================================================================
 
     @Override

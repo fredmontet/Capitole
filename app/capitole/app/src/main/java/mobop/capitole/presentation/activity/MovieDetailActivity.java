@@ -8,7 +8,10 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import io.realm.Realm;
+import mobop.capitole.Capitole;
 import mobop.capitole.R;
+import mobop.capitole.domain.MovieManager;
+import mobop.capitole.domain.model.User;
 import mobop.capitole.presentation.fragment.SeenFragment;
 import mobop.capitole.domain.model.Movie;
 
@@ -16,7 +19,11 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     private TextView mTitle;
     private TextView mReleaseDate;
-    private Realm realm;
+    private MovieManager movieManager;
+
+    //==============================================================================================
+    // Life Cycle
+    //==============================================================================================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +32,9 @@ public class MovieDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String movieUuid = intent.getStringExtra(SeenFragment.movieUuid);
 
-        // Get a Realm instance for this thread
-        realm = Realm.getInstance(getApplicationContext());
-        Movie movie = realm.where(Movie.class).equalTo("uuid", movieUuid).findFirst();
-
+        User user = Capitole.getInstance().getUser();
+        movieManager = new MovieManager(getApplicationContext(), user);
+        Movie movie = movieManager.getMovie(movieUuid);
 
         mTitle = (TextView) findViewById(R.id.mv_title);
         mTitle.setTextSize(40);
@@ -39,6 +45,10 @@ public class MovieDetailActivity extends AppCompatActivity {
         mReleaseDate.setText(movie.getReleaseDate().toString());
 
     }
+
+    //==============================================================================================
+    // Functions
+    //==============================================================================================
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

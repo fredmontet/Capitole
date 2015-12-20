@@ -6,6 +6,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
+import mobop.capitole.domain.model.User;
+
 /**
  * Created by fredmontet on 19/12/15.
  */
@@ -13,12 +15,14 @@ public class Capitole extends Application {
 
     private RequestQueue mRequestQueue;
     private static Capitole mInstance;
+    private static User mUser;
     public static final String TAG = Capitole.class.getName();
 
     @Override
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+        mUser = this.getUser();
         mRequestQueue = Volley.newRequestQueue(getApplicationContext());
     }
 
@@ -29,6 +33,19 @@ public class Capitole extends Application {
     public static synchronized Capitole getInstance() {
         return mInstance;
     }
+
+    /**
+     * Handle the Application user
+     * @return The User
+     */
+    public User getUser(){
+        if(this.mUser != null){
+            return this.mUser;
+        }else{
+            return new User();
+        }
+    }
+
 
     /**
      * Provides the general Volley request queue.

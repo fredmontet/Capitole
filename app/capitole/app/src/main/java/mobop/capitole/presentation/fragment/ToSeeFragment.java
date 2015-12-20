@@ -40,6 +40,10 @@ public class ToSeeFragment extends Fragment {
         // Required empty public constructor
     }
 
+    //==============================================================================================
+    // Life Cycle
+    //==============================================================================================
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,5 +78,9 @@ public class ToSeeFragment extends Fragment {
         // Inflate the layout for this fragment
         return mView;
     }
+
+    //==============================================================================================
+    // Functions
+    //==============================================================================================
 
 }
