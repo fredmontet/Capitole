@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.MalformedURLException;
@@ -38,19 +40,22 @@ public class ApiQuery {
     ApiConnection api = new ApiConnection(apiUrl, this.context);
     api.getJson(new ApiConnection.VolleyCallback() {
       @Override
-      public void onSuccess(JSONObject response) {
-        callback.onSuccess(response);
+      public void onSuccess(JSONObject response) throws JSONException {
+        JSONArray array = new JSONArray();
+        array.put(response);
       }
     });
   }
 
-  public void getMovieById(String id, String source, final ApiQueryCallback callback) throws MalformedURLException {
-    String apiUrl = tmdbApi.getUrlMovieById(id, source);
+  public void getMovieById(String id, final ApiQueryCallback callback) throws MalformedURLException {
+    String apiUrl = tmdbApi.getUrlMovieById(id);
     ApiConnection api = new ApiConnection(apiUrl, this.context);
     api.getJson(new ApiConnection.VolleyCallback() {
       @Override
-      public void onSuccess(JSONObject response) {
-        callback.onSuccess(response);
+      public void onSuccess(JSONObject response) throws JSONException {
+        JSONArray array = new JSONArray();
+        array.put(response);
+        callback.onSuccess(array);
       }
     });
   }
@@ -60,8 +65,8 @@ public class ApiQuery {
     ApiConnection api = new ApiConnection(apiUrl, this.context);
     api.getJson(new ApiConnection.VolleyCallback(){
       @Override
-      public void onSuccess(JSONObject response) {
-        callback.onSuccess(response);
+      public void onSuccess(JSONObject response) throws JSONException {
+        callback.onSuccess(response.getJSONArray("results"));
       }
     });
   }
@@ -86,6 +91,6 @@ public class ApiQuery {
    * Simple callback interface
    */
   public interface ApiQueryCallback {
-    void onSuccess(JSONObject jsonObject);
+    void onSuccess(JSONArray jsonArray);
   }
 }

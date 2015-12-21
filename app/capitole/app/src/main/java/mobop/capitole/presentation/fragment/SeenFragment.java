@@ -11,15 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
-
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import io.realm.RealmResults;
 
 import mobop.capitole.Capitole;
 import mobop.capitole.R;
@@ -124,10 +116,10 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Movie modifiedMovie = (Movie)mAdapter.getItem(position);
+        Movie clickedMovie = (Movie)mAdapter.getItem(position);
 
         // Get the movie object of realm matching the uuid
-        Movie movie = this.movieManager.getMovie(modifiedMovie.getUuid());
+        Movie movie = this.movieManager.getMovie(clickedMovie.getUuid());
 
         Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
         intent.putExtra(movieUuid, movie.getUuid());

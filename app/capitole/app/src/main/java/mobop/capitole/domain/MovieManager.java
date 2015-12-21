@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,6 +54,24 @@ public class MovieManager extends Application{
         return this.realm.where(Movie.class).equalTo("uuid", movieId).findFirst();
     }
 
+    public void getMovieFromApi(String tmdbId, final MovieManagerCallback callback) throws MalformedURLException {
+        ApiQuery api = new ApiQuery(this.context);
+        api.getMovieById(tmdbId, new ApiQuery.ApiQueryCallback() {
+            @Override
+            public void onSuccess(JSONArray response) {
+                List<Movie> movie = null;
+                try {
+                    movie = movieJsonMapper.transformDetails(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                callback.onSuccess(movie);
+            }
+        });
+    }
+
     public List<Movie> getMoviesSeen(){
         return this.user.getMoviesSeen();
     }
@@ -65,7 +84,7 @@ public class MovieManager extends Application{
         ApiQuery api = new ApiQuery(this.context);
         api.getMovieSuggestion(new ApiQuery.ApiQueryCallback() {
             @Override
-            public void onSuccess(JSONObject response) {
+            public void onSuccess(JSONArray response) {
                 List<Movie> suggestion = null;
                 try {
                     suggestion = movieJsonMapper.transform(response);

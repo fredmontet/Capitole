@@ -1,6 +1,7 @@
 package mobop.capitole;
 
 import android.app.Application;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -54,7 +55,6 @@ public class Capitole extends Application {
         }
     }
 
-
     /**
      * Provides the general Volley request queue.
      */
@@ -77,6 +77,13 @@ public class Capitole extends Application {
      */
     public void cancel() {
         mRequestQueue.cancelAll(TAG);
+    }
+
+    /**
+     * Toast utility to debug
+     */
+    public void toast(String text){
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 
 }

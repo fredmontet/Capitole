@@ -8,10 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.TextView;
 
 import java.net.MalformedURLException;
-import java.util.Collection;
 import java.util.List;
 
 import mobop.capitole.Capitole;
@@ -19,7 +17,7 @@ import mobop.capitole.R;
 import mobop.capitole.domain.MovieManager;
 import mobop.capitole.domain.model.Movie;
 import mobop.capitole.domain.model.User;
-import mobop.capitole.presentation.activity.MovieDetailActivity;
+import mobop.capitole.presentation.activity.SuggestionDetailActivity;
 import mobop.capitole.presentation.adapter.MovieListAdapter;
 
 /**
@@ -32,7 +30,7 @@ public class SuggestionFragment extends Fragment implements AdapterView.OnItemCl
     View mView;
     private MovieListAdapter mAdapter;
     GridView mGridView;
-    public final static String movieId = "mobop.capitole.activities.movieId";
+    public final static String tmdbId = "mobop.capitole.activities.movieTmdbId";
 
 
     public SuggestionFragment() {
@@ -92,14 +90,10 @@ public class SuggestionFragment extends Fragment implements AdapterView.OnItemCl
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Movie modifiedMovie = (Movie)mAdapter.getItem(position);
+        Movie clickedMovie = (Movie)mAdapter.getItem(position);
 
-        // Get the movie object of realm matching the uuid
-        //TODO Get the movie information from the online API
-
-        Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
-        //TODO Send the informations in the input extra
-        //intent.putExtra(movieUuid, movie.getUuid());
+        Intent intent = new Intent(getActivity(), SuggestionDetailActivity.class);
+        intent.putExtra(tmdbId, clickedMovie.getTmdbID());
         startActivity(intent);
     }
 

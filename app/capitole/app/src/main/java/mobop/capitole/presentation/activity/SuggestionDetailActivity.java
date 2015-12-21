@@ -1,21 +1,23 @@
 package mobop.capitole.presentation.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import io.realm.Realm;
+import java.net.MalformedURLException;
+import java.util.List;
+
 import mobop.capitole.Capitole;
 import mobop.capitole.R;
 import mobop.capitole.domain.MovieManager;
-import mobop.capitole.domain.model.User;
-import mobop.capitole.presentation.fragment.SeenFragment;
 import mobop.capitole.domain.model.Movie;
+import mobop.capitole.domain.model.User;
+import mobop.capitole.presentation.fragment.SuggestionFragment;
 
-public class MovieDetailActivity extends AppCompatActivity {
+public class SuggestionDetailActivity extends AppCompatActivity {
 
     private TextView mTitle;
     private TextView mReleaseDate;
@@ -28,21 +30,33 @@ public class MovieDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_detail);
+        setContentView(R.layout.activity_suggestion_detail);
         Intent intent = getIntent();
-        String movieUuid = intent.getStringExtra(SeenFragment.movieUuid);
+        String tmdbId = intent.getStringExtra(SuggestionFragment.tmdbId);
 
         User user = Capitole.getInstance().getUser();
         movieManager = new MovieManager(getApplicationContext(), user);
-        Movie movie = movieManager.getMovie(movieUuid);
 
-        mTitle = (TextView) findViewById(R.id.mv_title);
-        mTitle.setTextSize(40);
-        mTitle.setText(movie.getTitle());
+        try {
+            movieManager.getMovieFromApi(tmdbId, new MovieManager.MovieManagerCallback() {
+                @Override
+                public void onSuccess(List<Movie> response) {
 
+                    // TODO If possible change this to avoid making the get(0)
+                    Movie movie = response.get(0);
 
-        mReleaseDate = (TextView) findViewById(R.id.mv_release_date);
-        mReleaseDate.setText(movie.getReleaseDate().toString());
+                    // TODO Use the movie object
+                    mTitle = (TextView) findViewById(R.id.mv_title);
+                    mTitle.setTextSize(40);
+                    mTitle.setText(movie.getTitle());
+
+                    mReleaseDate = (TextView) findViewById(R.id.mv_release_date);
+                    mReleaseDate.setText(movie.getReleaseDate().toString());
+                }
+            });
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 
     }
 

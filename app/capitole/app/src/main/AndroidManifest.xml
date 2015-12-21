@@ -35,6 +35,14 @@
                 android:value=".presentation.activity.MainActivity" />
         </activity>
         <activity
+            android:name=".presentation.activity.SuggestionDetailActivity"
+            android:label="@string/title_activity_movie"
+            android:parentActivityName=".presentation.activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".presentation.activity.MainActivity" />
+        </activity>
+        <activity
             android:name=".presentation.activity.SettingsActivity"
             android:label="@string/title_activity_settings" />
     </application>

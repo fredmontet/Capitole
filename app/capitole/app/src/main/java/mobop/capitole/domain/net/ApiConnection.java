@@ -8,6 +8,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import mobop.capitole.Capitole;
@@ -35,7 +36,11 @@ public class ApiConnection{
 
                 @Override
                 public void onResponse(JSONObject response) {
-                  callback.onSuccess(response);
+                    try {
+                        callback.onSuccess(response);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
               }, new Response.ErrorListener() {
 
@@ -52,7 +57,7 @@ public class ApiConnection{
   }
 
   public interface VolleyCallback {
-    void onSuccess(JSONObject response);
+    void onSuccess(JSONObject response) throws JSONException;
   }
 
 }

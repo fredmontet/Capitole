@@ -2,6 +2,7 @@ package mobop.capitole.domain.mapper.tmdb;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,5 +28,19 @@ public class GenreJsonMapper {
         }
         return genresList;
     }
+
+    public RealmList<Genre> transformDetails(JSONArray jsonArray) throws JSONException {
+        RealmList<Genre> genresList = new RealmList<>();
+        Genre genre;
+        for (int i=0; i<jsonArray.length();i++) {
+            genre = new Genre();
+            genre.setId(jsonArray.getJSONObject(i).getString("id"));
+            genre.setGenre(jsonArray.getJSONObject(i).getString("name"));
+            genresList.add(genre);
+        }
+        return genresList;
+    }
+
+
 
 }
