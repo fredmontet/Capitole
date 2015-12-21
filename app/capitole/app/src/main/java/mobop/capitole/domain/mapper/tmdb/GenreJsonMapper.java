@@ -1,6 +1,8 @@
-package mobop.capitole.domain.omdbMapper;
+package mobop.capitole.domain.mapper.tmdb;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,13 +17,12 @@ public class GenreJsonMapper {
      * @param genresStr
      * @return Collection<Genre>
      */
-    public RealmList<Genre> transform(String genresStr){
+    public RealmList<Genre> transform(JSONArray jsonArray) throws JSONException {
         RealmList<Genre> genresList = new RealmList<>();
-        List<String> genreStrList = Arrays.asList(genresStr.split(", "));
         Genre genre;
-        for (String genreStr : genreStrList) {
+        for (int i=0; i<jsonArray.length();i++) {
             genre = new Genre();
-            genre.setGenre(genreStr);
+            genre.setId(jsonArray.getString(i));
             genresList.add(genre);
         }
         return genresList;

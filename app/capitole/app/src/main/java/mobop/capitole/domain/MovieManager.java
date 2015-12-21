@@ -4,15 +4,17 @@ import android.app.Application;
 import android.content.Context;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.MalformedURLException;
+import java.text.ParseException;
 import java.util.List;
 
 import io.realm.Realm;
 
 import io.realm.RealmConfiguration;
-import mobop.capitole.domain.omdbMapper.MovieJsonMapper;
+import mobop.capitole.domain.mapper.tmdb.MovieJsonMapper;
 import mobop.capitole.domain.model.Movie;
 import mobop.capitole.domain.model.User;
 import mobop.capitole.domain.net.ApiQuery;
@@ -40,6 +42,7 @@ public class MovieManager extends Application{
                 .build();
 
         // Clear the realm from last time
+        // If uncommented, throw an IllegalStateException...
         //Realm.deleteRealm(realmConfiguration);
 
         // Create a new empty instance of Realm
@@ -59,16 +62,18 @@ public class MovieManager extends Application{
     }
 
     public void getSuggestion(final MovieManagerCallback callback) throws MalformedURLException {
-
-        // TestToast
-        Toast.makeText(context, "getSuggestions()", Toast.LENGTH_SHORT).show();
-
-        // TODO change this for the real suggestions!!!
         ApiQuery api = new ApiQuery(this.context);
-        api.getMoviesByTitle("titanic", "", "full", new ApiQuery.ApiQueryCallback() {
+        api.getMovieSuggestion(new ApiQuery.ApiQueryCallback() {
             @Override
             public void onSuccess(JSONObject response) {
-                List<Movie> suggestion = movieJsonMapper.transform(response.toString());
+                List<Movie> suggestion = null;
+                try {
+                    suggestion = movieJsonMapper.transform(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 callback.onSuccess(suggestion);
             }
         });

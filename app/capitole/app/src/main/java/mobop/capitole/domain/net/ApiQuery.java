@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 
-import mobop.capitole.domain.omdbMapper.MovieJsonMapper;
+import mobop.capitole.domain.mapper.omdb.MovieJsonMapper;
 
 /**
  * Class for retrieving data from the network.
@@ -17,7 +17,7 @@ public class ApiQuery {
 
   private final Context context;
   private final MovieJsonMapper movieJsonMapper;
-  private final OmdbApi omdbApi;
+  private final TmdbApi tmdbApi;
 
   /**
    * Constructor of the class
@@ -30,12 +30,11 @@ public class ApiQuery {
     }
     this.context = context.getApplicationContext();
     this.movieJsonMapper = new MovieJsonMapper();
-    this.omdbApi = new OmdbApi();
+    this.tmdbApi = new TmdbApi();
   }
 
-  public void getMoviesByTitle(String title, String year, String plot, final ApiQueryCallback callback) throws MalformedURLException {
-    String resType = "json";
-    String apiUrl = omdbApi.getUrlMoviesByTitle(title, year, plot, resType);
+  public void getMoviesByTitle(String title, final ApiQueryCallback callback) throws MalformedURLException {
+    String apiUrl = tmdbApi.getUrlMoviesByTitle(title);
     ApiConnection api = new ApiConnection(apiUrl, this.context);
     api.getJson(new ApiConnection.VolleyCallback() {
       @Override
@@ -45,11 +44,21 @@ public class ApiQuery {
     });
   }
 
-  public void getMovieById(String id, String plot, final ApiQueryCallback callback) throws MalformedURLException {
-    final String resType = "json";
-    String apiUrl = omdbApi.getUrlMovieById(id, plot, resType);
+  public void getMovieById(String id, String source, final ApiQueryCallback callback) throws MalformedURLException {
+    String apiUrl = tmdbApi.getUrlMovieById(id, source);
     ApiConnection api = new ApiConnection(apiUrl, this.context);
     api.getJson(new ApiConnection.VolleyCallback() {
+      @Override
+      public void onSuccess(JSONObject response) {
+        callback.onSuccess(response);
+      }
+    });
+  }
+
+  public void getMovieSuggestion(final ApiQueryCallback callback) throws  MalformedURLException{
+    String apiUrl = tmdbApi.getUrlDiscoverMovies();
+    ApiConnection api = new ApiConnection(apiUrl, this.context);
+    api.getJson(new ApiConnection.VolleyCallback(){
       @Override
       public void onSuccess(JSONObject response) {
         callback.onSuccess(response);

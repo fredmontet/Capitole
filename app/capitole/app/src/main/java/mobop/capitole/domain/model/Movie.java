@@ -15,6 +15,7 @@ public class Movie extends RealmObject{
     private String uuid;
 
     private String imdbID;
+    private String tmdbID;
     private String title;
     private String tagline;
     private String synopsis;
@@ -53,6 +54,14 @@ public class Movie extends RealmObject{
 
     public void setImdbID(String imdbID) {
         this.imdbID = imdbID;
+    }
+
+    public String getTmdbID() {
+        return tmdbID;
+    }
+
+    public void setTmdbID(String tmdbID) {
+        this.tmdbID = tmdbID;
     }
 
     public String getTitle() {

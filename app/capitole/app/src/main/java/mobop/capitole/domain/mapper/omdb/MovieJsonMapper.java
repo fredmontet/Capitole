@@ -1,4 +1,4 @@
-package mobop.capitole.domain.omdbMapper;
+package mobop.capitole.domain.mapper.omdb;
 
 import io.realm.RealmList;
 import mobop.capitole.domain.model.Country;
@@ -13,7 +13,6 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
