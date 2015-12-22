@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
+
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -18,7 +22,7 @@ import mobop.capitole.domain.MovieManager;
 import mobop.capitole.domain.model.Movie;
 import mobop.capitole.domain.model.User;
 import mobop.capitole.presentation.activity.SuggestionDetailActivity;
-import mobop.capitole.presentation.adapter.MovieListAdapter;
+import mobop.capitole.presentation.adapter.MovieGridAdapter;
 
 /**
  * Created by fredmontet on 06/11/15.
@@ -28,10 +32,9 @@ public class SuggestionFragment extends Fragment implements AdapterView.OnItemCl
 
 
     View mView;
-    private MovieListAdapter mAdapter;
+    private MovieGridAdapter mAdapter;
     GridView mGridView;
     public final static String tmdbId = "mobop.capitole.activities.movieTmdbId";
-
 
     public SuggestionFragment() {
         // Required empty public constructor
@@ -64,7 +67,7 @@ public class SuggestionFragment extends Fragment implements AdapterView.OnItemCl
                 public void onSuccess(List<Movie> response) {
 
                     //This is the ListView adapter
-                    mAdapter = new MovieListAdapter(getActivity());
+                    mAdapter = new MovieGridAdapter(getActivity());
                     mAdapter.setData(response);
 
                     //This is the ListView which will display the list of movies
@@ -78,6 +81,9 @@ public class SuggestionFragment extends Fragment implements AdapterView.OnItemCl
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+
+
+
 
 
         // Inflate the layout for this fragment

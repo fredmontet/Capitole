@@ -7,15 +7,27 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+
 import java.util.List;
 
+import mobop.capitole.Capitole;
 import mobop.capitole.R;
 import mobop.capitole.domain.model.Movie;
+import mobop.capitole.domain.net.OmdbApi;
+import mobop.capitole.domain.net.TmdbApi;
 
 /**
  * Created by fredmontet on 10/12/15.
  */
 public class MovieGridAdapter extends BaseAdapter{
+
+
+    ImageLoader mImageLoader;
+    NetworkImageView mNetworkImageView;
+    private static final String IMAGE_URL =
+            "http://developer.android.com/images/training/system-ui.png";
 
     private LayoutInflater inflater;
 
@@ -59,8 +71,23 @@ public class MovieGridAdapter extends BaseAdapter{
         Movie movie = movies.get(position);
 
         if (movie != null) {
-            ((TextView) currentView.findViewById(R.id.movie_title)).setText(movie.getTitle());
-            ((TextView) currentView.findViewById(R.id.movie_release_date)).setText(movie.getReleaseDate().toString());
+
+            // Get the NetworkImageView that will display the image.
+            mNetworkImageView = (NetworkImageView)currentView.findViewById(R.id.networkImageView);
+
+            // Get the ImageLoader through your singleton class.
+            mImageLoader = Capitole.getInstance().getImageLoader();
+
+            // Set the URL of the image that should be loaded into this view, and
+            // specify the ImageLoader that will be used to make the request.
+            TmdbApi tmdbApi = new TmdbApi();
+            String posterUrl = tmdbApi.getUrlPoster(movie.getPoster());
+
+            mNetworkImageView.setImageUrl(posterUrl, mImageLoader);
+
+
+            // ((TextView) currentView.findViewById(R.id.movie_title)).setText(movie.getTitle());
+            // ((TextView) currentView.findViewById(R.id.movie_release_date)).setText(movie.getReleaseDate().toString());
         }
 
         return currentView;

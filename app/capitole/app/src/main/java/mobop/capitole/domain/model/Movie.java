@@ -1,6 +1,7 @@
 package mobop.capitole.domain.model;
 
 import java.util.Date;
+import java.util.UUID;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -45,6 +46,7 @@ public class Movie extends RealmObject{
         this.keywords = new RealmList<>();
         this.languages = new RealmList<>();
         this.genres = new RealmList<>();
+        this.uuid = UUID.randomUUID().toString();
     }
 
     // Methods

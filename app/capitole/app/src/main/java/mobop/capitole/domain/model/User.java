@@ -46,6 +46,7 @@ public class User extends RealmObject{
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
+
     public String getFirstname() {
         return firstname;
     }

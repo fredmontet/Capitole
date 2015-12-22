@@ -1,10 +1,14 @@
 package mobop.capitole;
 
 import android.app.Application;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.LruCache;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
 import mobop.capitole.domain.model.User;
@@ -16,6 +20,8 @@ public class Capitole extends Application {
 
     private RequestQueue mRequestQueue;
     private static Capitole mInstance;
+    private ImageLoader mImageLoader;
+    private static Context mContext;
     private static User mUser;
     public static final String TAG = Capitole.class.getName();
 
@@ -28,7 +34,23 @@ public class Capitole extends Application {
         super.onCreate();
         mInstance = this;
         mUser = this.getUser();
+        mContext = this.getBaseContext();
         mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+        mImageLoader = new ImageLoader(mRequestQueue,
+                new ImageLoader.ImageCache() {
+                    private final LruCache<String, Bitmap>
+                            cache = new LruCache<String, Bitmap>(20);
+
+                    @Override
+                    public Bitmap getBitmap(String url) {
+                        return cache.get(url);
+                    }
+
+                    @Override
+                    public void putBitmap(String url, Bitmap bitmap) {
+                        cache.put(url, bitmap);
+                    }
+                });
     }
 
     //==============================================================================================
@@ -70,6 +92,14 @@ public class Capitole extends Application {
     public <T> void add(Request<T> req) {
         req.setTag(TAG);
         getRequestQueue().add(req);
+    }
+
+    /**
+     * Getter for the Volley Image Loader
+     * @return
+     */
+    public ImageLoader getImageLoader() {
+        return mImageLoader;
     }
 
     /**
