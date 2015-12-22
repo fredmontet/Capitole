@@ -3,15 +3,12 @@ package mobop.capitole.presentation.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
-
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -28,12 +25,13 @@ import mobop.capitole.presentation.adapter.MovieGridAdapter;
  * Created by fredmontet on 06/11/15.
  */
 
-public class SuggestionFragment extends Fragment implements AdapterView.OnItemClickListener{
+public class SuggestionFragment extends Fragment implements AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
 
-    View mView;
+    private View mView;
     private MovieGridAdapter mAdapter;
-    GridView mGridView;
+    private GridView mGridView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     public final static String tmdbId = "mobop.capitole.activities.movieTmdbId";
 
     public SuggestionFragment() {
@@ -56,13 +54,53 @@ public class SuggestionFragment extends Fragment implements AdapterView.OnItemCl
                              Bundle savedInstanceState) {
 
         mView = inflater.inflate(R.layout.fragment_suggestion, container, false);
+        swipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.swipeRefreshLayout);
         mGridView = (GridView) mView.findViewById(R.id.suggestionGridview);
+
+        swipeRefreshLayout.setOnRefreshListener(this);
+
+        getMoviesSuggestion();
+
+        // Inflate the layout for this fragment
+        return mView;
+    }
+
+    //==============================================================================================
+    // Interface implemented functions
+    //==============================================================================================
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Movie clickedMovie = (Movie)mAdapter.getItem(position);
+
+        Intent intent = new Intent(getActivity(), SuggestionDetailActivity.class);
+        intent.putExtra(tmdbId, clickedMovie.getTmdbID());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onRefresh() {
+        // showing refresh animation before making http call
+        swipeRefreshLayout.setRefreshing(true);
+        getMoviesSuggestion();
+        // stopping swipe refresh
+        swipeRefreshLayout.setRefreshing(false);
+
+    }
+
+    //==============================================================================================
+    // Functions
+    //==============================================================================================
+
+    public void getMoviesSuggestion(){
+
 
         User user = Capitole.getInstance().getUser();
         MovieManager movieManager = new MovieManager(getContext(), user);
 
         try {
             movieManager.getSuggestion(new MovieManager.MovieManagerCallback() {
+
                 @Override
                 public void onSuccess(List<Movie> response) {
 
@@ -84,23 +122,6 @@ public class SuggestionFragment extends Fragment implements AdapterView.OnItemCl
 
 
 
-
-
-        // Inflate the layout for this fragment
-        return mView;
-    }
-
-    //==============================================================================================
-    // Functions
-    //==============================================================================================
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Movie clickedMovie = (Movie)mAdapter.getItem(position);
-
-        Intent intent = new Intent(getActivity(), SuggestionDetailActivity.class);
-        intent.putExtra(tmdbId, clickedMovie.getTmdbID());
-        startActivity(intent);
     }
 
 
