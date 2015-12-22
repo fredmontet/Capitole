@@ -15,6 +15,6 @@
         android:layout_height="match_parent"
         android:horizontalSpacing="2dp"
         android:verticalSpacing="2dp"
-        android:numColumns="3"/>
+        android:numColumns="2"/>
 
 </android.support.v4.widget.SwipeRefreshLayout>

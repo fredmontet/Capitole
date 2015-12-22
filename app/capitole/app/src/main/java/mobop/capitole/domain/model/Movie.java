@@ -39,6 +39,14 @@ public class Movie extends RealmObject{
     private Country country;
     private Mpaa mpaa;
 
+    // Constructor
+    public Movie(){
+        this.people = new RealmList<>();
+        this.keywords = new RealmList<>();
+        this.languages = new RealmList<>();
+        this.genres = new RealmList<>();
+    }
+
     // Methods
     public String getUuid() {
         return uuid;

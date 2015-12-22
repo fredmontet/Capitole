@@ -79,11 +79,4 @@ public class Capitole extends Application {
         mRequestQueue.cancelAll(TAG);
     }
 
-    /**
-     * Toast utility to debug
-     */
-    public void toast(String text){
-        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
-    }
-
 }

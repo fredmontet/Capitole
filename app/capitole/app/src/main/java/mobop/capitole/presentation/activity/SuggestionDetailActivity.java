@@ -2,10 +2,17 @@ package mobop.capitole.presentation.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -20,6 +27,8 @@ import mobop.capitole.presentation.fragment.SuggestionFragment;
 public class SuggestionDetailActivity extends AppCompatActivity {
 
     private TextView mTitle;
+    private Toolbar mToolbar;
+    private ActionBar mActionBar;
     private TextView mReleaseDate;
     private MovieManager movieManager;
 
@@ -31,9 +40,29 @@ public class SuggestionDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suggestion_detail);
+
+        // Toolbar section
+        //================
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+
+        mActionBar = getSupportActionBar();
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+
+        // Intent section
+        //================
+
         Intent intent = getIntent();
         String tmdbId = intent.getStringExtra(SuggestionFragment.tmdbId);
 
+        // FAB Section
+        //============
+
+        final FloatingActionsMenu menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
+
+        // Capitole section
+        //=================
         User user = Capitole.getInstance().getUser();
         movieManager = new MovieManager(getApplicationContext(), user);
 
@@ -43,15 +72,27 @@ public class SuggestionDetailActivity extends AppCompatActivity {
                 public void onSuccess(List<Movie> response) {
 
                     // TODO If possible change this to avoid making the get(0)
-                    Movie movie = response.get(0);
+                    final Movie movie = response.get(0);
 
                     // TODO Use the movie object
-                    mTitle = (TextView) findViewById(R.id.mv_title);
-                    mTitle.setTextSize(40);
-                    mTitle.setText(movie.getTitle());
-
+                    mActionBar.setTitle(movie.getTitle());
                     mReleaseDate = (TextView) findViewById(R.id.mv_release_date);
                     mReleaseDate.setText(movie.getReleaseDate().toString());
+
+                    findViewById(R.id.action_to_see).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            movieManager.addToMoviesToSee(movie);
+                        }
+                    });
+
+                    findViewById(R.id.action_seen).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            movieManager.addToMoviesSeen(movie);
+                        }
+                    });
+
                 }
             });
         } catch (MalformedURLException e) {

@@ -40,7 +40,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         mTitle.setTextSize(40);
         mTitle.setText(movie.getTitle());
 
-
         mReleaseDate = (TextView) findViewById(R.id.mv_release_date);
         mReleaseDate.setText(movie.getReleaseDate().toString());
 

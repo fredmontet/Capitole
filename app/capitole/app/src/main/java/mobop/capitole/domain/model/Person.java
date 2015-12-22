@@ -16,6 +16,11 @@ public class Person extends RealmObject{
     // Many to many
     private RealmList<Role> roles;
 
+    // Constructor
+    public Person(){
+        this.roles = new RealmList<>();
+    }
+
     // Methods
     public String getUuid() {
         return uuid;

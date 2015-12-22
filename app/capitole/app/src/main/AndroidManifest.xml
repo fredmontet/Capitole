@@ -37,7 +37,12 @@
         <activity
             android:name=".presentation.activity.SuggestionDetailActivity"
             android:label="@string/title_activity_movie"
+            android:uiOptions="splitActionBarWhenNarrow"
             android:parentActivityName=".presentation.activity.MainActivity">
+            <!-- To support below API Level 14 -->
+            <meta-data
+                android:name="android.support.UI_OPTIONS"
+                android:value="splitActionBarWhenNarrow" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".presentation.activity.MainActivity" />

@@ -29,7 +29,6 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
     private View mView;
     private MovieListAdapter mAdapter;
     private ListView mListView;
-    private FloatingActionButton mFabSeen;
     private MovieManager movieManager;
     public final static String movieUuid = "mobop.capitole.activities.movieUuid";
 
@@ -57,13 +56,6 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
         mListView = (ListView)mView.findViewById(R.id.seenListview);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(SeenFragment.this);
-        mFabSeen = (FloatingActionButton) mView.findViewById(R.id.fabSeen);
-        mFabSeen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addMovie();
-            }
-        });
 
         // Inflate the layout for this fragment
         return mView;
@@ -72,23 +64,10 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
     @Override
     public void onResume() {
         super.onResume();
-
-        // Load from file "movies.json" first time
-        if(mAdapter == null) {
-
-            List<Movie> movies = movieManager.getMoviesSeen();
-
-            //This is the ListView adapter
-            mAdapter = new MovieListAdapter(getActivity());
-            mAdapter.setData(movies);
-
-            //This is the ListView which will display the list of movies
-            mListView = (ListView) mView.findViewById(R.id.seenListview);
-            mListView.setAdapter(mAdapter);
-            mListView.setOnItemClickListener(SeenFragment.this);
-            mAdapter.notifyDataSetChanged();
-            mListView.invalidate();
-        }
+        List<Movie> movies = movieManager.getMoviesSeen();
+        mAdapter.setData(movies);
+        mAdapter.notifyDataSetChanged();
+        mListView.invalidate();
     }
 
     @Override
@@ -97,22 +76,9 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
         this.movieManager.close();
     }
 
-
     //==============================================================================================
     // Data functions
     //==============================================================================================
-
-
-    public void updateMovies() {
-
-        // Get all the seen movies
-        List<Movie> movies = movieManager.getMoviesSeen();
-
-        // Put these items in the Adapter
-        mAdapter.setData(movies);
-        mAdapter.notifyDataSetChanged();
-        mListView.invalidate();
-    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -126,13 +92,4 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
         startActivity(intent);
     }
 
-    /**
-     * Create a dummy movie to test realm add to db
-     */
-    public void addMovie() {
-
-        Toast.makeText(getActivity(), "addMovie()", Toast.LENGTH_SHORT).show();
-        updateMovies();
-
-    }
 }//EOC

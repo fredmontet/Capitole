@@ -29,6 +29,15 @@ public class User extends RealmObject{
     private RealmList<Movie> moviesToSee;
     private RealmList<Movie> moviesSuggestion;
 
+    // Constructor
+    public User(){
+        this.ratings = new RealmList<>();
+        this.comments = new RealmList<>();
+        this.moviesSeen = new RealmList<>();
+        this.moviesToSee = new RealmList<>();
+        this.moviesSuggestion = new RealmList<>();
+    }
+
     // Methods
     public String getUuid() {
         return uuid;
