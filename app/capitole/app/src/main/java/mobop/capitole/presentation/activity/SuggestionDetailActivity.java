@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
@@ -22,6 +24,7 @@ import mobop.capitole.R;
 import mobop.capitole.domain.MovieManager;
 import mobop.capitole.domain.model.Movie;
 import mobop.capitole.domain.model.User;
+import mobop.capitole.domain.net.TmdbApi;
 import mobop.capitole.presentation.fragment.SuggestionFragment;
 
 public class SuggestionDetailActivity extends AppCompatActivity {
@@ -31,6 +34,8 @@ public class SuggestionDetailActivity extends AppCompatActivity {
     private ActionBar mActionBar;
     private TextView mReleaseDate;
     private MovieManager movieManager;
+    private ImageLoader mImageLoader;
+    private NetworkImageView mNetworkImageView;
 
     //==============================================================================================
     // Life Cycle
@@ -74,7 +79,13 @@ public class SuggestionDetailActivity extends AppCompatActivity {
                     // TODO If possible change this to avoid making the get(0)
                     final Movie movie = response.get(0);
 
-                    // TODO Use the movie object
+                    // Get the poster
+                    mNetworkImageView = (NetworkImageView)findViewById(R.id.networkImageView);
+                    mImageLoader = Capitole.getInstance().getImageLoader();
+                    TmdbApi tmdbApi = new TmdbApi();
+                    String posterUrl = tmdbApi.getUrlPoster(movie.getPoster());
+                    mNetworkImageView.setImageUrl(posterUrl, mImageLoader);
+
                     mActionBar.setTitle(movie.getTitle());
                     mReleaseDate = (TextView) findViewById(R.id.mv_release_date);
                     mReleaseDate.setText(movie.getReleaseDate().toString());

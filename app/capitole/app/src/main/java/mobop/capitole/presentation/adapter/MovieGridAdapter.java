@@ -26,8 +26,6 @@ public class MovieGridAdapter extends BaseAdapter{
 
     ImageLoader mImageLoader;
     NetworkImageView mNetworkImageView;
-    private static final String IMAGE_URL =
-            "http://developer.android.com/images/training/system-ui.png";
 
     private LayoutInflater inflater;
 
@@ -86,7 +84,7 @@ public class MovieGridAdapter extends BaseAdapter{
             mNetworkImageView.setImageUrl(posterUrl, mImageLoader);
 
 
-            // ((TextView) currentView.findViewById(R.id.movie_title)).setText(movie.getTitle());
+            ((TextView) currentView.findViewById(R.id.movie_title)).setText(movie.getTitle());
             // ((TextView) currentView.findViewById(R.id.movie_release_date)).setText(movie.getReleaseDate().toString());
         }
 
