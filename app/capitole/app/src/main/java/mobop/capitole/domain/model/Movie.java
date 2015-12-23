@@ -26,6 +26,7 @@ public class Movie extends RealmObject{
     private Date releaseDate;
     private Integer year;
     private String awards;
+    private String budget;
     private String poster;
     private String metascore;
     private String type;
@@ -144,6 +145,14 @@ public class Movie extends RealmObject{
 
     public void setAwards(String awards) {
         this.awards = awards;
+    }
+
+    public String getBudget() {
+        return budget;
+    }
+
+    public void setBudget(String budget) {
+        this.budget = budget;
     }
 
     public String getPoster() {

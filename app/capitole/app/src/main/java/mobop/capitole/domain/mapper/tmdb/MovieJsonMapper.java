@@ -85,6 +85,10 @@ public class MovieJsonMapper {
             JSONObject JSONMovie = response.getJSONObject(i);
 
             movie.setTitle(JSONMovie.getString("original_title"));
+            movie.setBudget(JSONMovie.getString("budget"));
+            movie.setWebsite(JSONMovie.getString("homepage"));
+            movie.setImdbID(JSONMovie.getString("imdb_id"));
+            movie.setLength(JSONMovie.getInt("runtime"));
 
             String dateStr = JSONMovie.getString("release_date");
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

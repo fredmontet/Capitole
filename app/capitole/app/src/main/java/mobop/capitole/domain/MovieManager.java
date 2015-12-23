@@ -2,11 +2,9 @@ package mobop.capitole.domain;
 
 import android.app.Application;
 import android.content.Context;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.text.ParseException;
