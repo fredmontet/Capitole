@@ -55,7 +55,7 @@
                     android:layout_height="240dp"
                     android:paddingLeft="10dp"
                     android:paddingTop="10dp"
-                    android:background="@color/red"
+                    android:background="@color/colorPrimary"
                     android:clickable="false"
                     android:layout_gravity="left|top" />
 
@@ -63,7 +63,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/red"
+                android:background="@color/colorPrimary"
             android:weightSum="1">
 
                 <TextView
@@ -91,7 +91,7 @@
                     android:paddingTop="3dp"
                     android:paddingRight="6dp"
                     android:paddingBottom="3dp"
-                    android:textColor="@color/red" />
+                    android:textColor="@color/textColorPrimary" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -118,7 +118,7 @@
                     android:paddingTop="3dp"
                     android:paddingRight="6dp"
                     android:paddingBottom="3dp"
-                    android:textColor="@color/red" />
+                    android:textColor="@color/textColorPrimary" />
 
             <TextView
                     android:layout_width="match_parent"
@@ -154,7 +154,7 @@
             android:textSize="30dp"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:background="@color/red"
+            android:background="@color/colorPrimary"
             android:typeface="normal"
             android:paddingTop="10dp"
             android:paddingLeft="10dp"
@@ -166,7 +166,7 @@
             android:layout_height="wrap_content"
             android:text="Released the 17 May 2015"
             android:gravity="right"
-            android:background="@color/red"
+            android:background="@color/colorPrimary"
             android:paddingBottom="10dp"
             android:paddingTop="5dp"
             android:paddingRight="10dp"
@@ -178,7 +178,7 @@
             android:id="@+id/SynopsisTitle"
             android:text="Synopsis"
             android:layout_marginTop="10dp"
-            android:textColor="#840d0d"
+            android:textColor="@color/textColorSecondary"
             android:layout_marginBottom="3dp"
             android:textStyle="bold"
             android:layout_marginLeft="10dp"
@@ -189,6 +189,7 @@
             android:id="@+id/mv_synopsis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimary"
             android:text="A synopsis is a brief summary of the major points of a subject or written work or story, either as prose or as a table; an abridgment or condensation of a work."
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp" />

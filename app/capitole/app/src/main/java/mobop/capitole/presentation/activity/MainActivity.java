@@ -51,11 +51,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new SeenFragment(), getString(R.string.seen_title));
         adapter.addFragment(new SuggestionFragment(), getString(R.string.suggestion_title));
         adapter.addFragment(new ToSeeFragment(), getString(R.string.tosee_title));
+        adapter.addFragment(new SeenFragment(), getString(R.string.seen_title));
         viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(1); // Set suggestionFragment when app is opening
+        //viewPager.setCurrentItem(1); // Set suggestionFragment when app is opening
     }
 
 

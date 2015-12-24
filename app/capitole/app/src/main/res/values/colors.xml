@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#464646</color>
-    <color name="colorPrimaryDark">#333333</color>
-    <color name="textColorPrimary">#FFFFFF</color>
+
+    <!-- Capitole colors -->
+    <color name="colorPrimary">#8f0000</color>
+    <color name="colorPrimaryDark">#480000</color>
+
+    <color name="colorSecondary">#1b0850</color>
+    <color name="colorSecondaryDark">#00001b</color>
+
+    <color name="textColorPrimary">@color/colorPrimary</color>
+    <color name="textColorSecondary">@color/colorPrimaryDark</color>
+
     <color name="windowBackground">#FFFFFF</color>
+
     <color name="navigationBarColor">#000000</color>
+
     <color name="colorAccent">#d6d6d6</color>
     <color name="black_overlay">#66000000</color>
-
 
     <!-- FAB Colors -->
     <color name="black_semi_transparent">#B2000000</color>
@@ -19,4 +28,5 @@
     <color name="red_pressed">#aa0d0d</color>
     <color name="blue_semi_transparent">#805677fc</color>
     <color name="blue_semi_transparent_pressed">#80738ffe</color>
+
 </resources>
