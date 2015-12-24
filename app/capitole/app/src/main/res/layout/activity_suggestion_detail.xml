@@ -47,17 +47,37 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary">
 
-                <com.android.volley.toolbox.NetworkImageView
-                    android:id="@+id/networkImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="240dp"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
-                    android:background="@color/colorPrimary"
-                    android:clickable="false"
-                    android:layout_gravity="left|top" />
+
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/card_view"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="240dp"
+                android:layout_gravity="left|top"
+                card_view:cardBackgroundColor="@color/colorPrimary"
+                card_view:cardElevation="4dp"
+                card_view:cardCornerRadius="4dp"
+                android:background="@color/colorPrimary"
+                >
+
+                    <com.android.volley.toolbox.NetworkImageView
+                        android:id="@+id/networkImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/colorPrimary"
+                        android:adjustViewBounds="true"
+                        />
+
+
+            </android.support.v7.widget.CardView>
+
 
         <LinearLayout
                 android:orientation="vertical"
@@ -178,7 +198,7 @@
             android:id="@+id/SynopsisTitle"
             android:text="Synopsis"
             android:layout_marginTop="10dp"
-            android:textColor="@color/textColorSecondary"
+            android:textColor="@color/textColorPrimary"
             android:layout_marginBottom="3dp"
             android:textStyle="bold"
             android:layout_marginLeft="10dp"
@@ -189,7 +209,7 @@
             android:id="@+id/mv_synopsis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/textColorPrimary"
+            android:textColor="@color/textColorStandard"
             android:text="A synopsis is a brief summary of the major points of a subject or written work or story, either as prose or as a table; an abridgment or condensation of a work."
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp" />
