@@ -23,7 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp">
 
             <TextView
                 android:id="@+id/movie_title"
@@ -43,7 +44,8 @@
                 android:layout_height="61dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="0.70"
-                android:layout_gravity="bottom" >
+                android:layout_gravity="bottom"
+                android:layout_marginRight="5dp">
             </LinearLayout>
 
         </LinearLayout>

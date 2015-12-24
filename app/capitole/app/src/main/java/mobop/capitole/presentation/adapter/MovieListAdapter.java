@@ -2,6 +2,7 @@ package mobop.capitole.presentation.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,18 +88,20 @@ public class MovieListAdapter extends BaseAdapter{
             LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             lparams.setMargins(0, 0, 10, 0);
 
-            for(int i = 0; i<=3; i++)
+            for(int i = 0; i<genres.size()-1; i++)
             {
-                if(genres.get(i) != null){
+                try{
                     TextView textView = new TextView(Capitole.getInstance().getBaseContext());
                     textView.setText(genres.get(i).getGenre());
                     textView.setBackgroundResource(R.drawable.rounded_corner);
                     textView.setLayoutParams(lparams);
+                    textView.setSingleLine(true);
+                    textView.setEllipsize(TextUtils.TruncateAt.END);
                     textView.setTextColor(ContextCompat.getColor(Capitole.getInstance().getBaseContext(), R.color.red));
                     final float scale = Capitole.getInstance().getBaseContext().getResources().getDisplayMetrics().density;
                     textView.setPadding((int) (6 * scale + 0.5f),(int) (3 * scale + 0.5f),(int) (6 * scale + 0.5f),(int) (3 * scale + 0.5f));
                     linearLayout.addView(textView);
-                }else{
+                }catch(Exception E){
                     break;
                 }
 
