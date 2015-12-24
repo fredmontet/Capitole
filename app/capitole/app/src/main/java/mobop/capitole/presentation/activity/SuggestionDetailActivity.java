@@ -45,7 +45,6 @@ public class SuggestionDetailActivity extends AppCompatActivity {
     private RelativeLayout relativeLayout;
 
     private NetworkImageView mNetworkImageView;
-    private boolean zoomOut =  false;
     private ImageLoader mImageLoader;
     private TextView mTitle;
     private TextView mReleaseDate;
@@ -96,7 +95,7 @@ public class SuggestionDetailActivity extends AppCompatActivity {
                     // TODO If possible change this to avoid making the get(0)
                     final Movie movie = response.get(0);
 
-                    // Movie Title in ActionBar
+                    // Movie Title
                     mActionBar.setTitle("Suggestion Details");
 
                     // Get the poster
@@ -129,9 +128,7 @@ public class SuggestionDetailActivity extends AppCompatActivity {
                     mSynopsis.setText(movie.getSynopsis());
 
                     // Genres
-                    //mGenre = (TextView)findViewById(R.id.mv_genres);
                     RealmList<Genre> genres = movie.getGenres();
-
                     LinearLayout linearLayout = (LinearLayout) findViewById(R.id.mv_genres);
                     LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
