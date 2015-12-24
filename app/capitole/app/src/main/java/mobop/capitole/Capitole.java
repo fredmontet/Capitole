@@ -2,6 +2,7 @@ package mobop.capitole;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.util.LruCache;
 import android.widget.Toast;
@@ -11,6 +12,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
+import java.util.UUID;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 import mobop.capitole.domain.model.User;
 
 /**
@@ -22,7 +27,8 @@ public class Capitole extends Application {
     private static Capitole mInstance;
     private ImageLoader mImageLoader;
     private static Context mContext;
-    private static User mUser;
+    private static String mUserUuid;
+    private static Realm realm;
     public static final String TAG = Capitole.class.getName();
 
     //==============================================================================================
@@ -33,8 +39,18 @@ public class Capitole extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
-        mUser = this.getUser();
         mContext = this.getBaseContext();
+
+        //get the user
+        SharedPreferences sharedPref = mContext.getSharedPreferences(getString(R.string.capitole_prefs), Context.MODE_PRIVATE);
+        String userUuid = sharedPref.getString("userUuid", null);
+        if(userUuid == null){
+            this.mUserUuid = this.setUser().getUuid();
+        }else{
+            this.mUserUuid = userUuid;
+        }
+
+
         mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         mImageLoader = new ImageLoader(mRequestQueue,
                 new ImageLoader.ImageCache() {
@@ -66,15 +82,34 @@ public class Capitole extends Application {
     }
 
     /**
-     * Handle the Application user
+     * Get the Application user
      * @return The User
      */
     public User getUser(){
-        if(this.mUser != null){
-            return this.mUser;
-        }else{
-            return new User();
-        }
+        this.realm = Realm.getInstance(getBaseContext());
+        return realm.where(User.class).equalTo("uuid", mUserUuid).findFirst();
+    }
+
+    /**
+     * // TODO Change this for real user management once
+     * Set the Application user
+     * @return The User
+     */
+    public User setUser(){
+        this.realm = Realm.getInstance(getBaseContext());
+        this.realm.beginTransaction();
+        User user = realm.createObject(User.class); // Create a new object
+        user.setFirstname("John");
+        user.setLastname("Smith");
+        user.setUuid(UUID.randomUUID().toString());
+        this.realm.commitTransaction();
+
+        SharedPreferences sharedPref = mContext.getSharedPreferences(getString(R.string.capitole_prefs), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("userUuid", user.getUuid());
+        editor.commit();
+
+        return user;
     }
 
     /**

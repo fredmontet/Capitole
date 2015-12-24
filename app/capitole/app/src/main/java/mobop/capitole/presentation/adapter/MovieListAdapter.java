@@ -88,6 +88,8 @@ public class MovieListAdapter extends BaseAdapter{
             LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             lparams.setMargins(0, 0, 10, 0);
 
+
+            // TODO Problème quand clique sur un des item et qu'on revient sur la liste, les genres s'additionnent...
             for(int i = 0; i<genres.size()-1; i++)
             {
                 try{
@@ -104,10 +106,8 @@ public class MovieListAdapter extends BaseAdapter{
                 }catch(Exception E){
                     break;
                 }
-
             }
         }
-
         return currentView;
     }
 

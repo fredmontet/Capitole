@@ -84,7 +84,7 @@ public class MovieGridAdapter extends BaseAdapter{
             mNetworkImageView.setImageUrl(posterUrl, mImageLoader);
 
 
-            ((TextView) currentView.findViewById(R.id.movie_title)).setText(movie.getTitle());
+            //((TextView) currentView.findViewById(R.id.movie_title)).setText(movie.getTitle());
             // ((TextView) currentView.findViewById(R.id.movie_release_date)).setText(movie.getReleaseDate().toString());
         }
 

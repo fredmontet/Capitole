@@ -13,6 +13,7 @@ import java.util.List;
 import io.realm.Realm;
 
 import io.realm.RealmConfiguration;
+import mobop.capitole.Capitole;
 import mobop.capitole.domain.mapper.tmdb.MovieJsonMapper;
 import mobop.capitole.domain.model.Movie;
 import mobop.capitole.domain.model.User;
@@ -98,17 +99,42 @@ public class MovieManager extends Application{
     }
 
     public boolean addToMoviesSeen(Movie movie){
-        realm.beginTransaction();
-        boolean res = this.user.getMoviesSeen().add(movie);
-        realm.commitTransaction();
-        return res;
+        boolean isMovieInList = false;
+        for(Movie movieSeen : this.user.getMoviesSeen()) {
+            if(movieSeen.getTitle().equals(movie.getTitle())){
+                isMovieInList = true;
+                break;
+            }
+        }
+
+        if(isMovieInList){
+            return false;
+        }else{
+            this.realm.beginTransaction();
+            realm.copyToRealmOrUpdate(movie);
+            this.user.getMoviesSeen().add(movie);
+            this.realm.commitTransaction();
+            return true;
+        }
     }
 
     public boolean addToMoviesToSee(Movie movie){
-        realm.beginTransaction();
-        boolean res = this.user.getMoviesToSee().add(movie);
-        realm.commitTransaction();
-        return res;
+        boolean isMovieInList = false;
+        for(Movie movieToSee : this.user.getMoviesToSee()) {
+            if(movieToSee.getTitle().equals(movie.getTitle())){
+                isMovieInList = true;
+                break;
+            }
+        }
+        if(isMovieInList){
+            return false;
+        }else{
+            this.realm.beginTransaction();
+            realm.copyToRealmOrUpdate(movie);
+            this.user.getMoviesToSee().add(movie);
+            this.realm.commitTransaction();
+            return true;
+        }
     }
 
     public boolean removeFromMoviesSeen(Movie movie){

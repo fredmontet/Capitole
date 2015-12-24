@@ -58,18 +58,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setCurrentItem(1); // Set suggestionFragment when app is opening
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                this.startActivity(intent);
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-        return true;
-    }
 
     //==============================================================================================
     // Functions
