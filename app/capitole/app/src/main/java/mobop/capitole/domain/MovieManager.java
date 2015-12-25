@@ -178,11 +178,13 @@ public class MovieManager extends Application{
             realm.beginTransaction();
             this.user.getMoviesSeen().add(movie);
             this.user.getMoviesToSee().remove(movie);
+            realm.copyToRealmOrUpdate(movie);
             realm.commitTransaction();
-        }else{
+        }else if(this.user.getMoviesSeen().contains(movie)){
             realm.beginTransaction();
             this.user.getMoviesToSee().add(movie);
             this.user.getMoviesSeen().remove(movie);
+            realm.copyToRealmOrUpdate(movie);
             realm.commitTransaction();
         }
     }

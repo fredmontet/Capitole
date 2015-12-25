@@ -151,6 +151,7 @@ public class MovieSeenDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit_rating:
+
                 Toast.makeText(this, "Action rate selected", Toast.LENGTH_SHORT).show();
 
                 // TODO Start rating dialog here

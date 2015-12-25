@@ -1,11 +1,13 @@
 package mobop.capitole.presentation.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -160,18 +162,35 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_rate:
 
-
+                this.movieManager.changeList(this.mMovie);
 
                 // TODO Start rating dialog here
+
 
                 break;
             case R.id.action_delete:
 
-                movieManager.removeFromMoviesToSee(this.mMovie);
-                final Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra(SWITCH_TAB, TAB_TOSEE);
-                startActivity(intent);
-
+                AlertDialog.Builder builder = new AlertDialog.Builder(MovieToSeeDetailActivity.this);
+                builder.setMessage("Do you really want to delete this movie?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                        movieManager.removeFromMoviesToSee(mMovie);
+                        final Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                        intent.putExtra(SWITCH_TAB, TAB_TOSEE);
+                        startActivity(intent);
+                        dialog.dismiss();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                
                 break;
 
             default:
