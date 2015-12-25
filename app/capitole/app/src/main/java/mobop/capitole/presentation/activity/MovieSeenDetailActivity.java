@@ -172,16 +172,4 @@ public class MovieSeenDetailActivity extends AppCompatActivity {
 
         return true;
     }
-
-    @Override
-    public Intent getSupportParentActivityIntent() {
-        final Bundle bundle = new Bundle();
-        final Intent intent = new Intent(this, MainActivity.class);
-
-        bundle.putInt(SWITCH_TAB, TAB_TOSEE);
-        intent.putExtras(bundle);
-        startActivity(intent);
-        return intent;
-    }
-
 }
