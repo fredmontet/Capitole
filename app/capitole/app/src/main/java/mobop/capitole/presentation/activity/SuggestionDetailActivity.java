@@ -1,9 +1,6 @@
 package mobop.capitole.presentation.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -11,9 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -152,24 +147,29 @@ public class SuggestionDetailActivity extends AppCompatActivity {
                 findViewById(R.id.action_to_see).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Realm realm = Realm.getInstance(getBaseContext());
-                        realm.beginTransaction();
-                        movieManager.addToMoviesToSee(movie);
-                        realm.commitTransaction();
-                        Snackbar snackbar = Snackbar.make(relativeLayout, "Movie sent to To See list", Snackbar.LENGTH_LONG);
-                        snackbar.show();
+                        boolean isMovieInList = movieManager.addToMoviesToSee(movie);
+                        if(!isMovieInList){
+                            Snackbar snackbar = Snackbar.make(relativeLayout, "Movie already added", Snackbar.LENGTH_LONG);
+                            snackbar.show();
+                        }else{
+                            Snackbar snackbar = Snackbar.make(relativeLayout, "Movie added", Snackbar.LENGTH_LONG);
+                            snackbar.show();
+                        }
+
                     }
                 });
 
                 findViewById(R.id.action_seen).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Realm realm = Realm.getInstance(getBaseContext());
-                        realm.beginTransaction();
-                        movieManager.addToMoviesSeen(movie);
-                        realm.commitTransaction();
-                        Snackbar snackbar = Snackbar.make(relativeLayout, "Movie sent to Seen list", Snackbar.LENGTH_LONG);
-                        snackbar.show();
+                        boolean isMovieInList = movieManager.addToMoviesSeen(movie);
+                        if(!isMovieInList){
+                            Snackbar snackbar = Snackbar.make(relativeLayout, "Movie already added", Snackbar.LENGTH_LONG);
+                            snackbar.show();
+                        }else{
+                            Snackbar snackbar = Snackbar.make(relativeLayout, "Movie added", Snackbar.LENGTH_LONG);
+                            snackbar.show();
+                        }
                     }
                 });
                 }

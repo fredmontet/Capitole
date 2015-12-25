@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new ToSeeFragment(), getString(R.string.tosee_title));
         adapter.addFragment(new SeenFragment(), getString(R.string.seen_title));
         viewPager.setAdapter(adapter);
-        //viewPager.setCurrentItem(1); // Set suggestionFragment when app is opening
     }
 
 

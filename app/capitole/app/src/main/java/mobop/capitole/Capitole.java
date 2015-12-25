@@ -15,6 +15,7 @@ import com.android.volley.toolbox.Volley;
 import java.util.UUID;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import mobop.capitole.domain.model.User;
 
@@ -40,6 +41,13 @@ public class Capitole extends Application {
         super.onCreate();
         mInstance = this;
         mContext = this.getBaseContext();
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(mContext)
+                .name("capitole.realm")
+                .deleteRealmIfMigrationNeeded()
+                .build();
+
+        this.realm = Realm.getInstance(realmConfiguration);
 
         //get the user
         SharedPreferences sharedPref = mContext.getSharedPreferences(getString(R.string.capitole_prefs), Context.MODE_PRIVATE);
@@ -67,6 +75,9 @@ public class Capitole extends Application {
                         cache.put(url, bitmap);
                     }
                 });
+
+
+
     }
 
     //==============================================================================================
@@ -86,8 +97,7 @@ public class Capitole extends Application {
      * @return The User
      */
     public User getUser(){
-        this.realm = Realm.getInstance(getBaseContext());
-        return realm.where(User.class).equalTo("uuid", mUserUuid).findFirst();
+        return this.realm.where(User.class).equalTo("uuid", mUserUuid).findFirst();
     }
 
     /**
@@ -96,7 +106,6 @@ public class Capitole extends Application {
      * @return The User
      */
     public User setUser(){
-        this.realm = Realm.getInstance(getBaseContext());
         this.realm.beginTransaction();
         User user = realm.createObject(User.class); // Create a new object
         user.setFirstname("John");

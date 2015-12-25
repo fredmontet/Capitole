@@ -13,6 +13,7 @@ import java.util.List;
 import io.realm.Realm;
 
 import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 import mobop.capitole.Capitole;
 import mobop.capitole.domain.mapper.tmdb.MovieJsonMapper;
 import mobop.capitole.domain.model.Movie;
@@ -101,7 +102,7 @@ public class MovieManager extends Application{
     public boolean addToMoviesSeen(Movie movie){
         boolean isMovieInList = false;
         for(Movie movieSeen : this.user.getMoviesSeen()) {
-            if(movieSeen.getTitle().equals(movie.getTitle())){
+            if(movieSeen.getTmdbID().equals(movie.getTmdbID())){
                 isMovieInList = true;
                 break;
             }
@@ -121,7 +122,7 @@ public class MovieManager extends Application{
     public boolean addToMoviesToSee(Movie movie){
         boolean isMovieInList = false;
         for(Movie movieToSee : this.user.getMoviesToSee()) {
-            if(movieToSee.getTitle().equals(movie.getTitle())){
+            if(movieToSee.getTmdbID().equals(movie.getTmdbID())){
                 isMovieInList = true;
                 break;
             }
@@ -140,6 +141,7 @@ public class MovieManager extends Application{
     public boolean removeFromMoviesSeen(Movie movie){
         realm.beginTransaction();
         boolean res = this.user.getMoviesSeen().remove(movie);
+        movie.removeFromRealm();
         realm.commitTransaction();
         return res;
     }
@@ -147,8 +149,23 @@ public class MovieManager extends Application{
     public boolean removeFromMoviesToSee(Movie movie){
         realm.beginTransaction();
         boolean res = this.user.getMoviesToSee().remove(movie);
+        movie.removeFromRealm();
         realm.commitTransaction();
         return res;
+    }
+
+    public void changeList(Movie movie){
+        if(this.user.getMoviesToSee().contains(movie)){
+            realm.beginTransaction();
+            this.user.getMoviesToSee().remove(movie);
+            this.user.getMoviesSeen().add(movie);
+            realm.commitTransaction();
+        }else{
+            realm.beginTransaction();
+            this.user.getMoviesSeen().remove(movie);
+            this.user.getMoviesToSee().add(movie);
+            realm.commitTransaction();
+        }
     }
 
     /**

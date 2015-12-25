@@ -2,16 +2,15 @@ package mobop.capitole.presentation.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -58,8 +57,8 @@ public class ToSeeFragment extends Fragment implements AdapterView.OnItemClickLi
         mListView = (ListView)mView.findViewById(R.id.tooSeeListview);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(ToSeeFragment.this);
+        registerForContextMenu(mListView);
 
-        // Inflate the layout for this fragment
         return mView;
     }
 
@@ -82,6 +81,44 @@ public class ToSeeFragment extends Fragment implements AdapterView.OnItemClickLi
     // Functions
     //==============================================================================================
 
+    public void sendToSeenList(int position){
+        Movie clickedMovie = (Movie)mAdapter.getItem(position);
+
+        // Get the movie object of realm matching the uuid
+        Movie movie = this.movieManager.getMovie(clickedMovie.getUuid());
+
+        this.movieManager.changeList(movie);
+
+        // Uodate the view
+        mAdapter.notifyDataSetChanged();
+        mListView.invalidate();
+
+        Snackbar snackbar = Snackbar.make(mView, "Movie sent to seen list", Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+
+    public void remove(int position){
+        Movie clickedMovie = (Movie)mAdapter.getItem(position);
+
+        // Get the movie object of realm matching the uuid
+        Movie movie = this.movieManager.getMovie(clickedMovie.getUuid());
+
+        // Remove the movie
+        this.movieManager.removeFromMoviesToSee(movie);
+
+        // Uodate the view
+        mAdapter.notifyDataSetChanged();
+        mListView.invalidate();
+
+        Snackbar snackbar = Snackbar.make(mView, "Movie removed", Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+
+
+    //==============================================================================================
+    // Interface implementation Functions
+    //==============================================================================================
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Movie clickedMovie = (Movie)mAdapter.getItem(position);
@@ -92,6 +129,36 @@ public class ToSeeFragment extends Fragment implements AdapterView.OnItemClickLi
         Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
         intent.putExtra(movieUuid, movie.getUuid());
         startActivity(intent);
+    }
+
+    //==============================================================================================
+    // Context Menu
+    //==============================================================================================
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(0, v.getId(), 0, "Send to seen list");//groupId, itemId, order, title
+        menu.add(0, v.getId(), 0, "Remove this movie");
+    }
+
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getTitle() == "Send to seen list") {
+
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            sendToSeenList(info.position);
+
+
+        } else if (item.getTitle() == "Remove this movie") {
+
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            remove(info.position);
+
+        } else {
+            return false;
+        }
+        return true;
     }
 
 }//EOC
