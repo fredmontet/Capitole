@@ -1,11 +1,13 @@
 package mobop.capitole.presentation.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -159,10 +161,26 @@ public class MovieSeenDetailActivity extends AppCompatActivity {
                 break;
             case R.id.action_delete:
 
-                movieManager.removeFromMoviesSeen(this.mMovie);
-                final Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra(SWITCH_TAB, TAB_TOSEE);
-                startActivity(intent);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MovieSeenDetailActivity.this);
+                builder.setMessage("Do you really want to delete this movie?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                        movieManager.removeFromMoviesSeen(mMovie);
+                        final Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                        intent.putExtra(SWITCH_TAB, TAB_TOSEE);
+                        startActivity(intent);
+                        dialog.dismiss();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
 
                 break;

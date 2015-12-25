@@ -162,17 +162,38 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_rate:
 
-                this.movieManager.changeList(this.mMovie);
-
                 // TODO Start rating dialog here
+                AlertDialog.Builder builder_rate = new AlertDialog.Builder(MovieToSeeDetailActivity.this);
+                builder_rate.setMessage("Is the movie good?");
+                builder_rate.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                        movieManager.changeList(mMovie);
+                        final Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                        intent.putExtra(SWITCH_TAB, TAB_TOSEE);
+                        startActivity(intent);
+                        Toast.makeText(getBaseContext(), "Movie is now in seen list!", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+                builder_rate.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog_rate = builder_rate.create();
+                dialog_rate.show();
+
+
 
 
                 break;
             case R.id.action_delete:
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(MovieToSeeDetailActivity.this);
-                builder.setMessage("Do you really want to delete this movie?");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                AlertDialog.Builder builder_delete = new AlertDialog.Builder(MovieToSeeDetailActivity.this);
+                builder_delete.setMessage("Do you really want to delete this movie?");
+                builder_delete.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked OK button
                         movieManager.removeFromMoviesToSee(mMovie);
@@ -182,15 +203,15 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder_delete.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog
                         dialog.dismiss();
                     }
                 });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                
+                AlertDialog dialog_delete = builder_delete.create();
+                dialog_delete.show();
+
                 break;
 
             default:
