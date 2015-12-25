@@ -100,15 +100,24 @@ public class MovieManager extends Application{
     }
 
     public boolean addToMoviesSeen(Movie movie){
-        boolean isMovieInList = false;
-        for(Movie movieSeen : this.user.getMoviesSeen()) {
-            if(movieSeen.getTmdbID().equals(movie.getTmdbID())){
-                isMovieInList = true;
+
+        boolean inToSeeList = false;
+        for(Movie movieToSee : this.user.getMoviesToSee()) {
+            if(movieToSee.getTmdbID().equals(movie.getTmdbID())){
+                inToSeeList = true;
                 break;
             }
         }
 
-        if(isMovieInList){
+        boolean inSeenList = false;
+        for(Movie movieSeen : this.user.getMoviesSeen()) {
+            if(movieSeen.getTmdbID().equals(movie.getTmdbID())){
+                inSeenList = true;
+                break;
+            }
+        }
+
+        if(inToSeeList || inSeenList){
             return false;
         }else{
             this.realm.beginTransaction();
@@ -120,14 +129,24 @@ public class MovieManager extends Application{
     }
 
     public boolean addToMoviesToSee(Movie movie){
-        boolean isMovieInList = false;
+
+        boolean inToSeeList = false;
         for(Movie movieToSee : this.user.getMoviesToSee()) {
             if(movieToSee.getTmdbID().equals(movie.getTmdbID())){
-                isMovieInList = true;
+                inToSeeList = true;
                 break;
             }
         }
-        if(isMovieInList){
+
+        boolean inSeenList = false;
+        for(Movie movieSeen : this.user.getMoviesSeen()) {
+            if(movieSeen.getTmdbID().equals(movie.getTmdbID())){
+                inSeenList = true;
+                break;
+            }
+        }
+
+        if(inToSeeList || inSeenList){
             return false;
         }else{
             this.realm.beginTransaction();
@@ -157,13 +176,13 @@ public class MovieManager extends Application{
     public void changeList(Movie movie){
         if(this.user.getMoviesToSee().contains(movie)){
             realm.beginTransaction();
-            this.user.getMoviesToSee().remove(movie);
             this.user.getMoviesSeen().add(movie);
+            this.user.getMoviesToSee().remove(movie);
             realm.commitTransaction();
         }else{
             realm.beginTransaction();
-            this.user.getMoviesSeen().remove(movie);
             this.user.getMoviesToSee().add(movie);
+            this.user.getMoviesSeen().remove(movie);
             realm.commitTransaction();
         }
     }

@@ -147,8 +147,8 @@ public class SuggestionDetailActivity extends AppCompatActivity {
                 findViewById(R.id.action_to_see).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        boolean isMovieInList = movieManager.addToMoviesToSee(movie);
-                        if(!isMovieInList){
+                        boolean isMovieInToSee = movieManager.addToMoviesToSee(movie);
+                        if(!isMovieInToSee){
                             Snackbar snackbar = Snackbar.make(relativeLayout, "Movie already added", Snackbar.LENGTH_LONG);
                             snackbar.show();
                         }else{
