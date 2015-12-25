@@ -4,7 +4,7 @@
     tools:context=".presentation.activity.MovieToSeeDetailActivity">
 
     <item
-        android:id="@+id/action_rate"
+        android:id="@+id/action_edit_rating"
         android:icon="@drawable/ic_description_white_48dp"
         android:layout_width="24dp"
         android:layout_height="24dp"

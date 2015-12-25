@@ -1,15 +1,21 @@
 package mobop.capitole.presentation.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -26,14 +32,16 @@ import mobop.capitole.domain.model.Movie;
 import mobop.capitole.domain.model.User;
 import mobop.capitole.domain.net.TmdbApi;
 import mobop.capitole.presentation.fragment.SeenFragment;
+import mobop.capitole.presentation.fragment.ToSeeFragment;
 
 public class MovieSeenDetailActivity extends AppCompatActivity {
 
     private MovieManager movieManager;
+    private Movie mMovie;
 
     private ActionBar mActionBar;
     private Toolbar mToolbar;
-    private RelativeLayout relativeLayout;
+    private ScrollView mRelativeLayout;
 
     private NetworkImageView mNetworkImageView;
     private ImageLoader mImageLoader;
@@ -42,6 +50,8 @@ public class MovieSeenDetailActivity extends AppCompatActivity {
     private TextView mLanguage;
     private TextView mSynopsis;
     private TextView mBudget;
+    public final static String SWITCH_TAB = "mobop.capitole.activities.switch_tab";
+    private final int TAB_TOSEE = 2;
 
     //==============================================================================================
     // Life Cycle
@@ -51,6 +61,8 @@ public class MovieSeenDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_seen_detail);
+
+        this.mRelativeLayout = (ScrollView)findViewById(R.id.seen_details_scrollview);
 
         // Toolbar section
         //================
@@ -133,6 +145,43 @@ public class MovieSeenDetailActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_movie_seen, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_edit_rating:
+                Toast.makeText(this, "Action rate selected", Toast.LENGTH_SHORT).show();
+
+                // TODO Start rating dialog here
+
+                break;
+            case R.id.action_delete:
+
+                movieManager.removeFromMoviesSeen(this.mMovie);
+                final Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra(SWITCH_TAB, TAB_TOSEE);
+                startActivity(intent);
+
+
+                break;
+
+            default:
+                break;
+        }
+
+        return true;
+    }
+
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        final Bundle bundle = new Bundle();
+        final Intent intent = new Intent(this, MainActivity.class);
+
+        bundle.putInt(SWITCH_TAB, TAB_TOSEE);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        return intent;
     }
 
 }

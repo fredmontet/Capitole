@@ -3,7 +3,7 @@
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
 xmlns:app="http://schemas.android.com/apk/res-auto"
-android:id="@+id/suggestion_details"
+android:id="@+id/seen_details"
 android:orientation="vertical"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
@@ -27,10 +27,10 @@ tools:context=".presentation.activity.MovieSeenDetailActivity">
 
         <ScrollView
             xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:fab="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/seen_details_scrollview"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:orientation="vertical"
             tools:context=".presentation.activity.SuggestionDetailActivity">

@@ -1,15 +1,22 @@
 package mobop.capitole.presentation.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -26,14 +33,16 @@ import mobop.capitole.domain.model.User;
 import mobop.capitole.domain.net.TmdbApi;
 import mobop.capitole.presentation.fragment.SeenFragment;
 import mobop.capitole.domain.model.Movie;
+import mobop.capitole.presentation.fragment.ToSeeFragment;
 
 public class MovieToSeeDetailActivity extends AppCompatActivity {
 
     private MovieManager movieManager;
+    private Movie mMovie;
 
     private ActionBar mActionBar;
     private Toolbar mToolbar;
-    private RelativeLayout relativeLayout;
+    private ScrollView mRelativeLayout;
 
     private NetworkImageView mNetworkImageView;
     private ImageLoader mImageLoader;
@@ -42,6 +51,8 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
     private TextView mLanguage;
     private TextView mSynopsis;
     private TextView mBudget;
+    public final static String SWITCH_TAB = "mobop.capitole.activities.switch_tab";
+    private final int TAB_TOSEE = 1;
 
     //==============================================================================================
     // Life Cycle
@@ -51,6 +62,8 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_tosee_detail);
+
+        this.mRelativeLayout = (ScrollView)findViewById(R.id.tosee_details_scrollview);
 
         // Toolbar section
         //================
@@ -65,49 +78,49 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
         //================
 
         Intent intent = getIntent();
-        String movieUuid = intent.getStringExtra(SeenFragment.movieUuid);
+        String movieUuid = intent.getStringExtra(ToSeeFragment.movieUuid);
 
         // Capitole section
         //=================
 
         User user = Capitole.getInstance().getUser();
         movieManager = new MovieManager(getApplicationContext(), user);
-        final Movie movie = movieManager.getMovie(movieUuid);
+        this.mMovie = movieManager.getMovie(movieUuid);
 
         // Movie Title
-        mActionBar.setTitle("Movie");
+        mActionBar.setTitle("Movie To See");
 
         // Get the poster
         mNetworkImageView = (NetworkImageView)findViewById(R.id.networkImageView);
         mImageLoader = Capitole.getInstance().getImageLoader();
         TmdbApi tmdbApi = new TmdbApi();
-        String posterUrl = tmdbApi.getUrlPoster(movie.getPoster());
+        String posterUrl = tmdbApi.getUrlPoster(this.mMovie.getPoster());
         mNetworkImageView.setImageUrl(posterUrl, mImageLoader);
 
         // Movie Title
         mTitle = (TextView) findViewById(R.id.mv_title);
-        mTitle.setText(movie.getTitle());
+        mTitle.setText(this.mMovie.getTitle());
 
         // Release Date
         mReleaseDate = (TextView) findViewById(R.id.mv_release_date);
-        String releaseDate = DateFormat.getDateInstance().format(movie.getReleaseDate());
-        mReleaseDate.setText("Released the "+releaseDate);
+        String releaseDate = DateFormat.getDateInstance().format(this.mMovie.getReleaseDate());
+        mReleaseDate.setText("Released the " + releaseDate);
 
         // Budget
         mBudget = (TextView) findViewById(R.id.mv_budget);
-        mBudget.setText(movie.getBudget());
+        mBudget.setText(this.mMovie.getBudget());
 
         // Language
         mLanguage = (TextView)findViewById(R.id.mv_language);
-        RealmList<Language> languages = movie.getLanguages();
+        RealmList<Language> languages = this.mMovie.getLanguages();
         mLanguage.setText(languages.get(0).getLanguage());
 
         // Synopsis
         mSynopsis = (TextView)findViewById(R.id.mv_synopsis);
-        mSynopsis.setText(movie.getSynopsis());
+        mSynopsis.setText(this.mMovie.getSynopsis());
 
         // Genres
-        RealmList<Genre> genres = movie.getGenres();
+        RealmList<Genre> genres = this.mMovie.getGenres();
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.mv_genres);
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
@@ -126,14 +139,57 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
     }
 
     //==============================================================================================
-    // Functions
+    // Action Bar Menu
     //==============================================================================================
+
+    // TODO pourrait être enlevé...
+    @Override
+    public void onBackPressed(){
+        NavUtils.navigateUpFromSameTask(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_movie_tosee, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_rate:
+
+
+
+                // TODO Start rating dialog here
+
+                break;
+            case R.id.action_delete:
+
+                movieManager.removeFromMoviesToSee(this.mMovie);
+                final Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra(SWITCH_TAB, TAB_TOSEE);
+                startActivity(intent);
+
+                break;
+
+            default:
+                break;
+        }
+
+        return true;
+    }
+
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        final Bundle bundle = new Bundle();
+        final Intent intent = new Intent(this, MainActivity.class);
+
+        bundle.putInt(SWITCH_TAB, TAB_TOSEE);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        return intent;
     }
 
 }

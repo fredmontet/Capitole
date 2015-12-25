@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
+    public final static String SWITCH_TAB = "mobop.capitole.activities.switch_tab";
 
     //==============================================================================================
     // Life Cycle
@@ -40,6 +41,16 @@ public class MainActivity extends AppCompatActivity {
 
             mTabLayout = (TabLayout) findViewById(R.id.tabs);
             mTabLayout.setupWithViewPager(mViewPager);
+
+            // Intent section
+            //================
+
+            final Intent intent = getIntent();
+
+            if (intent.hasExtra(SWITCH_TAB)) {
+                final int tab = intent.getIntExtra(SWITCH_TAB, 0);
+                switchToTab(mViewPager, tab); // switch to tab2 in this example
+            }
     }
 
     @Override
@@ -62,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
     // Functions
     //==============================================================================================
 
+    private void switchToTab(ViewPager viewPager, int tab){
+        viewPager.setCurrentItem(tab);
+    }
 
 
 
