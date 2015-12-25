@@ -27,7 +27,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.activity.MovieDetailActivity"
+            android:name=".presentation.activity.MovieToSeeDetailActivity"
+            android:label="@string/title_activity_movie"
+            android:parentActivityName=".presentation.activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".presentation.activity.MainActivity" />
+        </activity>
+        <activity
+            android:name=".presentation.activity.MovieSeenDetailActivity"
             android:label="@string/title_activity_movie"
             android:parentActivityName=".presentation.activity.MainActivity">
             <meta-data
@@ -39,10 +47,6 @@
             android:label="@string/title_activity_movie"
             android:uiOptions="splitActionBarWhenNarrow"
             android:parentActivityName=".presentation.activity.MainActivity">
-            <!-- To support below API Level 14 -->
-            <meta-data
-                android:name="android.support.UI_OPTIONS"
-                android:value="splitActionBarWhenNarrow" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".presentation.activity.MainActivity" />

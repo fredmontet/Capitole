@@ -2,7 +2,6 @@ package mobop.capitole.presentation.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
@@ -12,14 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import mobop.capitole.Capitole;
 import mobop.capitole.R;
 import mobop.capitole.domain.MovieManager;
-import mobop.capitole.presentation.activity.MovieDetailActivity;
+import mobop.capitole.presentation.activity.MovieSeenDetailActivity;
+import mobop.capitole.presentation.activity.MovieToSeeDetailActivity;
 import mobop.capitole.presentation.adapter.MovieListAdapter;
 import mobop.capitole.domain.model.Movie;
 
@@ -128,7 +127,7 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
         // Get the movie object of realm matching the uuid
         Movie movie = this.movieManager.getMovie(clickedMovie.getUuid());
 
-        Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
+        Intent intent = new Intent(getActivity(), MovieSeenDetailActivity.class);
         intent.putExtra(movieUuid, movie.getUuid());
         startActivity(intent);
     }

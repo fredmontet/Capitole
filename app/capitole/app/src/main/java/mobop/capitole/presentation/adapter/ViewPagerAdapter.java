@@ -12,6 +12,8 @@ import java.util.List;
 /**
  * Created by fredmontet on 06/11/15.
  */
+
+// TODO Faire que quand on revient en arrière depuis une activité, on retombe sur le tab courant.
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     private final List<Fragment> mFragmentList = new ArrayList<>();

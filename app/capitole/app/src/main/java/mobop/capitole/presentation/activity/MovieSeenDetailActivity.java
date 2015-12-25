@@ -1,38 +1,33 @@
 package mobop.capitole.presentation.activity;
 
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.text.DateFormat;
 
-import io.realm.Realm;
 import io.realm.RealmList;
 import mobop.capitole.Capitole;
 import mobop.capitole.R;
 import mobop.capitole.domain.MovieManager;
 import mobop.capitole.domain.model.Genre;
 import mobop.capitole.domain.model.Language;
+import mobop.capitole.domain.model.Movie;
 import mobop.capitole.domain.model.User;
 import mobop.capitole.domain.net.TmdbApi;
 import mobop.capitole.presentation.fragment.SeenFragment;
-import mobop.capitole.domain.model.Movie;
 
-public class MovieDetailActivity extends AppCompatActivity {
+public class MovieSeenDetailActivity extends AppCompatActivity {
 
     private MovieManager movieManager;
 
@@ -55,7 +50,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_detail);
+        setContentView(R.layout.activity_movie_seen_detail);
 
         // Toolbar section
         //================
@@ -72,12 +67,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String movieUuid = intent.getStringExtra(SeenFragment.movieUuid);
 
-        // FAB Section
-        //============
-
-        final FloatingActionsMenu menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
-
-
         // Capitole section
         //=================
 
@@ -86,7 +75,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         final Movie movie = movieManager.getMovie(movieUuid);
 
         // Movie Title
-        mActionBar.setTitle("Movie Details");
+        mActionBar.setTitle("Movie Seen");
 
         // Get the poster
         mNetworkImageView = (NetworkImageView)findViewById(R.id.networkImageView);
@@ -133,38 +122,6 @@ public class MovieDetailActivity extends AppCompatActivity {
             textView.setPadding((int) (6 * scale + 0.5f),(int) (3 * scale + 0.5f),(int) (6 * scale + 0.5f),(int) (3 * scale + 0.5f));
             linearLayout.addView(textView);
         }
-
-
-        // FAB Button Section
-        //===================
-
-        findViewById(R.id.action_to_see).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Realm realm = Realm.getInstance(getBaseContext());
-                realm.beginTransaction();
-                movieManager.addToMoviesToSee(movie);
-                realm.commitTransaction();
-                Snackbar snackbar = Snackbar.make(relativeLayout, "Movie sent to To See list", Snackbar.LENGTH_LONG);
-                snackbar.show();
-            }
-        });
-
-        findViewById(R.id.action_seen).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Realm realm = Realm.getInstance(getBaseContext());
-                realm.beginTransaction();
-                movieManager.addToMoviesSeen(movie);
-                realm.commitTransaction();
-                Snackbar snackbar = Snackbar.make(relativeLayout, "Movie sent to Seen list", Snackbar.LENGTH_LONG);
-                snackbar.show();
-            }
-        });
-
-
-
-
     }
 
     //==============================================================================================

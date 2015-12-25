@@ -8,7 +8,7 @@ android:id="@+id/suggestion_details"
 android:layout_height="match_parent"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 android:orientation="vertical"
-tools:context=".presentation.activity.MovieDetailActivity">
+tools:context=".presentation.activity.MovieToSeeDetailActivity">
 
 
         <android.support.design.widget.AppBarLayout

@@ -18,13 +18,9 @@ import mobop.capitole.Capitole;
 import mobop.capitole.R;
 import mobop.capitole.domain.MovieManager;
 import mobop.capitole.domain.model.Movie;
-import mobop.capitole.presentation.activity.MovieDetailActivity;
+import mobop.capitole.presentation.activity.MovieToSeeDetailActivity;
 import mobop.capitole.presentation.adapter.MovieListAdapter;
 
-
-/**
- * Created by fredmontet on 06/11/15.
- */
 
 public class ToSeeFragment extends Fragment implements AdapterView.OnItemClickListener{
 
@@ -126,7 +122,7 @@ public class ToSeeFragment extends Fragment implements AdapterView.OnItemClickLi
         // Get the movie object of realm matching the uuid
         Movie movie = this.movieManager.getMovie(clickedMovie.getUuid());
 
-        Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
+        Intent intent = new Intent(getActivity(), MovieToSeeDetailActivity.class);
         intent.putExtra(movieUuid, movie.getUuid());
         startActivity(intent);
     }
