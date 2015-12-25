@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
 xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:fab="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:id="@+id/suggestion_details"
-android:layout_height="match_parent"
 xmlns:app="http://schemas.android.com/apk/res-auto"
+android:id="@+id/suggestion_details"
 android:orientation="vertical"
-tools:context=".presentation.activity.MovieToSeeDetailActivity">
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".presentation.activity.MovieSeenDetailActivity">
 
 
         <android.support.design.widget.AppBarLayout
@@ -217,41 +216,5 @@ tools:context=".presentation.activity.MovieToSeeDetailActivity">
             </LinearLayout>
 
         </ScrollView>
-
-
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
-            android:id="@+id/multiple_actions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            fab:fab_addButtonColorNormal="@color/red"
-            fab:fab_addButtonColorPressed="@color/red_pressed"
-            fab:fab_addButtonPlusIconColor="@color/white_pressed"
-            fab:fab_labelStyle="@style/menu_labels_style"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginEnd="16dp">
-
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/action_seen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/red"
-                fab:fab_title="Seen"
-                fab:fab_size="mini"
-                fab:fab_colorPressed="@color/red_pressed"/>
-
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/action_to_see"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/red"
-                fab:fab_title="To See"
-                fab:fab_size="mini"
-                fab:fab_colorPressed="@color/red_pressed"/>
-
-        </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
     </RelativeLayout>

@@ -1,19 +1,14 @@
 package mobop.capitole.presentation.activity;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,7 +21,6 @@ import java.net.MalformedURLException;
 import java.text.DateFormat;
 import java.util.List;
 
-import io.realm.Realm;
 import io.realm.RealmList;
 import mobop.capitole.Capitole;
 import mobop.capitole.R;
@@ -172,19 +166,6 @@ public class SuggestionDetailActivity extends AppCompatActivity {
                             Snackbar snackbar = Snackbar.make(relativeLayout, "Movie already added", Snackbar.LENGTH_LONG);
                             snackbar.show();
                         }else{
-
-                            AlertDialog alertDialog = new AlertDialog.Builder(getApplicationContext()).create();
-                            alertDialog.setTitle("Alert");
-                            alertDialog.setMessage("Alert message to be shown");
-                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                        }
-                                    });
-                            alertDialog.show();
-
-
                             Snackbar snackbar = Snackbar.make(relativeLayout, "Movie added", Snackbar.LENGTH_LONG);
                             snackbar.show();
                         }
@@ -205,7 +186,7 @@ public class SuggestionDetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_movie, menu);
+        getMenuInflater().inflate(R.menu.menu_suggestion_detail, menu);
         return true;
     }
 }

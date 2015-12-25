@@ -94,7 +94,7 @@ public class ToSeeFragment extends Fragment implements AdapterView.OnItemClickLi
     }
 
     public void remove(int position){
-        Movie clickedMovie = (Movie)mAdapter.getItem(position);
+        Movie clickedMovie = (Movie)this.mAdapter.getItem(position);
 
         // Get the movie object of realm matching the uuid
         Movie movie = this.movieManager.getMovie(clickedMovie.getUuid());

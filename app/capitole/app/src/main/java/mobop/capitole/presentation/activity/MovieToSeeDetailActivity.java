@@ -75,7 +75,7 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
         final Movie movie = movieManager.getMovie(movieUuid);
 
         // Movie Title
-        mActionBar.setTitle("Movie To See");
+        mActionBar.setTitle("Movie");
 
         // Get the poster
         mNetworkImageView = (NetworkImageView)findViewById(R.id.networkImageView);
@@ -132,7 +132,7 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_movie, menu);
+        getMenuInflater().inflate(R.menu.menu_movie_tosee, menu);
         return true;
     }
 
