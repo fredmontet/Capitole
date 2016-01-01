@@ -9,9 +9,10 @@ import mobop.capitole.domain.model.Language;
 public class LanguageJsonMapper {
 
     /**
-     *  Small utility to create a person object
-     *  with a role based on the key
-     *  of the json String
+     * Mapper to transform a String of Languages in a
+     * RealmList of Languages
+     * @param languagesStr in the form : "language1, language2,..., languageN"
+     * @return languageList the RealmList<Language>
      */
     public RealmList<Language> transform(String languagesStr){
         RealmList<Language> languageList = new RealmList<>();

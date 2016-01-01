@@ -23,10 +23,6 @@ import mobop.capitole.domain.model.User;
 import mobop.capitole.presentation.activity.SuggestionDetailActivity;
 import mobop.capitole.presentation.adapter.MovieGridAdapter;
 
-/**
- * Created by fredmontet on 06/11/15.
- */
-
 public class SuggestionFragment extends Fragment implements AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
 
@@ -58,9 +54,7 @@ public class SuggestionFragment extends Fragment implements AdapterView.OnItemCl
         mView = inflater.inflate(R.layout.fragment_suggestion, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.swipeRefreshLayout);
         mGridView = (GridView) mView.findViewById(R.id.suggestionGridview);
-
         swipeRefreshLayout.setOnRefreshListener(this);
-
         Intent intent = getActivity().getIntent();
 
         // ACTION_SEARCH Intent
@@ -101,7 +95,7 @@ public class SuggestionFragment extends Fragment implements AdapterView.OnItemCl
     //==============================================================================================
 
     public void getMoviesSuggestion(){
-        
+
         User user = Capitole.getInstance().getUser();
         MovieManager movieManager = new MovieManager(getContext(), user);
 

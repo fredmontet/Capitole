@@ -2,10 +2,6 @@ package mobop.capitole.domain.mapper.tmdb;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Arrays;
-import java.util.List;
 
 import io.realm.RealmList;
 import mobop.capitole.domain.model.Genre;
@@ -13,10 +9,11 @@ import mobop.capitole.domain.model.Genre;
 public class GenreJsonMapper {
 
     /**
-     * Mapper to get a collection of Genre from a
-     * String of genres like this one: "Drama, Romance,..."
-     * @param genresStr
-     * @return Collection<Genre>
+     * Mapper to get a RealmList of Genre from
+     * a jsonArray of Genre with only the genre IDs
+     * @param jsonArray of genres
+     * @return the RealmList<Genre>
+     * @throws JSONException
      */
     public RealmList<Genre> transform(JSONArray jsonArray) throws JSONException {
         RealmList<Genre> genresList = new RealmList<>();
@@ -29,6 +26,13 @@ public class GenreJsonMapper {
         return genresList;
     }
 
+    /**
+     * Mapper to get a RealmList of Genre from
+     * a jsonArray of Genre
+     * @param jsonArray of genres
+     * @return the RealmList<Genre>
+     * @throws JSONException
+     */
     public RealmList<Genre> transformDetails(JSONArray jsonArray) throws JSONException {
         RealmList<Genre> genresList = new RealmList<>();
         Genre genre;

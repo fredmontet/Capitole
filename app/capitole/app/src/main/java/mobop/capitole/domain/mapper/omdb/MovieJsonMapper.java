@@ -17,9 +17,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Class used to transform from Strings representing json to valid objects.
- */
 public class MovieJsonMapper {
 
     private final Gson gson;
@@ -30,11 +27,11 @@ public class MovieJsonMapper {
 
     /**
      * Transform from valid json string coming from
-     * Omdb API to {@link Movie}.
+     * Omdb API to Movie.
      *
      * @param moviesString A json representing a movie.
-     * @return {@link Movie}.
-     * @throws com.google.gson.JsonSyntaxException if the json string is not a valid json structure.
+     * @return Movie
+     * @throws JsonSyntaxException if the json string is not a valid json structure.
      */
     public List<Movie> transform(String moviesString) throws JsonSyntaxException {
 
@@ -44,8 +41,6 @@ public class MovieJsonMapper {
         }.getType();
         Map<String, String> movieMap = gson.fromJson(moviesString, type);
         Movie movie = new Movie();
-
-        // TODO Checker le cas s'il y a plusieurs films dans la movieMap..
 
         movie.setTitle(movieMap.get("Title"));
         movie.setYear(Integer.parseInt(movieMap.get("Year")));

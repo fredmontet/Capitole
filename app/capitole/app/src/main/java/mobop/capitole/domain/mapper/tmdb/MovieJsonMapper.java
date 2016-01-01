@@ -1,6 +1,5 @@
 package mobop.capitole.domain.mapper.tmdb;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONArray;
@@ -19,31 +18,23 @@ import mobop.capitole.domain.model.Genre;
 import mobop.capitole.domain.model.Language;
 import mobop.capitole.domain.model.Movie;
 
-/**
- * Class used to transform from Strings representing json to valid objects.
- */
 public class MovieJsonMapper {
 
-    private final Gson gson;
-
-    public MovieJsonMapper() {
-        this.gson = new Gson();
-    }
 
     /**
-     * Transform from valid json string coming from
-     * Omdb API to {@link Movie}.
-     *
-     * @param response A json representing a movie.
-     * @return {@link Movie}.
-     * @throws JsonSyntaxException if the json string is not a valid json structure.
+     * Tranform a JSONArray of movies to a
+     * List of Movies
+     * @param response the JSONArray of movies
+     * @return movieList the List<Movie>
+     * @throws JsonSyntaxException
+     * @throws JSONException
+     * @throws ParseException
      */
     public List<Movie> transform(JSONArray response) throws JsonSyntaxException, JSONException, ParseException {
 
         List<Movie> movieList = new ArrayList<>();
 
         for(int i = 0; i < response.length(); i++){
-
             Movie movie = new Movie();
             JSONObject JSONMovie = response.getJSONObject(i);
 
@@ -68,19 +59,24 @@ public class MovieJsonMapper {
             movie.setTmdbID(JSONMovie.getString("id"));
 
             movieList.add(movie);
-
         }
-
         return movieList;
     }
 
-
+    /**
+     * Tranform a JSONArray of movies details
+     * to a List of Movies
+     * @param response the JSONArray of movies
+     * @return movieList the List<Movie>
+     * @throws JsonSyntaxException
+     * @throws JSONException
+     * @throws ParseException
+     */
     public List<Movie> transformDetails(JSONArray response) throws JsonSyntaxException, JSONException, ParseException {
 
         List<Movie> movieList = new ArrayList<>();
 
         for(int i = 0; i < response.length(); i++){
-
             Movie movie = new Movie();
             JSONObject JSONMovie = response.getJSONObject(i);
 
