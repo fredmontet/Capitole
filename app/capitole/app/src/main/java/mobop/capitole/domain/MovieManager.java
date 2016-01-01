@@ -11,24 +11,27 @@ import java.text.ParseException;
 import java.util.List;
 
 import io.realm.Realm;
-
 import io.realm.RealmConfiguration;
+
 import io.realm.RealmResults;
 import mobop.capitole.Capitole;
+
 import mobop.capitole.domain.mapper.tmdb.MovieJsonMapper;
 import mobop.capitole.domain.model.Movie;
 import mobop.capitole.domain.model.User;
 import mobop.capitole.domain.net.ApiQuery;
 
-/**
- * Created by fredmontet on 13/12/15.
- */
+
 public class MovieManager extends Application{
 
     private Realm realm;
     private User user;
     private Context context;
     private MovieJsonMapper movieJsonMapper;
+
+
+    // Constructor
+    //============
 
     public MovieManager(Context context, User user){
         this.user = user;
@@ -50,9 +53,8 @@ public class MovieManager extends Application{
         this.realm = Realm.getInstance(realmConfiguration);
     }
 
-    public Movie getMovie(String movieId){
-        return this.realm.where(Movie.class).equalTo("uuid", movieId).findFirst();
-    }
+    // API Functions
+    //==============
 
     public void getMovieFromApi(String tmdbId, final MovieManagerCallback callback) throws MalformedURLException {
         ApiQuery api = new ApiQuery(this.context);
@@ -72,12 +74,22 @@ public class MovieManager extends Application{
         });
     }
 
-    public List<Movie> getMoviesSeen(){
-        return this.user.getMoviesSeen();
-    }
-
-    public List<Movie> getMoviesToSee(){
-        return this.user.getMoviesToSee();
+    public void searchMovieFromApi(String query, final MovieManagerCallback callback) throws MalformedURLException {
+        ApiQuery api = new ApiQuery(this.context);
+        api.getMoviesByTitle(query, new ApiQuery.ApiQueryCallback() {
+            @Override
+            public void onSuccess(JSONArray response) {
+                List<Movie> movies = null;
+                try {
+                    movies = movieJsonMapper.transform(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                callback.onSuccess(movies);
+            }
+        });
     }
 
     public void getSuggestion(final MovieManagerCallback callback) throws MalformedURLException {
@@ -97,6 +109,29 @@ public class MovieManager extends Application{
             }
         });
 
+    }
+
+    // Local Functions
+    //================
+
+    public Movie getMovie(String movieId){
+        return this.realm.where(Movie.class).equalTo("uuid", movieId).findFirst();
+    }
+
+    public void rateMovie(Movie movie, float rating, String comment){
+        this.realm.beginTransaction();
+        movie.setRating(rating);
+        movie.setComment(comment);
+        realm.copyToRealmOrUpdate(movie);
+        this.realm.commitTransaction();
+    }
+
+    public List<Movie> getMoviesSeen(){
+        return this.user.getMoviesSeen();
+    }
+
+    public List<Movie> getMoviesToSee(){
+        return this.user.getMoviesToSee();
     }
 
     public boolean addToMoviesSeen(Movie movie){
@@ -121,8 +156,8 @@ public class MovieManager extends Application{
             return false;
         }else{
             this.realm.beginTransaction();
-            realm.copyToRealmOrUpdate(movie);
             this.user.getMoviesSeen().add(movie);
+            realm.copyToRealmOrUpdate(movie);
             this.realm.commitTransaction();
             return true;
         }
@@ -150,8 +185,8 @@ public class MovieManager extends Application{
             return false;
         }else{
             this.realm.beginTransaction();
-            realm.copyToRealmOrUpdate(movie);
             this.user.getMoviesToSee().add(movie);
+            realm.copyToRealmOrUpdate(movie);
             this.realm.commitTransaction();
             return true;
         }
@@ -188,6 +223,7 @@ public class MovieManager extends Application{
             realm.commitTransaction();
         }
     }
+
 
     /**
      * Function to close the MovieManager

@@ -41,8 +41,7 @@ public class ApiQuery {
     api.getJson(new ApiConnection.VolleyCallback() {
       @Override
       public void onSuccess(JSONObject response) throws JSONException {
-        JSONArray array = new JSONArray();
-        array.put(response);
+        callback.onSuccess(response.getJSONArray("results"));
       }
     });
   }

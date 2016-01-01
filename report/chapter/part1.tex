@@ -1,22 +1,112 @@
-\chapter{Conceptualisation de l'application}
+%----------------------------------------------------------------------------------------
+\chapter{Conception de l'application}
+%----------------------------------------------------------------------------------------
+
+
+
+\section{But}
+%----------------------------------------------------------------------------------------
+
+L'application Capitole est basée sur la proposition de projet de semestre suivante:\\
+
+``FilmList – Create a mobile application that builds a personal movie database – allow different categories and ratings. Connect it to the existing movies databases''\\
+
+Le but est donc de développer une application pour la gestion d'un catalogue de film. Cette dernière doit permettre de classer les films d'un utilisateurs par catégorie et d'attribuer des notes pour les films. De plus, elle doit être connectée à une base de donnée de films en ligne pour récolter ses informations.
+
+
 \section{Concept}
+%----------------------------------------------------------------------------------------
+
+\subsection*{Le nom}
+Tout d'abord, nous avons changé le nom de projet de semestre donné (FilmList) par Capitole. Ceci pour donner une réelle identité à notre application et rappeler une des plus ancienne et plus grande salle de cinéma de Suisse toujours en activité, qui est située à Lausanne, le Capitole. \footnote{Le lien de vers le site du Capitole: http://www.lecapitole.ch}
+
+\subsection*{Structure de l'interface}
+
+Les différentes situations qui confronte une personne au monde du cinéma peuvent se résumer de la manière suivante:\\
 
 \begin{itemize}
-
-Une page d'accueil avec 3 onglets
-
-\begin{itemize}
-  \item Seen
-  \item Proposition
-  \item To see
+	\item La personne ne sait pas quoi regarder comme film.
+	\item La personne ne se souvient plus quels sont les films qu'elle a envie de voir
+	\item La personne ne se souvient plus les films qu'elle a vu.
 \end{itemize}
 
-Chacun de ces onglets contient une liste de films qui ont les attributs suivants:
+\clearpage
 
-\begin{itemize}
-  \item 
+Du fait de ces 3 situations, pour l'application Capitole, nous avons fait le choix de créer 3 pages qui apportent une solutions aux problème cités ci-dessus. Soit, les pages suivantes:\\
 
+\begin{center}
+	\begin{description}
+	  \item[Suggestion] Une liste de proposition de films à l'affiche 
+	  \item[To see] Une liste de films sélectionné par l'utilisateur
+	  \item[Seen] Une liste des films vu par l'utilisateur
+	\end{description}
+\end{center}
 
+Ces 3 pages seront mises dans l'ordre ci-dessus dans l'application car c'est cet ordre qui est, chronologiquement et logiquement, celle d'un film dans l'application Capitole. De la proposition d'un film à son archivage en passant par sa phase ``à voir''.
+
+\subsection*{Problématique de l'application}
+
+Une des problèmatiques de Capitole est la suivante:\\
+
+``Comment obtenir les données des films et en proposer à l'utilisateur?''\\
+
+Pour résoudre ce problèmes, plusieurs solutions sont envisageables:\\
+
+\begin{enumerate}
+	\item La saisie des données des films est faite par l'utilisateur
+	\item Les films proposés sont uniquement ceux à l'affiche donné par un webservice
+	\item Les films proposés le sont grâce à un algorithme de suggestion en utilisant la base de donnée d'un webservice
+	\item L'utilisateur recherche lui même les films qu'il a envie de voir sur la base de donnée d'un webservice
+\end{enumerate}
+
+La meilleur solution serait de faire des proposition de films à l'utilisateur qui sont pertinentes pour lui, soit d'envisager la troisième solution de la liste ci-dessus. Malheureusement, cette dernière possède un niveau de compléxité que nous avons choisi d'éviter et nous nous rabattrons donc sur l'association avantageuse d'une proposition de films à l'affiche et de films issus d'une recherche utilisateur.
 
 \section{Mock-ups}
-\section{Maquettes}
+%----------------------------------------------------------------------------------------
+
+Les mock-ups de l'application sont les suivants:
+
+\begin{figure}[H]
+    \begin{subfigure}[b]{.5\linewidth}
+        \centering
+            \includegraphics[width=0.6\linewidth, fbox]{img/mockup/main.jpg}
+            \caption{Page principale de Capitole}
+            \label{tasklist}
+    \end{subfigure}
+    \begin{subfigure}[b]{.5\linewidth}
+        \centering
+            \includegraphics[width=0.6\linewidth, fbox]{img/mockup/filmPage.jpg}
+            \caption{Page du détail d'un film}
+    \end{subfigure}
+    \caption{Mock-ups de Capitole - Principaux}
+    \label{mockup1}
+\end{figure}
+
+Dans la figure \ref{mockup1} ci-dessus, nous avons prévu d'utiliser la tabView d'Android avec 3 fragments. Il sera possible de swiper pour passer d'un onglet à l'autre de l'application et ainsi voir les différentes listes de films.\\
+
+Pour notre cas d'utilisation nous sommes chanceux car ce composant UI correspond exactment au besoin de notre interface et suit les guidline donnée par Google \footnote{Utilisation des tabs dans Android: \url{http://www.google.ch/design/spec/components/tabs.html\#tabs-usage}} concernant l'utilisation des onglets dans une application.
+
+\begin{figure}[H]
+    \begin{subfigure}[b]{.5\linewidth}
+        \centering
+            \includegraphics[width=0.6\linewidth, fbox]{img/mockup/search.jpg}
+            \caption{Recherche de films}
+            \label{tasklist}
+    \end{subfigure}
+    \begin{subfigure}[b]{.5\linewidth}
+        \centering
+            \includegraphics[width=0.6\linewidth, fbox]{img/mockup/searchResult.jpg}
+            \caption{Résultat d'une recherche}
+    \end{subfigure}
+    \caption{Mock-ups de Capitole - Recherche}
+\end{figure}
+
+Ces derniers mock-ups mettent en avant l'utilisation du module de recherche de l'ActionBar d'Android. A l'aide de cet outil UI, il est possible d'intégrer un champ de recherche dans une interface utilisateur mobile de manière sobre et discrète.
+
+
+
+
+
+
+
+

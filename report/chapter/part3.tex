@@ -1,3 +1,51 @@
-\chapter{Utilisation}
-\section{Pages principales}
-\section{Etc.}
+%----------------------------------------------------------------------------------------
+\chapter{Mode d'emploi}
+%----------------------------------------------------------------------------------------
+
+\section{Interface principale}
+
+L'interface de Capitole est composée d'une manière analogue à l'application de messagerie Whats App. L'emploi de son interface devrait donc être aisé pour tous. L'interface principale est composée de 3 onglets qui correspondent aux différents état qu'un film peut avoir. 
+
+\subsection*{Onglet Suggestion}
+C'est l'onglet qui s'ouvre à l'ouverture de l'application. Une fois celui-ci ouvert, les affiches des films se chargent dans l'interface et l'utilisateur peut scroller et cliquer sur les films pour voir leur détail. Si nécessaire, l'utilisateur peut actualiser la liste de films proposé en utilisant le geste ``Swipe-to-Refresh''\footnote{http://www.google.ch/design/spec/patterns/swipe-to-refresh.html}.
+
+\subsection*{Onglet To See}
+Dans cet onglet, l'utilisateur peu voir les films qu'il a choisi est ajouté à sa liste de films à voir.\\
+En faisant un clique long sur un des éléments de la liste, les différentes options disponibles s'affichent à l'écran dans un \texttt{ContextMenu}.
+
+\subsection*{Onglet Seen}
+L'interface de cet onglet est quasi similaire à l'onglet To See. Une liste des films vu y est présente, en cliquant sur les éléments de la liste, on observe le détail du film et en cliquant longtemps, on voit les différentes action qu'il est possible d'efféctuer avec un film.
+
+\section{Détail des films}
+Quelque soit l'état du film (suggéré, à voir ou vu), il est possible d'afficher un détail de ce dernier. Ce détail différe légérement selon l'état dans lequel le film se trouve.
+
+\subsection*{Détail d'une suggestion}
+Dans cette interface, il est possible de consulter le détail d'un film suggéré et de l'ajouter à une des 2 liste de films de Capitole. À savoir, ``To See'' ou ``Seen''. On ajoute un film à une de ces deux liste en cliquant sur le FAB button. \footnote{Le Floating Action Button représente l'action primaire qu'il est possible d'efféctuer sur une interface \url{http://www.google.ch/design/spec/components/buttons-floating-action-button.html}} Un film me peu être ajouter qu'une fois dans quelquesoit la liste dans laquelle il a été ajouté.
+
+\subsection*{Détail d'un film à voir}
+Dans ce détail de film à voir, les informations affichées proviennent de la base de donnée local. Deux actions sont disponibles: évaluer le film ou supprimer le film. L'évalutation d'un film se fait en cliquant sur le fauteil. Lors d'une évalutation, il est implicite que le film a été visionné par l'utilisateur, il va donc passer dans la liste de films vu. Lors de la suppression d'un film suite à un clique sur la corbeille, le film va simplement être supprimé de la liste de films à voir.
+
+\subsection*{Détail d'un film vu}
+Le détail d'un film vu est analogue à celui d'un film à voir à la différence qu'il contient le commentaire et l'évaluation de l'utilisateur. Les actions disponibles dans l'Action Bar sont: Le retour du film dans la liste de films à voir ou la suppresion du film.
+
+\section{Recherche de films}
+La recherche des films dans la base de donnée de l'API en ligne est possible depuis l'interface principale en cliquant sur la loupe disponible dans l'Action Bar. Une fois la loupe cliqué, un clavier s'affiche, l'utilisateur peut saisir le titre du film qu'il désir rechercher et uen liste de résultat s'affiche. En cliquant sur un des résultat, l'utilisateur arrive sur la même interface de détail que celle utilisée lors des suggestions de film. L'utilisateur peut mettre ce film dans ses liste de films à voir ou vu.
+
+\section{Evaluation d'un film}
+Un film peut être évaluer dans le cas ou il est envoyé dans la liste de film vu. Ce passage peut se faire depuis deux emplacement de l'application. Soit depuis le détail d'une suggestion de film, soit lorsqu'un film est dans la liste ``To See'' et sera mis dans la liste ``Seen'' après avoir cliqué sur le fauteuil.\\
+A la suite d'une de ces actions permettant l'évaluation, un \texttt{AlertDialog} s'affiche et invite l'utilisateur à évaluer le film à l'aide d'une \texttt{RatingBar} et à y ajouter un commentaire.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

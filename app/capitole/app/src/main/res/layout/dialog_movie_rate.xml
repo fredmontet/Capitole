@@ -3,27 +3,46 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <ImageView
-        android:id="@+id/image"
+
+    <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="5dp" />
+        android:id="@+id/movieRating"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="71dp"
+        android:numStars="5"
+        android:rating="0"
+        android:stepSize="0.5" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/movieComment"
+        android:layout_below="@+id/dialogRateComment"
+        android:layout_alignLeft="@+id/dialogRateComment"
+        android:layout_alignStart="@+id/dialogRateComment"
+        android:layout_marginTop="33dp" />
 
     <TextView
-        android:id="@+id/text"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#FFF"
-        android:layout_toRightOf="@+id/image"/>/>
+        android:text="Rate the movie"
+        android:id="@+id/Title"
+        android:layout_alignLeft="@+id/movieRating"
+        android:layout_alignStart="@+id/movieRating"
+        android:layout_marginTop="36dp" />
 
-    <Button
-        android:id="@+id/dialogButtonOK"
-        android:layout_width="100px"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Ok "
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_below="@+id/image"
-        />
+        android:text="Write a comment"
+        android:id="@+id/dialogRateComment"
+        android:layout_below="@+id/movieRating"
+        android:layout_alignLeft="@+id/movieRating"
+        android:layout_alignStart="@+id/movieRating"
+        android:layout_marginTop="28dp" />
+
 
 </RelativeLayout>

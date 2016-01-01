@@ -22,6 +22,8 @@ import android.widget.Toast;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 
 import io.realm.RealmList;
@@ -52,6 +54,8 @@ public class MovieSeenDetailActivity extends AppCompatActivity {
     private TextView mLanguage;
     private TextView mSynopsis;
     private TextView mBudget;
+    private TextView mRating;
+    private TextView mComment;
     public final static String SWITCH_TAB = "mobop.capitole.activities.switch_tab";
     private final int TAB_TOSEE = 2;
 
@@ -119,6 +123,15 @@ public class MovieSeenDetailActivity extends AppCompatActivity {
         // Synopsis
         mSynopsis = (TextView)findViewById(R.id.mv_synopsis);
         mSynopsis.setText(movie.getSynopsis());
+
+        // Rating
+        mRating = (TextView)findViewById(R.id.mv_rating);
+        mRating.setText("You rated "+Float.toString(movie.getRating())+"/5.0");
+
+        // Comment
+        mComment = (TextView)findViewById(R.id.mv_comment);
+        String comment = ((movie.getComment() == null) ? "No comment" : movie.getComment());
+        mComment.setText(comment);
 
         // Genres
         RealmList<Genre> genres = movie.getGenres();

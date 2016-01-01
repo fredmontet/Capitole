@@ -179,17 +179,36 @@ tools:context=".presentation.activity.MovieSeenDetailActivity">
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp" />
 
-                <TextView
-                    android:id="@+id/mv_release_date"
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Released the 17 May 2015"
-                    android:gravity="right"
-                    android:background="@color/colorPrimary"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="5dp"
-                    android:paddingRight="10dp"
-                    android:textColor="@color/white" />
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/mv_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="You rated 8/10"
+                        android:gravity="left"
+                        android:background="@color/colorPrimary"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="10dp"
+                        android:textColor="@color/white"
+                        android:paddingLeft="10dp" />
+
+                    <TextView
+                        android:id="@+id/mv_release_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Released the 17 May 2015"
+                        android:gravity="right"
+                        android:background="@color/colorPrimary"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="10dp"
+                        android:textColor="@color/white" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -212,6 +231,29 @@ tools:context=".presentation.activity.MovieSeenDetailActivity">
                     android:text="A synopsis is a brief summary of the major points of a subject or written work or story, either as prose or as a table; an abridgment or condensation of a work."
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/CommentTitle"
+                    android:text="Comment"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/textColorPrimary"
+                    android:layout_marginBottom="3dp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/mv_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Your comment"
+                    android:textColor="@color/textColorStandard"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp" />
+
 
             </LinearLayout>
 

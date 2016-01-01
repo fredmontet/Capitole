@@ -1,5 +1,6 @@
 package mobop.capitole.presentation.fragment;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -59,7 +61,16 @@ public class SuggestionFragment extends Fragment implements AdapterView.OnItemCl
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        getMoviesSuggestion();
+        Intent intent = getActivity().getIntent();
+
+        // ACTION_SEARCH Intent
+        //=====================
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            searchMovies(query);
+        }else {
+            getMoviesSuggestion();
+        }
 
         // Inflate the layout for this fragment
         return mView;
@@ -72,7 +83,6 @@ public class SuggestionFragment extends Fragment implements AdapterView.OnItemCl
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Movie clickedMovie = (Movie)mAdapter.getItem(position);
-
         Intent intent = new Intent(getActivity(), SuggestionDetailActivity.class);
         intent.putExtra(tmdbId, clickedMovie.getTmdbID());
         startActivity(intent);
@@ -80,10 +90,8 @@ public class SuggestionFragment extends Fragment implements AdapterView.OnItemCl
 
     @Override
     public void onRefresh() {
-        // showing refresh animation before making http call
         swipeRefreshLayout.setRefreshing(true);
         getMoviesSuggestion();
-        // stopping swipe refresh
         swipeRefreshLayout.setRefreshing(false);
 
     }
@@ -93,8 +101,7 @@ public class SuggestionFragment extends Fragment implements AdapterView.OnItemCl
     //==============================================================================================
 
     public void getMoviesSuggestion(){
-
-
+        
         User user = Capitole.getInstance().getUser();
         MovieManager movieManager = new MovieManager(getContext(), user);
 
@@ -124,5 +131,33 @@ public class SuggestionFragment extends Fragment implements AdapterView.OnItemCl
 
     }
 
+    public void searchMovies(String query){
+
+        User user = Capitole.getInstance().getUser();
+        MovieManager movieManager = new MovieManager(getContext(), user);
+
+        try {
+            movieManager.searchMovieFromApi(query, new MovieManager.MovieManagerCallback() {
+
+                @Override
+                public void onSuccess(List<Movie> response) {
+
+                    //This is the ListView adapter
+                    mAdapter = new MovieGridAdapter(getActivity());
+                    mAdapter.setData(response);
+
+                    //This is the ListView which will display the list of movies
+                    mGridView = (GridView)mView.findViewById(R.id.suggestionGridview);
+                    mGridView.setAdapter(mAdapter);
+                    mGridView.setOnItemClickListener(SuggestionFragment.this);
+                    mAdapter.notifyDataSetChanged();
+                    mGridView.invalidate();
+                }
+            });
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }//EOC

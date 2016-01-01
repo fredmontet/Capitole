@@ -1,95 +1,199 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Laboratory report
+% LaTeX Template
+%
+% Author: Frédéric Montet
+% 
+% Thanks to Jacky Casas, Ted Pavlic 
+% and http://www.latextemplates.com
+% for the ideas.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
 \documentclass[a4paper, 11pt]{report}
-
-\usepackage[utf8]{inputenc}
-\usepackage[french]{babel}
-%\usepackage[english]{babel}
-\usepackage[T1]{fontenc}
-% \usepackage[latin1]{inputenc}
-
+\usepackage{fancyhdr} % Required for custom headers
+\usepackage[T1]{fontenc} % Required for output font encoding
+\usepackage[utf8]{inputenc} % Required for wirting in UTF-8
+%\usepackage[latin1]{inputenc}
+\usepackage[frenchb, english]{babel} % Required for french support
+%\usepackage[english]{babel} % Required for english support
+%\usepackage[margin = 2cm]{geometry} % Required for page layout
 \usepackage[top=3cm, bottom=3cm, left=2.3cm,right=2cm]{geometry}
-\usepackage{graphicx}
-\usepackage{color}
-\usepackage{titlepic}
-\usepackage{hyperref}
-\hypersetup{%
-    pdfborder = {0 0 0}
-}
-%\usepackage{url}
-\usepackage[table]{xcolor}
-\usepackage{tipa} % phonétique
+\usepackage{listings} % Required for insertion of code
+\usepackage{graphicx} % Required to insert images
+\usepackage[export]{adjustbox} % Required to add frame around figures
+\usepackage[usenames,dvipsnames]{color} % Required for custom colors
+\usepackage{titlepic} % Required to use image in title
+\usepackage{hyperref} % Required for cross-references
+\usepackage{courier} % Required for the courier font
+\usepackage[table]{xcolor} % Required for cool colors
+\usepackage{todonotes} % To add some todo tags in the latex
+\usepackage{subfloat}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{float}
+
+
+%----------------------------------------------------------------------------------------
+%	CODE INCLUSION CONFIGURATION
+%----------------------------------------------------------------------------------------
+
+% Color definition
+% --------------------------------
 \definecolor{light-gray}{gray}{0.50}
 \definecolor{very-light-gray}{gray}{0.9}
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0} % This is the color used for comments
 
-\usepackage{listings}
-\lstset{language=java,
-  basicstyle=\scriptsize,
-  numbers=left,
-  numberstyle=\tiny\color{light-gray},  % the style that is used for the line-numbers
-  numbersep=5pt,                  % how far the line-numbers are from the code
-  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
-  showspaces=false,               % show spaces adding particular underscores
-  showstringspaces=false,         % underline spaces within strings
-  showtabs=false,                 % show tabs within strings adding particular underscores
-  frame=single,                   % adds a frame around the code
-  %rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
-  tabsize=4,                      % sets default tabsize to 2 spaces
-  captionpos=b,                   % sets the caption-position to bottom
-  breaklines=true,                % sets automatic line breaking
-  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
-  title=\lstname,                   % show the filename of files included with \lstinputlisting;
-                                  % also try caption instead of title
-  %keywordstyle=\color{blue},          % keyword style
-  commentstyle=\color{light-gray},       % comment style
-  %stringstyle=\color{yellow}         % string literal style
+% Language loading
+% --------------------------------
+\lstloadlanguages{Java} % Load Java syntax for listings, for a list of other languages supported see: ftp://ftp.tex.ac.uk/tex-archive/macros/latex/contrib/listings/listings.pdf
+
+% Language styling
+% --------------------------------
+\lstset{
+        breaklines=true,
+        postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}},
+        language=Java, % Use Java
+        frame=single, % Single frame around code
+        basicstyle=\small\ttfamily, % Use small true type font
+        keywordstyle=[1]\color{Blue}\small\ttfamily\bf, % Perl functions bold and blue
+        keywordstyle=[2]\color{Purple}, % Perl function arguments purple
+        keywordstyle=[3]\color{Blue}\underbar, % Custom functions underlined and blue
+        identifierstyle=, % Nothing special about identifiers
+        commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\small, % Comments small dark green courier font
+        stringstyle=\color{Purple}, % Strings are purple
+        showstringspaces=false, % Don't put marks in string spaces
+        tabsize=4, % 4 spaces per tab
+        %
+        % Put standard Perl functions not included in the default language here
+        morekeywords={rand},
+        %
+        % Put Perl function parameters here
+        morekeywords=[2]{on, off, interp},
+        %
+        % Put user defined functions here
+        morekeywords=[3]{test},
+       	%
+        morecomment=[l][\color{Blue}]{...}, % Line continuation (...) like blue comment
+        numbers=left, % Line numbers on left
+        numberstyle=\tiny\color{light-gray},  % the style that is used for the line-numbers
+        numbersep=5pt,                  % how far the line-numbers are from the code
+        firstnumber=1, % Line numbers start with line 1
+        %stepnumber=5 % Line numbers go in steps of 5
 }
-
-%en-tete de page
-\usepackage{fancyhdr}
-\lhead{DMG}
-\chead{Lunong Ba \& Montet}
-\rhead{\today}
-\pagestyle{fancy}
 
 %\renewcommand{\thesection}{\arabic{section}} % pour numerotation des sections
 
-\titlepic{\includegraphics[width=0.55\textwidth]{img/mselogo.jpg}}
-\title{\huge{HES-SO Master} \\ \Huge{\textbf{\textsc{Mobile Operating Systems}}} \\
-\LARGE{Projet de cours} \\
-\vspace{2cm} \huge{\textbf{Capitole}} \\
-\vspace{1cm} \Large{Le catalogue de films sous Android} }
+%-------------------------------------------------------------------------------
+%	NAME AND CLASS SECTION
+%-------------------------------------------------------------------------------
 
-\author{\\ \\ Dan \textsc{Luong Ba} \& Frédéric \textsc{Montet} \\
-\\ \\
-Professeurs : Markus \textsc{Stolze} \& Pascal \textsc{Bruegger} \\
+\newcommand{\mTitle}{Capitole - Le catalogue de films sous Android} % Assignment title
+\newcommand{\mReportTitle}{Rapport du projet de semestre} % Assignment title
+\newcommand{\mCourse}{MobOp} % Course name
+\newcommand{\mClassInstructor}{Pascal \textsc{Bruegger} \& Ninoslav \textsc{Marina}} % Teacher/lecturer
+
+% Author #1
+\newcommand{\mAuthorOneFN}{Dan}
+\newcommand{\mAuthorOneLN}{Luong Ba}
+
+% Author #2
+\newcommand{\mAuthorTwoFN}{Frédéric}
+\newcommand{\mAuthorTwoLN}{Montet}
+
+\newcommand{\mLocation}{Lausanne} % The location
+
+% Other newcommands
+% --------------------------------
+\newcommand{\mAuthorOne}{\mAuthorOneFN\ \textsc{\mAuthorOneLN}}
+\newcommand{\mAuthorTwo}{\mAuthorTwoFN\ \textsc{\mAuthorTwoLN}}
+\newcommand{\mAuthors}{\mAuthorOne\ \& \mAuthorTwo}
+\newcommand{\mAuthorsLN}{\mAuthorOneLN\ \& \mAuthorTwoLN}
+
+%-------------------------------------------------------------------------------
+%	TITLE PAGE
+%-------------------------------------------------------------------------------
+
+% En-tete de page
+% --------------------------------
+
+\lhead{\mTitle}
+\chead{\mAuthorsLN}
+\rhead{\today}
+\pagestyle{fancy}
+
+% Page de titre
+% --------------------------------
+
+\title{
+  \textbf{\mCourse\ :} \mTitle
+  \vspace{0.3cm} \\
+  \mReportTitle
+}
+
+\author{
+  \mAuthors
+  \vspace{1cm} \\
+  \textbf{Professeurs :} \mClassInstructor
 }
 
 \date{\today}
 
+\titlepic{\includegraphics[width=0.55\textwidth]{img/mselogo.jpg}}
 
+
+%-------------------------------------------------------------------------------
+%	DOCUMENT START
+%-------------------------------------------------------------------------------
 \begin{document}
-\maketitle % page de garde
-\newpage
 
+% Title page
+% --------------------------------
+
+\maketitle
+
+
+%	Table of content
+% --------------------------------
+
+\newpage
 %\setcounter{tocdepth}{1} % limit the table of contents to depth 1
 \tableofcontents
 \newpage
+
+%-------------------------------------------------------------------------------
+%	CONTENT
+%-------------------------------------------------------------------------------
 
 \input{chapter/introduction.tex}
 \input{chapter/part1.tex}
 \input{chapter/part2.tex}
 \input{chapter/part3.tex}
-% On peut toujour rajouter des chapitres ici si jamais il y en a plus.
 \input{chapter/conclusion.tex}
 
+
+% Final page
+% --------------------------------
+
 \vspace{3cm}
-Lausanne, le \today
+\mLocation, \today
+\vspace{1.5cm} \\
 
-\vspace{1.5cm}
+\begin{center}
+  \mAuthorOneFN\ \textsc{\mAuthorOneLN}
+  \hspace{5cm}
+  \mAuthorTwoFN\ \textsc{\mAuthorTwoLN}
+\end{center}
 
-\hspace{2cm} Dan \textsc{Luong Ba}
-\hspace{5cm} Frédéric \textsc{Montet}
 
-\vspace{2cm}
+%-------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%-------------------------------------------------------------------------------
 
 %\newpage
 
@@ -97,11 +201,15 @@ Lausanne, le \today
 %\bibliographystyle{plain}
 %\bibliography{papers}
 
-% reference
-% lists
-% appendices
 
-%\appendix % annexes
-%\input{chapter/annexe.tex}
+%-------------------------------------------------------------------------------
+%	APPENDIX
+%-------------------------------------------------------------------------------
+
+% \appendix % annexes
+% \input{chapter/annexes.tex}
 
 \end{document}
+%-------------------------------------------------------------------------------
+%	DOCUMENT END
+%-------------------------------------------------------------------------------

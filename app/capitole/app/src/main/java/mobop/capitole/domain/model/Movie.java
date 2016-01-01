@@ -30,6 +30,8 @@ public class Movie extends RealmObject{
     private String poster;
     private String metascore;
     private String type;
+    private float rating;
+    private String comment;
 
     // Many to many
     private RealmList<Person> people;
@@ -177,6 +179,22 @@ public class Movie extends RealmObject{
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
     }
 
     public RealmList<Person> getPeople() {

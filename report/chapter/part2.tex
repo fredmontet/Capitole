@@ -1,9 +1,86 @@
+%----------------------------------------------------------------------------------------
 \chapter{Développement}
+%----------------------------------------------------------------------------------------
 
 \section{Structure de l'application}
+%----------------------------------------------------------------------------------------
+\subsection*{Séparation des résponsabilité}
+Abordant Android pour la première fois, il a été difficile de crééer un programme qui adopte un patron structurel \footnote{MVC, MVP, MVVC, etc.} tout en prenant en compte les contraintes dûes à la manière de programmer une application Android. Dans l'incertitude, nous avons choisi le modèle MVC pour son côté générique. \\
 
-\section{Schémas UML} %Est-ce qu'on en fait?
+L'application Capitole est structurée ainsi:
+    \begin{figure}[H]
+        \centering
+            \includegraphics[width=0.4\linewidth, fbox]{img/structure/structure.png}
+            \caption{Structure de l'application}
+            \label{structure}
+    \end{figure}
 
-\section{Liaisons aec les bases de données cinématographiques}
+\clearpage
 
-\section{Parties critiques}
+Les principaux composant logiques de l'appliction se trouvent dans le dossier \texttt{Capitole}. Dans ce dernier se le dossier \texttt{domain} qui regroupe les composants suivant:\\
+
+\begin{description}
+	\item [\texttt{mapper}]  \hfill \\
+	Les classes transformant les objets \texttt{JSON} reçu des webservices en objet \texttt{Movie} de Capitole
+	\item [\texttt{model}]  \hfill \\
+	Les classes représentant la base de donnée
+	\item [\texttt{net}]  \hfill \\
+	Les classes permettant de faire les appels aux webservices\\
+\end{description}
+
+Dans le dossier \texttt{presentation} se trouvent les compsants classique de toute application Android, à savoir les classes \texttt{Activity}, \texttt{Fragment} et les \texttt{Adapter}. Ces derniers permettent, sans surprise, de gérer les vues de l'application qui se trouves dans les \texttt{XML} situé dans le dossier \texttt{res} de l'application.\\
+
+Concernant les controlleurs de l'applcation, il n'y en a qu'un. Il est situé dans le dossier \texttt{domain} de l'application et 
+
+\subsection*{Problèmes rencontrés}
+\subsubsection*{Couplage imposé}
+
+En abordant le développement Android, il est facile de commencer à mettre du code métier dans les fragments et activités alors que ces classes ont comme but la gestion du cycle de vie d'une vue. Une telle pratique aurait comme résultat un code ``spaghetti'' difficilement maintenable et fortement couplé.\\
+
+Afin de bien séparer les responsabilité des différentes classes, nous avons consulté certains blog, notamment: \url{http://fernandocejas.com/2014/09/03/architecting-android-the-clean-way/} qui traite de ce sujet. La structure finale de l'application dont parle ce blog est pleie de bonnes pratique cependant, la mise en pratique de ces dernières pour Capitole n'aurait pas été bénéfique en terme de productivité. Nous avons donc du faire le choix de se rabattre à une architecture plus simple, un peu plus couplée et reposant sur la base de donnée Realm que nous verrons dans la section suivante.
+
+
+\section{Base de donnée}
+%----------------------------------------------------------------------------------------
+
+\subsection*{Diagramme de classe}
+Au début de la phase de conception de Capitole, nous avons créé le diagramme de classe. Le but de ce dernier, en plus de la conception de la base de donnée, était d'améliorer la compréhension de ce que nous allions faire dans notre application, sa structure et ses besoins.
+
+\subsection*{Schémas relationnel}
+Une fois le diagramme de classe fait, nous l'avons décliné en schéma relationnel pour pouvoir l'implémenter avec SQLite et les différents outils Android pour la gestion de base de donnée.
+
+
+\subsection*{Problèmes rencontrés}
+\subsubsection*{Conception trop hative du diagramme de classe}
+La conception du diagramme de classe a été faite avant de prendre en compte les contraintes inhérantes aux données provenant d'une API en ligne. De ce fait, nous avons commencé a développer selon un modèle de donnée et avons adapté ce modèle selon l'API. En soi, cette approche n'est pas mauvaise mais elle nécessite un temps plus important. Une manière plus productive aurait été de prendre en compte le modèle de donnée de l'API nous fournissant les données des films plus tôt pour pouvoir concevoir le modèle de donnée de Capitole en évitant de devoir faire des \texttt{mapper}. Cette dernière solution nous aurait permis de faire un mapping direct d'un objet JSON à un objet Java.
+
+\subsubsection*{Changement de base de donnée}
+Un des autres problème rencontré a été celui du choix de base de donnée. Au début, nous nous sommes dirigés vers l'outil basique de base de donnée relationnel Android: SQLite. Il s'est avéré que cet outil, bien que couvrant nos besoins, nécessite plus de code pour pouvoir être implémenté. Nous nous sommes donc orienté vers le base de donnée mobile non structurée Realm. Cette dernière a nécéssité un temps d'apprentissage relativement court pour être prise en main et, contrairement à plusieurs autres SGBD pour mobile, est maintenu par une entreprise, ce qui implique une bonne maintenance.
+
+\section{Liaisons avec les bases de données cinématographiques}
+%----------------------------------------------------------------------------------------
+
+\subsection*{Offre des bases de donnée cinématographique}
+Plusieurs base de donnée cinématographique en ligne existent, notamment:
+
+\begin{itemize}
+	\item The Open Movie Database
+ 	\item The Movie Database
+ 	\item Internet Movie Database
+\end{itemize}
+
+La plus populaire étant sans aucun doute Internet Movie Database (IMDb) malheureusement, cette dernière ne fournit pas d'API public. La solution la plus ouverte est the Open Movie Database (OMDb) car cette API est complétement ouverte. C'est vers ce choix que c'est orienté notre développement dans un premier temps.
+
+\subsection*{Problèmes rencontrés}
+
+\subsubsection*{Choix de l'API de films}
+Comme cité précédemment, c'est vers The Open Movie Database (OMDb) que s'est orienté notre choix de base de donnée cinématographique en ligne en premier lieu. Cependant ce choix n'était pas judicieux car ce webservice ne fournit que des fonctionnalités très limitées. Après avoir mieux consulté The Movie Database (TMDb), cette dernière propose une offre bien meilleure en terme de fonctionnalité et nécessite une authentification avec un token unique. Nous avons donc finalement opté pour TMDb.
+
+\subsubsection*{Chargement des données en ligne}
+Il a été plsu compliqué que prévu de chargé les données en ligne sur le terminal mobile. Pour commencé, le chargement de celles-ci a été efféctué sur le main thread, ce qui a evidemment créé une erreur au lancement de l'application. Le chargement des données en ligne doit se faire sur un autre thread que celui qui gère l'interface utilisateur. Ainsi, la fluidité de l'interface est assurée. Pour facilité le téléchargement des données de films, nous avons utilisé la librairie de Google: Volley\footnote{http://developer.android.com/training/volley/index.html}. A l'aide de cette librairie, le chargement des données a été aisé, qu'il s'agisse des données JSON ou des images.
+
+
+
+
+
+

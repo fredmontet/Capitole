@@ -2,8 +2,6 @@ package mobop.capitole.presentation.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -11,11 +9,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +33,6 @@ import mobop.capitole.domain.model.Genre;
 import mobop.capitole.domain.model.Language;
 import mobop.capitole.domain.model.User;
 import mobop.capitole.domain.net.TmdbApi;
-import mobop.capitole.presentation.fragment.SeenFragment;
 import mobop.capitole.domain.model.Movie;
 import mobop.capitole.presentation.fragment.ToSeeFragment;
 
@@ -137,8 +136,9 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
             textView.setPadding((int) (6 * scale + 0.5f),(int) (3 * scale + 0.5f),(int) (6 * scale + 0.5f),(int) (3 * scale + 0.5f));
             linearLayout.addView(textView);
         }
-
     }
+
+
 
     //==============================================================================================
     // Action Bar Menu
@@ -164,10 +164,23 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
 
                 // TODO Start rating dialog here
                 AlertDialog.Builder builder_rate = new AlertDialog.Builder(MovieToSeeDetailActivity.this);
-                builder_rate.setMessage("Is the movie good?");
-                builder_rate.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                // Get the layout inflater
+                LayoutInflater inflater = getLayoutInflater();
+                final View dialog_view = inflater.inflate(R.layout.dialog_movie_rate, null);
+
+                // Inflate and set the layout for the dialog
+                // Pass null as the parent view because its going in the dialog layout
+                builder_rate.setView(dialog_view);
+                builder_rate.setMessage("How good was the movie?");
+                builder_rate.setPositiveButton("Rate", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked OK button
+                        final RatingBar movieRating = (RatingBar) dialog_view.findViewById(R.id.movieRating);
+                        final TextView movieComment = (TextView) dialog_view.findViewById(R.id.movieComment);
+
+                        Toast.makeText(getBaseContext(), movieRating.getRating()+" "+movieComment.getText(), Toast.LENGTH_SHORT).show();
+                        movieManager.rateMovie(mMovie, movieRating.getRating(), movieComment.getText().toString());
                         movieManager.changeList(mMovie);
                         final Intent intent = new Intent(getBaseContext(), MainActivity.class);
                         intent.putExtra(SWITCH_TAB, TAB_TOSEE);
@@ -176,7 +189,7 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
-                builder_rate.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                builder_rate.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog
                         dialog.dismiss();
@@ -184,8 +197,6 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
                 });
                 AlertDialog dialog_rate = builder_rate.create();
                 dialog_rate.show();
-
-
 
 
                 break;

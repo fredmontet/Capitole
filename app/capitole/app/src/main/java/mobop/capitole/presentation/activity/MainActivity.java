@@ -1,5 +1,7 @@
 package mobop.capitole.presentation.activity;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,9 +9,12 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import mobop.capitole.R;
 import mobop.capitole.presentation.adapter.ViewPagerAdapter;
@@ -42,20 +47,35 @@ public class MainActivity extends AppCompatActivity {
             mTabLayout = (TabLayout) findViewById(R.id.tabs);
             mTabLayout.setupWithViewPager(mViewPager);
 
-            // Intent section
-            //================
-
             final Intent intent = getIntent();
 
+            // SWITCH_TAB Intent
+            //==================
             if (intent.hasExtra(SWITCH_TAB)) {
                 final int tab = intent.getIntExtra(SWITCH_TAB, 0);
                 switchToTab(mViewPager, tab); // switch to tab2 in this example
             }
+
+//            // ACTION_SEARCH Intent
+//            //=====================
+//            if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+//                String query = intent.getStringExtra(SearchManager.QUERY);
+//                searchMovies(query);
+//            }
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuInflater inflater = getMenuInflater();
+        // Inflate menu to add items to action bar if it is present.
+        inflater.inflate(R.menu.menu_main, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        //return true;
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -76,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
     private void switchToTab(ViewPager viewPager, int tab){
         viewPager.setCurrentItem(tab);
     }
-
 
 
 }
