@@ -4,12 +4,14 @@ import java.util.Date;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  *  User model for the Capitole database
  */
 public class User extends RealmObject{
 
+    @PrimaryKey
     private String uuid;
     private String firstname;
     private String lastname;

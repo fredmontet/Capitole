@@ -80,7 +80,7 @@ public class MovieSeenDetailActivity extends AppCompatActivity {
 
         User user = Capitole.getInstance().getUser();
         movieManager = new MovieManager(getApplicationContext(), user);
-        final Movie movie = movieManager.getMovie(movieUuid);
+        this.mMovie = movieManager.getMovie(movieUuid);
 
         // Movie Title
         mActionBar.setTitle("Movie Seen");
@@ -89,42 +89,42 @@ public class MovieSeenDetailActivity extends AppCompatActivity {
         mNetworkImageView = (NetworkImageView) findViewById(R.id.networkImageView);
         mImageLoader = Capitole.getInstance().getImageLoader();
         TmdbApi tmdbApi = new TmdbApi();
-        String posterUrl = tmdbApi.getUrlPoster(movie.getPoster());
+        String posterUrl = tmdbApi.getUrlPoster(mMovie.getPoster());
         mNetworkImageView.setImageUrl(posterUrl, mImageLoader);
 
         // Movie Title
         mTitle = (TextView) findViewById(R.id.mv_title);
-        mTitle.setText(movie.getTitle());
+        mTitle.setText(mMovie.getTitle());
 
         // Release Date
         mReleaseDate = (TextView) findViewById(R.id.mv_release_date);
-        String releaseDate = DateFormat.getDateInstance().format(movie.getReleaseDate());
+        String releaseDate = DateFormat.getDateInstance().format(mMovie.getReleaseDate());
         mReleaseDate.setText("Released the " + releaseDate);
 
         // Budget
         mBudget = (TextView) findViewById(R.id.mv_budget);
-        mBudget.setText(movie.getBudget());
+        mBudget.setText(mMovie.getBudget());
 
         // Language
         mLanguage = (TextView) findViewById(R.id.mv_language);
-        RealmList<Language> languages = movie.getLanguages();
+        RealmList<Language> languages = mMovie.getLanguages();
         mLanguage.setText(languages.get(0).getLanguage());
 
         // Synopsis
         mSynopsis = (TextView) findViewById(R.id.mv_synopsis);
-        mSynopsis.setText(movie.getSynopsis());
+        mSynopsis.setText(mMovie.getSynopsis());
 
         // Rating
         mRating = (TextView) findViewById(R.id.mv_rating);
-        mRating.setText("You rated " + Float.toString(movie.getRating()) + "/5.0");
+        mRating.setText("You rated " + Float.toString(mMovie.getRating()) + "/5.0");
 
         // Comment
         mComment = (TextView) findViewById(R.id.mv_comment);
-        String comment = ((movie.getComment() == null) ? "No comment" : movie.getComment().getText());
+        String comment = ((mMovie.getComment() == null) ? "No comment" : mMovie.getComment().getText());
         mComment.setText(comment);
 
         // Genres
-        RealmList<Genre> genres = movie.getGenres();
+        RealmList<Genre> genres = mMovie.getGenres();
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.mv_genres);
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
@@ -172,12 +172,9 @@ public class MovieSeenDetailActivity extends AppCompatActivity {
                 builder_rate.setPositiveButton("Rate", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         movieManager.rateMovie(mMovie, movieRating.getRating(), movieComment.getText().toString());
-                        movieManager.changeList(mMovie);
-                        final Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                        intent.putExtra(SWITCH_TAB, TAB_SEEN);
-                        startActivity(intent);
-                        Toast.makeText(getBaseContext(), "Movie is now in seen list!", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
+                        finish();
+                        startActivity(getIntent());
                     }
                 });
 

@@ -220,6 +220,7 @@ public class MovieManager extends Application {
         } else {
             this.realm.beginTransaction();
             this.user.getMoviesSeen().add(movie);
+            realm.copyToRealmOrUpdate(this.user);
             realm.copyToRealmOrUpdate(movie);
             this.realm.commitTransaction();
             return true;
@@ -255,6 +256,7 @@ public class MovieManager extends Application {
         } else {
             this.realm.beginTransaction();
             this.user.getMoviesToSee().add(movie);
+            realm.copyToRealmOrUpdate(this.user);
             realm.copyToRealmOrUpdate(movie);
             this.realm.commitTransaction();
             return true;
@@ -269,8 +271,9 @@ public class MovieManager extends Application {
      */
     public boolean removeFromMoviesSeen(Movie movie) {
         realm.beginTransaction();
-        boolean res = this.user.getMoviesSeen().remove(movie);
-        movie.removeFromRealm();
+        Movie movieRetrieved = realm.where(Movie.class).equalTo("uuid", movie.getUuid()).findFirst();
+        boolean res = this.user.getMoviesSeen().remove(movieRetrieved);
+        movieRetrieved.removeFromRealm();
         realm.commitTransaction();
         return res;
     }
@@ -283,8 +286,9 @@ public class MovieManager extends Application {
      */
     public boolean removeFromMoviesToSee(Movie movie) {
         realm.beginTransaction();
-        boolean res = this.user.getMoviesToSee().remove(movie);
-        movie.removeFromRealm();
+        Movie movieRetrieved = realm.where(Movie.class).equalTo("uuid", movie.getUuid()).findFirst();
+        boolean res = this.user.getMoviesToSee().remove(movieRetrieved);
+        movieRetrieved.removeFromRealm();
         realm.commitTransaction();
         return res;
     }
@@ -301,13 +305,13 @@ public class MovieManager extends Application {
             realm.beginTransaction();
             this.user.getMoviesSeen().add(movie);
             this.user.getMoviesToSee().remove(movie);
-            realm.copyToRealmOrUpdate(movie);
+            realm.copyToRealmOrUpdate(this.user);
             realm.commitTransaction();
         } else if (this.user.getMoviesSeen().contains(movie)) {
             realm.beginTransaction();
             this.user.getMoviesToSee().add(movie);
             this.user.getMoviesSeen().remove(movie);
-            realm.copyToRealmOrUpdate(movie);
+            realm.copyToRealmOrUpdate(this.user);
             realm.commitTransaction();
         }
     }
@@ -326,5 +330,6 @@ public class MovieManager extends Application {
     public interface MovieManagerCallback {
         void onSuccess(List<Movie> response);
     }
+
 
 }
