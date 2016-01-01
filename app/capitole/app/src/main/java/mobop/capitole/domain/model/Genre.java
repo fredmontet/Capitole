@@ -4,7 +4,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
- * Created by fredmontet on 22/11/15.
+ *  Genre model for the Capitole database
  */
 public class Genre extends RealmObject{
 

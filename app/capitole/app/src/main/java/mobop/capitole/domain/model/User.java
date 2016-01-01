@@ -6,7 +6,7 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 
 /**
- * Created by fredmontet on 22/11/15.
+ *  User model for the Capitole database
  */
 public class User extends RealmObject{
 
@@ -24,7 +24,7 @@ public class User extends RealmObject{
     private RealmList<Rating> ratings;
     private RealmList<Comment> comments;
 
-    // The Capitole associations \o/
+    // The Capitole associations
     private RealmList<Movie> moviesSeen;
     private RealmList<Movie> moviesToSee;
     private RealmList<Movie> moviesSuggestion;

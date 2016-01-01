@@ -4,7 +4,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
- * Created by fredmontet on 22/11/15.
+ *  Language model for the Capitole database
  */
 public class Language extends RealmObject{
 

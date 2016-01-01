@@ -13,9 +13,16 @@ public class TmdbApi {
     private final String API_IMAGE_BASE_URL = "http://image.tmdb.org/t/p/";
 
     private final String API_KEY_PARAM = "api_key";
+    // Please don't touch this API Key
     private final String API_KEY_VALUE = "a47e4f6e9fc5d19bf5bebd8596188dc4";
 
-    public String getUrlMoviesByTitle(String title){
+    /**
+     * Get the URL to get some movies by their title
+     *
+     * @param title the title of the film to get
+     * @return A string representing the URL
+     */
+    public String getUrlMoviesByTitle(String title) {
 
         Uri builtUri = Uri.parse(API_SEARCH_BASE_URL).buildUpon()
                 .appendQueryParameter("query", title)
@@ -25,7 +32,13 @@ public class TmdbApi {
         return builtUri.toString();
     }
 
-    public String getUrlMovieById(String id){
+    /**
+     * Get the URL to get a movie by its ID
+     *
+     * @param id the TMDB id
+     * @return A string representing the URL
+     */
+    public String getUrlMovieById(String id) {
 
         Uri builtUri = Uri.parse(API_FIND_BASE_URL).buildUpon()
                 .appendPath(id + "?")
@@ -35,7 +48,12 @@ public class TmdbApi {
         return builtUri.toString();
     }
 
-    public String getUrlDiscoverMovies(){
+    /**
+     * Get the URL to get a list of movie suggestion
+     *
+     * @return A string representing the URL
+     */
+    public String getUrlDiscoverMovies() {
 
         Uri builtUri = Uri.parse(API_DISCOVER_BASE_URL).buildUpon()
                 .appendQueryParameter(API_KEY_PARAM, API_KEY_VALUE)
@@ -44,7 +62,13 @@ public class TmdbApi {
         return builtUri.toString();
     }
 
-    public String getUrlPoster(String path){
+    /**
+     * Get the url of the poster for a designated size
+     *
+     * @param path The path of the poster
+     * @return A string representing the URL
+     */
+    public String getUrlPoster(String path) {
 
         // Available size: w500, w600, w1000, w1920
         String size = "w500";
@@ -59,9 +83,6 @@ public class TmdbApi {
 
         return builtUri.toString();
     }
-
-
-
 
 
 }

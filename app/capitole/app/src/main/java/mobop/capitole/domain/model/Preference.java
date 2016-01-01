@@ -3,7 +3,7 @@ package mobop.capitole.domain.model;
 import io.realm.RealmObject;
 
 /**
- * Created by fredmontet on 22/11/15.
+ *  Preference model for the Capitole database
  */
 public class Preference extends RealmObject{
 
