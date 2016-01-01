@@ -31,7 +31,6 @@ public class Movie extends RealmObject{
     private String metascore;
     private String type;
     private float rating;
-    private String comment;
 
     // Many to many
     private RealmList<Person> people;
@@ -40,6 +39,7 @@ public class Movie extends RealmObject{
     private RealmList<Genre> genres;
 
     // Many to one
+    private Comment comment;
     private Country country;
     private Mpaa mpaa;
 
@@ -181,11 +181,11 @@ public class Movie extends RealmObject{
         this.type = type;
     }
 
-    public String getComment() {
+    public Comment getComment() {
         return comment;
     }
 
-    public void setComment(String comment) {
+    public void setComment(Comment comment) {
         this.comment = comment;
     }
 

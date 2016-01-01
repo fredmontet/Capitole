@@ -3,9 +3,7 @@ package mobop.capitole.presentation.activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +11,6 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.widget.Toast;
 
 import mobop.capitole.R;
 import mobop.capitole.presentation.adapter.ViewPagerAdapter;
@@ -36,34 +32,30 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 
-            mToolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(mToolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
-            mViewPager = (ViewPager) findViewById(R.id.viewpager);
-            setupViewPager(mViewPager);
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(mViewPager);
 
-            mTabLayout = (TabLayout) findViewById(R.id.tabs);
-            mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout = (TabLayout) findViewById(R.id.tabs);
+        mTabLayout.setupWithViewPager(mViewPager);
 
-            final Intent intent = getIntent();
+        final Intent intent = getIntent();
 
-            // SWITCH_TAB Intent
-            //==================
-            if (intent.hasExtra(SWITCH_TAB)) {
-                final int tab = intent.getIntExtra(SWITCH_TAB, 0);
-                switchToTab(mViewPager, tab); // switch to tab2 in this example
-            }
-
-//            // ACTION_SEARCH Intent
-//            //=====================
-//            if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-//                String query = intent.getStringExtra(SearchManager.QUERY);
-//                searchMovies(query);
-//            }
-
+        // SWITCH_TAB Intent
+        //==================
+        if (intent.hasExtra(SWITCH_TAB)) {
+            final int tab = intent.getIntExtra(SWITCH_TAB, 0);
+            switchToTab(mViewPager, tab); // switch to tab2 in this example
+        }
     }
+
+    //==============================================================================================
+    // Functions
+    //==============================================================================================
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -79,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    private void switchToTab(ViewPager viewPager, int tab) {
+        viewPager.setCurrentItem(tab);
+    }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -87,15 +82,5 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new SeenFragment(), getString(R.string.seen_title));
         viewPager.setAdapter(adapter);
     }
-
-
-    //==============================================================================================
-    // Functions
-    //==============================================================================================
-
-    private void switchToTab(ViewPager viewPager, int tab){
-        viewPager.setCurrentItem(tab);
-    }
-
 
 }

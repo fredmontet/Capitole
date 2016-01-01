@@ -8,12 +8,15 @@ import org.json.JSONException;
 
 import java.net.MalformedURLException;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 import mobop.capitole.domain.mapper.tmdb.MovieJsonMapper;
+import mobop.capitole.domain.model.Comment;
 import mobop.capitole.domain.model.Movie;
 import mobop.capitole.domain.model.User;
 import mobop.capitole.domain.net.ApiQuery;
@@ -47,10 +50,6 @@ public class MovieManager extends Application {
                 .name("capitole.realm")
                 .deleteRealmIfMigrationNeeded()
                 .build();
-
-        // Clear the realm from last time
-        // If uncommented, throw an IllegalStateException...
-        //Realm.deleteRealm(realmConfiguration);
 
         // Create a new empty instance of Realm
         this.realm = Realm.getInstance(realmConfiguration);
@@ -153,13 +152,23 @@ public class MovieManager extends Application {
      * Rate a movie
      *
      * @param movie   The movie to rate
-     * @param rating  The rating to give
-     * @param comment The String of the comment
+     * @param rate  The rating to give
+     * @param commentStr The String of the comment
      */
-    public void rateMovie(Movie movie, float rating, String comment) {
+    public void rateMovie(Movie movie, float rate, String commentStr) {
+
         this.realm.beginTransaction();
-        movie.setRating(rating);
-        movie.setComment(comment);
+        Comment comment = new Comment();
+        comment.setUuid(UUID.randomUUID().toString());
+        comment.setDate(new Date());
+        comment.setText(commentStr);
+        realm.copyToRealmOrUpdate(comment);
+        this.realm.commitTransaction();
+
+        this.realm.beginTransaction();
+        movie.setRating(rate);
+        Comment commentRetrieved = realm.where(Comment.class).equalTo("uuid", comment.getUuid()).findFirst();
+        movie.setComment(commentRetrieved);
         realm.copyToRealmOrUpdate(movie);
         this.realm.commitTransaction();
     }

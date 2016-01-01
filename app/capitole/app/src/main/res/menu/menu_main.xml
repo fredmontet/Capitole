@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".presentation.activity.MainActivity">
 
-    <!-- Search button - should appear as action button if possible -->
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search_white_48dp"

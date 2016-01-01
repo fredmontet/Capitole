@@ -1,7 +1,6 @@
 <resources>
 
     <style name="CapitoleTheme" parent="CapitoleTheme.Base">
-
     </style>
 
     <style name="CapitoleTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">

@@ -42,14 +42,19 @@ public class Capitole extends Application {
         mInstance = this;
         mContext = this.getBaseContext();
 
+        // Realm configuration
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(mContext)
                 .name("capitole.realm")
                 .deleteRealmIfMigrationNeeded()
                 .build();
 
+        // Clear the realm from last time
+        // If uncommented, throw an IllegalStateException...
+        //Realm.deleteRealm(realmConfiguration);
+
         this.realm = Realm.getInstance(realmConfiguration);
 
-        //get the user
+        // Get the user
         SharedPreferences sharedPref = mContext.getSharedPreferences(getString(R.string.capitole_prefs), Context.MODE_PRIVATE);
         String userUuid = sharedPref.getString("userUuid", null);
         if(userUuid == null){
@@ -57,7 +62,6 @@ public class Capitole extends Application {
         }else{
             this.mUserUuid = userUuid;
         }
-
 
         mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         mImageLoader = new ImageLoader(mRequestQueue,
@@ -75,9 +79,6 @@ public class Capitole extends Application {
                         cache.put(url, bitmap);
                     }
                 });
-
-
-
     }
 
     //==============================================================================================
@@ -101,7 +102,7 @@ public class Capitole extends Application {
     }
 
     /**
-     * // TODO Change this for real user management once
+     * TODO Change this for real user management once
      * Set the Application user
      * @return The User
      */
@@ -140,7 +141,7 @@ public class Capitole extends Application {
 
     /**
      * Getter for the Volley Image Loader
-     * @return
+     * @return the ImageLoader
      */
     public ImageLoader getImageLoader() {
         return mImageLoader;

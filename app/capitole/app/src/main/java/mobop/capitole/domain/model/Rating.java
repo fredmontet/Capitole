@@ -7,17 +7,17 @@ import io.realm.RealmObject;
  */
 public class Rating extends RealmObject{
 
-    private int rate;
+    private float rate;
 
     // Many to one
     private Scale scale;
 
     // Methods
-    public int getRate() {
+    public float getRate() {
         return rate;
     }
 
-    public void setRate(int rate) {
+    public void setRate(float rate) {
         this.rate = rate;
     }
 

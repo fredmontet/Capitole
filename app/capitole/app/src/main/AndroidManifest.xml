@@ -16,6 +16,8 @@
         android:icon="@drawable/capitole_logo"
         android:label="@string/app_name"
         android:theme="@style/CapitoleTheme">
+
+        <!-- Main Activity -->
         <activity
             android:name=".presentation.activity.MainActivity"
             android:label="@string/app_name"
@@ -30,6 +32,7 @@
                 android:resource="@xml/searchable" />
         </activity>
 
+        <!-- Movie To See Detail Activity -->
         <activity
             android:name=".presentation.activity.MovieToSeeDetailActivity"
             android:label="@string/title_activity_movie"
@@ -38,6 +41,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".presentation.activity.MainActivity" />
         </activity>
+
+        <!-- Movie Seen Detail Activity -->
         <activity
             android:name=".presentation.activity.MovieSeenDetailActivity"
             android:label="@string/title_activity_movie"
@@ -46,6 +51,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".presentation.activity.MainActivity" />
         </activity>
+
+        <!-- Movie Suggestion Detail Activity -->
         <activity
             android:name=".presentation.activity.SuggestionDetailActivity"
             android:label="@string/title_activity_movie"

@@ -40,12 +40,10 @@ public class SuggestionFragment extends Fragment implements AdapterView.OnItemCl
     // Life Cycle
     //==============================================================================================
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -154,4 +152,4 @@ public class SuggestionFragment extends Fragment implements AdapterView.OnItemCl
 
     }
 
-}//EOC
+}

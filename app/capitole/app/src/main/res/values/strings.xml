@@ -16,7 +16,6 @@
     <string name="title_activity_movie">Movie</string>
     <string name="title_activity_settings">Settings</string>
 
-
     <!-- Shared preferences -->
     <string name="capitole_prefs">mobop.capitole.shared_preferences</string>
 

@@ -38,7 +38,6 @@ public class SuggestionDetailActivity extends AppCompatActivity {
     private ActionBar mActionBar;
     private Toolbar mToolbar;
     private RelativeLayout relativeLayout;
-
     private NetworkImageView mNetworkImageView;
     private ImageLoader mImageLoader;
     private TextView mTitle;
@@ -87,90 +86,89 @@ public class SuggestionDetailActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(List<Movie> response) {
 
-                // TODO If possible change this to avoid making the get(0)
-                final Movie movie = response.get(0);
+                    // TODO If possible change this to avoid making the get(0)
+                    final Movie movie = response.get(0);
 
-                // Movie Title
-                mActionBar.setTitle("Suggestion Details");
+                    // Movie Title
+                    mActionBar.setTitle("Suggestion Details");
 
-                // Get the poster
-                mNetworkImageView = (NetworkImageView)findViewById(R.id.networkImageView);
-                mImageLoader = Capitole.getInstance().getImageLoader();
-                TmdbApi tmdbApi = new TmdbApi();
-                String posterUrl = tmdbApi.getUrlPoster(movie.getPoster());
-                mNetworkImageView.setImageUrl(posterUrl, mImageLoader);
+                    // Get the poster
+                    mNetworkImageView = (NetworkImageView) findViewById(R.id.networkImageView);
+                    mImageLoader = Capitole.getInstance().getImageLoader();
+                    TmdbApi tmdbApi = new TmdbApi();
+                    String posterUrl = tmdbApi.getUrlPoster(movie.getPoster());
+                    mNetworkImageView.setImageUrl(posterUrl, mImageLoader);
 
-                // Movie Title
-                mTitle = (TextView) findViewById(R.id.mv_title);
-                mTitle.setText(movie.getTitle());
+                    // Movie Title
+                    mTitle = (TextView) findViewById(R.id.mv_title);
+                    mTitle.setText(movie.getTitle());
 
-                // Release Date
-                mReleaseDate = (TextView) findViewById(R.id.mv_release_date);
-                String releaseDate = DateFormat.getDateInstance().format(movie.getReleaseDate());
-                mReleaseDate.setText("Released the "+releaseDate);
+                    // Release Date
+                    mReleaseDate = (TextView) findViewById(R.id.mv_release_date);
+                    String releaseDate = DateFormat.getDateInstance().format(movie.getReleaseDate());
+                    mReleaseDate.setText("Released the " + releaseDate);
 
-                // Budget
-                mBudget = (TextView) findViewById(R.id.mv_budget);
-                mBudget.setText(movie.getBudget());
+                    // Budget
+                    mBudget = (TextView) findViewById(R.id.mv_budget);
+                    mBudget.setText(movie.getBudget());
 
-                // Language
-                mLanguage = (TextView)findViewById(R.id.mv_language);
-                RealmList<Language> languages = movie.getLanguages();
-                mLanguage.setText(languages.get(0).getLanguage());
+                    // Language
+                    mLanguage = (TextView) findViewById(R.id.mv_language);
+                    RealmList<Language> languages = movie.getLanguages();
+                    mLanguage.setText(languages.get(0).getLanguage());
 
-                // Synopsis
-                mSynopsis = (TextView)findViewById(R.id.mv_synopsis);
-                mSynopsis.setText(movie.getSynopsis());
+                    // Synopsis
+                    mSynopsis = (TextView) findViewById(R.id.mv_synopsis);
+                    mSynopsis.setText(movie.getSynopsis());
 
-                // Genres
-                RealmList<Genre> genres = movie.getGenres();
-                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.mv_genres);
-                LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    // Genres
+                    RealmList<Genre> genres = movie.getGenres();
+                    LinearLayout linearLayout = (LinearLayout) findViewById(R.id.mv_genres);
+                    LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-                for(int i = 0; i<genres.size()-1; i++)
-                {
-                    TextView textView = new TextView(getBaseContext());
-                    textView.setText(genres.get(i).getGenre());
-                    textView.setBackgroundResource(R.drawable.rounded_corner);
-                    textView.setLayoutParams(lparams);
-                    textView.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.red));
-                    final float scale = getBaseContext().getResources().getDisplayMetrics().density;
-                    textView.setPadding((int) (6 * scale + 0.5f),(int) (3 * scale + 0.5f),(int) (6 * scale + 0.5f),(int) (3 * scale + 0.5f));
-                    linearLayout.addView(textView);
-                }
-
-
-                // FAB Button Section
-                //===================
-
-                findViewById(R.id.action_to_see).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        boolean isMovieInToSee = movieManager.addToMoviesToSee(movie);
-                        if(!isMovieInToSee){
-                            Snackbar snackbar = Snackbar.make(relativeLayout, "Movie already added", Snackbar.LENGTH_LONG);
-                            snackbar.show();
-                        }else{
-                            Snackbar snackbar = Snackbar.make(relativeLayout, "Movie added", Snackbar.LENGTH_LONG);
-                            snackbar.show();
-                        }
-
+                    for (int i = 0; i < genres.size() - 1; i++) {
+                        TextView textView = new TextView(getBaseContext());
+                        textView.setText(genres.get(i).getGenre());
+                        textView.setBackgroundResource(R.drawable.rounded_corner);
+                        textView.setLayoutParams(lparams);
+                        textView.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.red));
+                        final float scale = getBaseContext().getResources().getDisplayMetrics().density;
+                        textView.setPadding((int) (6 * scale + 0.5f), (int) (3 * scale + 0.5f), (int) (6 * scale + 0.5f), (int) (3 * scale + 0.5f));
+                        linearLayout.addView(textView);
                     }
-                });
 
-                findViewById(R.id.action_seen).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        boolean isMovieInList = movieManager.addToMoviesSeen(movie);
-                        if(!isMovieInList){
-                            Snackbar snackbar = Snackbar.make(relativeLayout, "Movie already added", Snackbar.LENGTH_LONG);
-                            snackbar.show();
-                        }else{
-                            Snackbar snackbar = Snackbar.make(relativeLayout, "Movie added", Snackbar.LENGTH_LONG);
-                            snackbar.show();
+
+                    // FAB Button Section
+                    //===================
+
+                    findViewById(R.id.action_to_see).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            boolean isMovieInToSee = movieManager.addToMoviesToSee(movie);
+                            if (!isMovieInToSee) {
+                                Snackbar snackbar = Snackbar.make(relativeLayout, "Movie already added", Snackbar.LENGTH_LONG);
+                                snackbar.show();
+                            } else {
+                                Snackbar snackbar = Snackbar.make(relativeLayout, "Movie added", Snackbar.LENGTH_LONG);
+                                snackbar.show();
+                            }
+
                         }
-                    }
-                });
+                    });
+
+                    findViewById(R.id.action_seen).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            boolean isMovieInList = movieManager.addToMoviesSeen(movie);
+                            if (!isMovieInList) {
+                                Snackbar snackbar = Snackbar.make(relativeLayout, "Movie already added", Snackbar.LENGTH_LONG);
+                                snackbar.show();
+                            } else {
+                                Snackbar snackbar = Snackbar.make(relativeLayout, "Movie added", Snackbar.LENGTH_LONG);
+                                snackbar.show();
+                            }
+                        }
+                    });
                 }
             });
         } catch (MalformedURLException e) {

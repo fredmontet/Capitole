@@ -9,7 +9,7 @@ public class Scale extends RealmObject{
 
     private int min;
     private int max;
-    private int step;
+    private float step;
 
     // Methods
     public int getMin() {
@@ -28,11 +28,11 @@ public class Scale extends RealmObject{
         this.max = max;
     }
 
-    public int getStep() {
+    public float getStep() {
         return step;
     }
 
-    public void setStep(int step) {
+    public void setStep(float step) {
         this.step = step;
     }
 }

@@ -2,23 +2,15 @@ package mobop.capitole.presentation.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by fredmontet on 06/11/15.
- */
-
-// TODO Faire que quand on revient en arrière depuis une activité, on retombe sur le tab courant.
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
-
 
     public ViewPagerAdapter(FragmentManager manager) {
         super(manager);
@@ -27,7 +19,6 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         return mFragmentList.get(position);
-
     }
 
     @Override

@@ -18,15 +18,10 @@ import mobop.capitole.Capitole;
 import mobop.capitole.R;
 import mobop.capitole.domain.MovieManager;
 import mobop.capitole.presentation.activity.MovieSeenDetailActivity;
-import mobop.capitole.presentation.activity.MovieToSeeDetailActivity;
 import mobop.capitole.presentation.adapter.MovieListAdapter;
 import mobop.capitole.domain.model.Movie;
 
-/**
- * Created by fredmontet on 06/11/15.
- */
-
-public class SeenFragment extends Fragment implements AdapterView.OnItemClickListener{
+public class SeenFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private View mView;
     private MovieListAdapter mAdapter;
@@ -38,11 +33,9 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
         // Required empty public constructor
     }
 
-
     //==============================================================================================
     // Life Cycle
     //==============================================================================================
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,10 +45,9 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         mView = inflater.inflate(R.layout.fragment_seen, container, false);
         mAdapter = new MovieListAdapter(getContext());
-        mListView = (ListView)mView.findViewById(R.id.seenListview);
+        mListView = (ListView) mView.findViewById(R.id.seenListview);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(SeenFragment.this);
         registerForContextMenu(mListView);
@@ -82,25 +74,24 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
     // Functions
     //==============================================================================================
 
-    public void sendToListToSee(int position){
-        Movie clickedMovie = (Movie)mAdapter.getItem(position);
+    public void sendToListToSee(int position) {
+        Movie clickedMovie = (Movie) mAdapter.getItem(position);
 
         // Get the movie object of realm matching the uuid
         Movie movie = this.movieManager.getMovie(clickedMovie.getUuid());
-
         this.movieManager.changeList(movie);
 
-        // Uodate the view
+        // Update the view
         mAdapter.notifyDataSetChanged();
         mListView.invalidate();
 
-
+        // Inform the user
         Snackbar snackbar = Snackbar.make(mView, "Movie sent to list to see", Snackbar.LENGTH_LONG);
         snackbar.show();
     }
 
-    public void remove(int position){
-        Movie clickedMovie = (Movie)mAdapter.getItem(position);
+    public void remove(int position) {
+        Movie clickedMovie = (Movie) mAdapter.getItem(position);
 
         // Get the movie object of realm matching the uuid
         Movie movie = this.movieManager.getMovie(clickedMovie.getUuid());
@@ -108,10 +99,11 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
         // Remove the movie
         this.movieManager.removeFromMoviesSeen(movie);
 
-        // Uodate the view
+        // Update the view
         mAdapter.notifyDataSetChanged();
         mListView.invalidate();
 
+        // Inform the user
         Snackbar snackbar = Snackbar.make(mView, "Movie removed", Snackbar.LENGTH_LONG);
         snackbar.show();
     }
@@ -122,7 +114,7 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Movie clickedMovie = (Movie)mAdapter.getItem(position);
+        Movie clickedMovie = (Movie) mAdapter.getItem(position);
 
         // Get the movie object of realm matching the uuid
         Movie movie = this.movieManager.getMovie(clickedMovie.getUuid());
@@ -137,29 +129,23 @@ public class SeenFragment extends Fragment implements AdapterView.OnItemClickLis
     //==============================================================================================
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
-    {
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, v.getId(), 0, "Send to list to see");//groupId, itemId, order, title
+        // add parameter : groupId, itemId, order, title
+        menu.add(0, v.getId(), 0, "Send to list to see");
         menu.add(0, v.getId(), 0, "Remove this movie");
     }
 
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getTitle() == "Send to list to see") {
-
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             sendToListToSee(info.position);
-
         } else if (item.getTitle() == "Remove this movie") {
-
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             remove(info.position);
-
         } else {
             return false;
         }
         return true;
     }
-
-
-}//EOC
+}

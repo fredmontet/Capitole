@@ -22,11 +22,7 @@ import mobop.capitole.domain.model.Genre;
 import mobop.capitole.domain.model.Movie;
 import mobop.capitole.domain.net.TmdbApi;
 
-/**
- * Created by fredmontet on 10/12/15.
- */
-
-public class MovieListAdapter extends BaseAdapter{
+public class MovieListAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private NetworkImageView mNetworkImageView;
@@ -73,7 +69,7 @@ public class MovieListAdapter extends BaseAdapter{
         if (movie != null) {
 
             // Get the poster
-            mNetworkImageView = (NetworkImageView)currentView.findViewById(R.id.networkImageView);
+            mNetworkImageView = (NetworkImageView) currentView.findViewById(R.id.networkImageView);
             mImageLoader = Capitole.getInstance().getImageLoader();
             TmdbApi tmdbApi = new TmdbApi();
             String posterUrl = tmdbApi.getUrlPoster(movie.getPoster());
@@ -88,11 +84,9 @@ public class MovieListAdapter extends BaseAdapter{
             LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             lparams.setMargins(0, 0, 10, 0);
 
-
-            // TODO Problème quand clique sur un des item et qu'on revient sur la liste, les genres s'additionnent...
-            for(int i = 0; i<genres.size()-1; i++)
-            {
-                try{
+            // TODO Problème quand on clic sur un des item et qu'on revient sur la liste, les genres s'additionnent...
+            for (int i = 0; i < genres.size() - 1; i++) {
+                try {
                     TextView textView = new TextView(Capitole.getInstance().getBaseContext());
                     textView.setText(genres.get(i).getGenre());
                     textView.setBackgroundResource(R.drawable.rounded_corner);
@@ -101,14 +95,13 @@ public class MovieListAdapter extends BaseAdapter{
                     textView.setEllipsize(TextUtils.TruncateAt.END);
                     textView.setTextColor(ContextCompat.getColor(Capitole.getInstance().getBaseContext(), R.color.red));
                     final float scale = Capitole.getInstance().getBaseContext().getResources().getDisplayMetrics().density;
-                    textView.setPadding((int) (6 * scale + 0.5f),(int) (3 * scale + 0.5f),(int) (6 * scale + 0.5f),(int) (3 * scale + 0.5f));
+                    textView.setPadding((int) (6 * scale + 0.5f), (int) (3 * scale + 0.5f), (int) (6 * scale + 0.5f), (int) (3 * scale + 0.5f));
                     linearLayout.addView(textView);
-                }catch(Exception E){
+                } catch (Exception E) {
                     break;
                 }
             }
         }
         return currentView;
     }
-
 }

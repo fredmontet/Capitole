@@ -2,7 +2,6 @@ package mobop.capitole.presentation.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -13,10 +12,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,11 +37,8 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
 
     private MovieManager movieManager;
     private Movie mMovie;
-
     private ActionBar mActionBar;
     private Toolbar mToolbar;
-    private ScrollView mRelativeLayout;
-
     private NetworkImageView mNetworkImageView;
     private ImageLoader mImageLoader;
     private TextView mTitle;
@@ -63,8 +57,6 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_tosee_detail);
-
-        this.mRelativeLayout = (ScrollView)findViewById(R.id.tosee_details_scrollview);
 
         // Toolbar section
         //================
@@ -92,7 +84,7 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
         mActionBar.setTitle("Movie To See");
 
         // Get the poster
-        mNetworkImageView = (NetworkImageView)findViewById(R.id.networkImageView);
+        mNetworkImageView = (NetworkImageView) findViewById(R.id.networkImageView);
         mImageLoader = Capitole.getInstance().getImageLoader();
         TmdbApi tmdbApi = new TmdbApi();
         String posterUrl = tmdbApi.getUrlPoster(this.mMovie.getPoster());
@@ -112,12 +104,12 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
         mBudget.setText(this.mMovie.getBudget());
 
         // Language
-        mLanguage = (TextView)findViewById(R.id.mv_language);
+        mLanguage = (TextView) findViewById(R.id.mv_language);
         RealmList<Language> languages = this.mMovie.getLanguages();
         mLanguage.setText(languages.get(0).getLanguage());
 
         // Synopsis
-        mSynopsis = (TextView)findViewById(R.id.mv_synopsis);
+        mSynopsis = (TextView) findViewById(R.id.mv_synopsis);
         mSynopsis.setText(this.mMovie.getSynopsis());
 
         // Genres
@@ -125,34 +117,24 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.mv_genres);
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        for(int i = 0; i<genres.size()-1; i++)
-        {
+        for (int i = 0; i < genres.size() - 1; i++) {
             TextView textView = new TextView(getBaseContext());
             textView.setText(genres.get(i).getGenre());
             textView.setBackgroundResource(R.drawable.rounded_corner);
             textView.setLayoutParams(lparams);
             textView.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.red));
             final float scale = getBaseContext().getResources().getDisplayMetrics().density;
-            textView.setPadding((int) (6 * scale + 0.5f),(int) (3 * scale + 0.5f),(int) (6 * scale + 0.5f),(int) (3 * scale + 0.5f));
+            textView.setPadding((int) (6 * scale + 0.5f), (int) (3 * scale + 0.5f), (int) (6 * scale + 0.5f), (int) (3 * scale + 0.5f));
             linearLayout.addView(textView);
         }
     }
-
-
 
     //==============================================================================================
     // Action Bar Menu
     //==============================================================================================
 
-    // TODO pourrait être enlevé...
-    @Override
-    public void onBackPressed(){
-        NavUtils.navigateUpFromSameTask(this);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_movie_tosee, menu);
         return true;
     }
@@ -160,26 +142,24 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+
+            // Rate action button
+            //===================
+
             case R.id.action_rate:
-
-                // TODO Start rating dialog here
                 AlertDialog.Builder builder_rate = new AlertDialog.Builder(MovieToSeeDetailActivity.this);
-
-                // Get the layout inflater
                 LayoutInflater inflater = getLayoutInflater();
                 final View dialog_view = inflater.inflate(R.layout.dialog_movie_rate, null);
-
-                // Inflate and set the layout for the dialog
-                // Pass null as the parent view because its going in the dialog layout
                 builder_rate.setView(dialog_view);
                 builder_rate.setMessage("How good was the movie?");
+
+                // User clicked OK button
                 builder_rate.setPositiveButton("Rate", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK button
+
                         final RatingBar movieRating = (RatingBar) dialog_view.findViewById(R.id.movieRating);
                         final TextView movieComment = (TextView) dialog_view.findViewById(R.id.movieComment);
 
-                        Toast.makeText(getBaseContext(), movieRating.getRating()+" "+movieComment.getText(), Toast.LENGTH_SHORT).show();
                         movieManager.rateMovie(mMovie, movieRating.getRating(), movieComment.getText().toString());
                         movieManager.changeList(mMovie);
                         final Intent intent = new Intent(getBaseContext(), MainActivity.class);
@@ -189,24 +169,29 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
+
+                // User cancelled the dialog
                 builder_rate.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
                         dialog.dismiss();
                     }
                 });
+
                 AlertDialog dialog_rate = builder_rate.create();
                 dialog_rate.show();
-
-
                 break;
-            case R.id.action_delete:
 
+
+            //  Delete action button
+            //======================
+
+            case R.id.action_delete:
                 AlertDialog.Builder builder_delete = new AlertDialog.Builder(MovieToSeeDetailActivity.this);
                 builder_delete.setMessage("Do you really want to delete this movie?");
+
+                // User clicked OK button
                 builder_delete.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK button
                         movieManager.removeFromMoviesToSee(mMovie);
                         final Intent intent = new Intent(getBaseContext(), MainActivity.class);
                         intent.putExtra(SWITCH_TAB, TAB_TOSEE);
@@ -214,15 +199,16 @@ public class MovieToSeeDetailActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
+
+                // User cancelled the dialog
                 builder_delete.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
                         dialog.dismiss();
                     }
                 });
+
                 AlertDialog dialog_delete = builder_delete.create();
                 dialog_delete.show();
-
                 break;
 
             default:
